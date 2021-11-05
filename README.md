@@ -13,14 +13,28 @@ develop branch는 기능구현을 하는 branch입니다.
 그리고, develop branch가 새로 merge됐을때 
 이 기능을 배포해야하므로 develop -> main으로 다시 merge시켜줍니다.
 
+
+
+
+merge는 branch와 branch를 병합하는 작업입니다.
+예를들어 develop branch에는 a.txt파일만 있고, feature branch에는 a.txt와 b.txt파일이있을때
+feature -> develop으로 merge를 시키면 
+develop branch에는 a.txt, b.txt파일이 존재하게됩니다.
+
+
+
+
+
+
+
 main과 develop에는 branch protection을 걸어놨기때문에
-merge를 할때 팀원 2명이상의 approve가 있어야지만 merge됩니다.
+develop으로의 merge, main으로의 merge를 할때 팀원 2명이상의 approve가 있어야지만 merge됩니다.
 그만큼 develop과 main은 중요한 branch입니다. 
 
 *******************************
-* [➤가장 중요한 것은]
+[➤가장 중요한 것은]
 main branch에서 작업하지 말것!!
-main branch에서 pull/push를 하지 말것!!
+main branch로 push를 하지 말것!!
 ***************************************
 
 main branch는 배포담당 branch인만큼 develop 에서 병합되기만 하지
@@ -36,7 +50,9 @@ pull/push를 자유롭게하면됩니다.
 *************************************************
 
 만약 새로운 branch에서 기능구현이 끝났다
-그러면 이제 새로운 branch ->develop으로 merge하고, develop -> main으로 merge시키는 것입니다.
+그러면 이제 새로운branch ->develop으로 merge하고, develop -> main으로 merge시키는 것입니다.
+
+
 
 
 
