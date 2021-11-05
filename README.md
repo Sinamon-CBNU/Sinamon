@@ -18,7 +18,7 @@ develop branch는 기능구현을 하는 branch입니다.
 
 merge는 branch와 branch를 병합하는 작업입니다.
 예를들어 develop branch에는 a.txt파일만 있고, feature branch에는 a.txt와 b.txt파일이있을때
-feature -> develop으로 merge를 시키면 
+feature -> develop으로 merge를 시키면 feature branch는 사리지고 
 develop branch에는 a.txt, b.txt파일이 존재하게됩니다.
 
 
@@ -38,7 +38,7 @@ main branch로 push를 하지 말것!!
 ***************************************
 
 main branch는 배포담당 branch인만큼 develop 에서 병합되기만 하지
-이 브랜치에서 어떤 작업도 하지 않는 것이 좋습니다.
+이 브랜치에서 어떤 작업도 하지 말아야합니다.
 
 
 
@@ -47,6 +47,8 @@ main branch는 배포담당 branch인만큼 develop 에서 병합되기만 하�
 develop branch로 이동한 후, develop branch에서 새로운 branch를 만들어
 새로운 branch에서 새로운 파일을 생성하든, 코드를 수정하든 하신다음에
 pull/push를 자유롭게하면됩니다.
+main branch에서 새로운 branch를 생성하면 안됩니다.
+develop branch로 꼭 이동한 후, 새로운 branch를 만들어야합니다.
 *************************************************
 
 만약 새로운 branch에서 기능구현이 끝났다
