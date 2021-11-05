@@ -18,9 +18,9 @@ develop branch는 기능구현을 하는 branch입니다.
 
 merge는 branch와 branch를 병합하는 작업입니다.
 예를들어 develop branch에는 a.txt파일만 있고, feature branch에는 a.txt와 b.txt파일이있을때
-feature -> develop으로 merge를 시키면 feature branch는 사리지고 
-develop branch에는 a.txt, b.txt파일이 존재하게됩니다.
-
+feature -> develop으로 merge를 시키면  
+develop branch에는 a.txt, b.txt파일이 존재하게됩니다
+develop과 main을 제외하고, merge시킨 branch는 삭제해도됩니다
 
 
 
