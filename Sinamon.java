@@ -1,3 +1,6 @@
+/*파일 이미지 경로 설정이 내 데탑의 경로로 되어있기 때문에 이 파일을 열고 싶으면 파일 경로 설정 다 바꿔야됨*/
+/*현재경료를 이용해서 ./이런식으로 하면 Design tool 사용이 안됨*/
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,14 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
+import javax.swing.JLabel;
 
 public class Sinamon {
 	
-	//check �ӽ� ID,PW
+	//check 임시 ID,PW
 	private final String ID="Hello";
 	private final String PASS="1234";
 	
-	String place[]= {"�� ��", "�� ��","�� ��","�� ��","�� ��"};
+	String place[]= {"정 문", "중 문","학 교","서 문","후 문"};
 	
 	private JFrame frame;
 	private JTextField idField;
@@ -66,20 +70,20 @@ public class Sinamon {
 		frame.setBounds(100, 100, 960, 540);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//BulletinPanel
+		/****************************BulletinPanel (게시판 패널)*****************************************/
 		ImagePanel bulletinPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\Bulletin_page.png").getImage());
 		frame.getContentPane().add(bulletinPanel);
 		bulletinPanel.setBounds(0, 10, 960, 540);
 		bulletinPanel.setLayout(null);
 		
-		//Place Panel
+		/*****************************Place Panel (장소 선택 패널)******************************************/
 		ImagePanel placePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\Place_page.png").getImage());
 		frame.getContentPane().add(placePanel);
 		placePanel.setBounds(0, 10, 960, 540);
 		placePanel.setLayout(null);
-		
+		//선택 버튼
 		clickBtn = new JButton("click");
-		clickBtn.addActionListener(new ActionListener() {
+		clickBtn.addActionListener(new ActionListener() {	//반응
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
 				bulletinPanel.setVisible(true);
@@ -89,7 +93,7 @@ public class Sinamon {
 		clickBtn.setBounds(141, 118, 97, 23);
 		placePanel.add(clickBtn);
 		
-		//Choice panel
+		/****************************Choice panel (시나 음식 시나 생필품)*********************************************/
 		ImagePanel choicePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\choice_page.png").getImage());
 		frame.getContentPane().add(choicePanel);
 		choicePanel.setBounds(0, 10, 960, 540);
@@ -113,7 +117,7 @@ public class Sinamon {
 		necBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\Ch_nec.PNG"));
 		choicePanel.add(necBtn);
 		
-		//Join panel
+		/**********************************Join panel (회원가입 패널)******************************************/
 		ImagePanel joinPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\join_page.png").getImage());
 		frame.getContentPane().add(joinPanel);
 		joinPanel.setBounds(0, 10, 960, 540);
@@ -157,7 +161,7 @@ public class Sinamon {
 		comboBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//��� �� ���� ����
+				//사는 곳 정보 저장
 			}
 		});
 		comboBox.setBounds(613, 261, 106, 27);
@@ -184,7 +188,7 @@ public class Sinamon {
 		joinPanel.add(enrollBtn);
 		enrollBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\enroll_click_btn.PNG"));
 		
-		//login panel
+		/***************************************login panel(로그인 패널)***************************************/
 		ImagePanel loginPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\JAVAprac\\Image\\login_page.png").getImage());
 		loginPanel.setBounds(0, 10, 960, 540);
 		loginPanel.setLayout(null);
