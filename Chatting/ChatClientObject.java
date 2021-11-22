@@ -1,3 +1,6 @@
+/*********************************************/
+//성호가 고칠부분 96줄쯤 nickname부분
+
 package Chatting;
 
 import javax.swing.*;
@@ -7,67 +10,101 @@ import java.io.*;
 import java.net.*;
 import java.io.*;
 
+import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
 
-
-/*********************************************/
-//성호가 고칠부분 96줄쯤 nickname부분
-
-public class  ChatClientObject extends JFrame implements ActionListener,Runnable
-{
-	private JTextArea output; 
-	private JTextField input; 
+class ChatClientObject extends JFrame implements ActionListener, Runnable {
+	private JTextArea output;
+	private JTextField input;
 	private JButton sendBtn;
 	private Socket socket;
-	private ObjectInputStream reader=null;
-	private ObjectOutputStream writer=null; 
-	//private String msg;
-	//private InfoDTO dto;
+	private ObjectInputStream reader = null;
+	private ObjectOutputStream writer = null;
+	// private String msg;
+	// private InfoDTO dto;
 	private String nickName;
-	private Thread t;
+
 	public ChatClientObject() {
-		//센터에 TextArea만들기
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\Window Icon.png"));
+		setTitle("ä�ù�");
+
+		/*
+		 * frame = new JFrame(); frame.setBounds(100, 100, 500, 700);
+		 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 * frame.getContentPane().setLayout(null);
+		 * 
+		 * textField = new JTextField(); textField.setBounds(0, 605, 416, 58);
+		 * frame.getContentPane().add(textField); textField.setColumns(10);
+		 * 
+		 * JButton btnNewButton = new JButton("New button"); btnNewButton.setBounds(415,
+		 * 605, 71, 58); frame.getContentPane().add(btnNewButton);
+		 * 
+		 * JScrollBar scrollBar = new JScrollBar(); scrollBar.setBounds(481, 0, 5, 607);
+		 * frame.getContentPane().add(scrollBar);
+		 * 
+		 * JPanel panel = new JPanel(); panel.setBackground(Color.PINK);
+		 * panel.setBounds(0, 0, 486, 606); frame.getContentPane().add(panel);
+		 */
+
+		// ���Ϳ� TextArea�����
 		output = new JTextArea();
-		output.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		output.setBackground(new Color(255, 204, 204));
+		output.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
+		output.setForeground(new Color(50, 50, 50));
 		output.setEditable(false);
 		JScrollPane scroll = new JScrollPane(output);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  //항상 스크롤바가 세로로 떠있음
-		
-		//하단에 버튼과 TextArea넣기 
+		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // �׻� ��ũ�ѹٰ� ���η� �����
+		ImageIcon img2 = new ImageIcon("C:\\Users\\6843w\\OneDrive\\���� ȭ��\\�׸��ҽ�\\send buttton3.png");
+		// �ϴܿ� ��ư�� TextArea�ֱ�
 		JPanel bottom = new JPanel();
-		bottom.setLayout(new BorderLayout()); 
+		bottom.setBackground(Color.WHITE);
+		bottom.setForeground(Color.RED);
+		bottom.setLayout(new BorderLayout());
 		input = new JTextField();
+		input.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
+		input.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+		sendBtn = new JButton();
+		sendBtn.setIcon(new ImageIcon("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\send button6.png"));
+		sendBtn.setFont(new Font("LG Smart UI Light", Font.PLAIN, 12));
+		//sendBtn.setSize(60,35);
+		//sendBtn.setBackground(Color.yellow);
+		sendBtn.setBorderPainted(false); // ��ư �׵θ� ������
+		//sendBtn.setOpaque(false);
+		//sendBtn.setBorderPainted(false); 
+		//sendBtn.setFocusPainted(false); 
+		sendBtn.setContentAreaFilled(false);
+
 		
-		sendBtn = new JButton("보내기");
-		
-		bottom.add("Center",input);  //센터에 붙이기
-		bottom.add("East",sendBtn);  //동쪽에 붙이기
-		//container에 붙이기
+		bottom.add("Center", input); // ���Ϳ� ���̱�
+		bottom.add("East", sendBtn); // ���ʿ� ���̱�
+		// container�� ���̱�
 		Container c = this.getContentPane();
-		c.add("Center", scroll);  //센터에 붙이기
-		c.add("South", bottom);  //남쪽에 붙이기
-		//윈도우 창 설정
-		setBounds(300,300,300,300);
+		c.add("Center", scroll); // ���Ϳ� ���̱�
+		c.add("South", bottom); // ���ʿ� ���̱�
+		// ����� â ���
+		setBounds(300, 150, 350, 500);
 		setVisible(true);
 
-		//윈도우 이벤트
-		
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){ 
-				//System.exit(0);
-				try{
-					//InfoDTO dto = new InfoDTO(nickName,Info.EXIT);
+		// ����� �̺�Ʈ
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				// System.exit(0);
+				try {
+					// InfoDTO dto = new InfoDTO(nickName,Info.EXIT);
 					InfoDTO dto = new InfoDTO();
 					dto.setNickName(nickName);
 					dto.setCommand(Info.EXIT);
-					writer.writeObject(dto);  //역슬러쉬가 필요가 없음
+					writer.writeObject(dto); // ���������� �ʿ䰡 ���
 					writer.flush();
-				}catch(IOException io){
+				} catch (IOException io) {
 					io.printStackTrace();
 				}
 			}
 		});
 	}
+
 
 	public void service(){
 		//서버 IP 입력받기
@@ -196,3 +233,4 @@ public class  ChatClientObject extends JFrame implements ActionListener,Runnable
 	}
 }
 //���� ä���� ���� �����带 �������־�� ��
+

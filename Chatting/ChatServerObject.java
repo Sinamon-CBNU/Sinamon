@@ -1,5 +1,6 @@
 package Chatting;
 
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -47,8 +48,11 @@ public class ChatServerObject
 
 	}
 	
+
 	public static void main(String[] args) 
 	{
 		new ChatServerObject();
 	}
+
 }
+
