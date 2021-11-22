@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-class ChatHandlerObject extends Thread //Ã³¸®ÇØÁÖ´Â °÷(¼ÒÄÏ¿¡ ´ëÇÑ Á¤º¸°¡ ´ã°ÜÀÖ´Â °÷. ¼ÒÄÏÀ» Ã³¸®ÇÔ)
+
+class ChatHandlerObject extends Thread //ì²˜ë¦¬í•´ì£¼ëŠ” ê³³(ì†Œì¼“ì— ëŒ€í•œ ì •ë³´ê°€ ë‹´ê²¨ìˆëŠ” ê³³. ì†Œì¼“ì„ ì²˜ë¦¬í•¨)
+
 {
 	private ObjectInputStream reader;
 	private ObjectOutputStream writer;
@@ -19,14 +21,18 @@ class ChatHandlerObject extends Thread //Ã³¸®ÇØÁÖ´Â °÷(¼ÒÄÏ¿¡ ´ëÇÑ Á¤º¸°¡ ´ã°ÜÀÖ
 	//private InfoDTO dto;
 	///private Info command;
 	private List <ChatHandlerObject> list;
-	//»ı¼ºÀÚ
+
+	//ìƒì„±ì
+
 	public ChatHandlerObject(Socket socket, List <ChatHandlerObject> list) throws IOException {
 		
 		this.socket = socket;
 		this.list = list;
 		writer = new ObjectOutputStream(socket.getOutputStream());
 		reader = new ObjectInputStream(socket.getInputStream());
-		//¼ø¼­°¡ µÚ¹Ù²î¸é °ªÀ» ÀÔ·Â¹ŞÁö ¸øÇÏ´Â »óÈ²ÀÌ ¹ú¾îÁö±â ¶§¹®¿¡ ¹İµå½Ã writerºÎÅÍ »ı¼º½ÃÄÑÁÖ¾î¾ß ÇÔ!!!!!!
+
+		//ìˆœì„œê°€ ë’¤ë°”ë€Œë©´ ê°’ì„ ì…ë ¥ë°›ì§€ ëª»í•˜ëŠ” ìƒí™©ì´ ë²Œì–´ì§€ê¸° ë•Œë¬¸ì— ë°˜ë“œì‹œ writerë¶€í„° ìƒì„±ì‹œì¼œì£¼ì–´ì•¼ í•¨!!!!!!
+
 		
 	}
 	public void run(){
@@ -37,11 +43,14 @@ class ChatHandlerObject extends Thread //Ã³¸®ÇØÁÖ´Â °÷(¼ÒÄÏ¿¡ ´ëÇÑ Á¤º¸°¡ ´ã°ÜÀÖ
 				dto=(InfoDTO)reader.readObject();
 				nickName=dto.getNickName();
 				
-				//System.out.println("¹è¿­ Å©±â:"+ar.length);
-				//»ç¿ëÀÚ°¡ Á¢¼ÓÀ» ²÷¾úÀ» °æ¿ì. ÇÁ·Î±×·¥À» ³¡³»¼­´Â ¾ÈµÇ°í ³²Àº »ç¿ëÀÚµé¿¡°Ô ÅğÀå¸Ş¼¼Áö¸¦ º¸³»Áà¾ß ÇÑ´Ù. 
-				if(dto.getCommand()==Info.EXIT){
+
+				//System.out.println("ë°°ì—´ í¬ê¸°:"+ar.length);
+				//ì‚¬ìš©ìê°€ ì ‘ì†ì„ ëŠì—ˆì„ ê²½ìš°. í”„ë¡œê·¸ë¨ì„ ëë‚´ì„œëŠ” ì•ˆë˜ê³  ë‚¨ì€ ì‚¬ìš©ìë“¤ì—ê²Œ í‡´ì¥ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ì¤˜ì•¼ í•œë‹¤. 
+				if(dto.getCommand()==Info.EXIT){ 
+			
 					InfoDTO sendDto = new InfoDTO();
-					//³ª°¡·Á°í exit¸¦ º¸³½ Å¬¶óÀÌ¾ğÆ®¿¡°Ô ´äº¯ º¸³»±â
+					//ë‚˜ê°€ë ¤ê³  exitë¥¼ ë³´ë‚¸ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë‹µë³€ ë³´ë‚´ê¸°
+
 					sendDto.setCommand(Info.EXIT);
 					writer.writeObject(sendDto);
 					writer.flush();
@@ -49,37 +58,39 @@ class ChatHandlerObject extends Thread //Ã³¸®ÇØÁÖ´Â °÷(¼ÒÄÏ¿¡ ´ëÇÑ Á¤º¸°¡ ´ã°ÜÀÖ
 					reader.close();
 					writer.close();
 					socket.close();
-					//³²¾ÆÀÖ´Â Å¬¶óÀÌ¾ğÆ®¿¡°Ô ÅğÀå¸Ş¼¼Áö º¸³»±â
+
+					//ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ş¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					list.remove(this);
 
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					sendDto.setMessage(nickName+"´ÔÀÌ ÅğÀåÇÏ¿´½À´Ï´Ù.");                                  // gui ¼öÁ¤¿ë ÁÖ¼®
+					sendDto.setMessage(nickName+"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½Ï´ï¿½.");                                  // gui ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
 					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //ÇÚµé·¯ ¾ÈÀÇ writer¿¡ °ªÀ» º¸³»±â
-						handler.writer.flush();  //ÇÚµé·¯ ¾ÈÀÇ writer °ª ºñ¿öÁÖ±â
+						handler.writer.writeObject(sendDto); //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writerï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						handler.writer.flush();  //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writer ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 					}
 					break;
 				} else if(dto.getCommand()==Info.JOIN){
-					//¸ğµç »ç¿ëÀÚ¿¡°Ô ¸Ş¼¼Áö º¸³»±â
+					//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					//nickName = dto.getNickName();
-					//¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡°Ô ÀÔÀå ¸Ş¼¼Áö¸¦ º¸³»¾ß ÇÔ
+					//ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					sendDto.setMessage(nickName+"´ÔÀÌ ÀÔÀåÇÏ¿´½À´Ï´Ù.");
+					sendDto.setMessage(nickName+"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½Ï´ï¿½.");
 					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //ÇÚµé·¯ ¾ÈÀÇ writer¿¡ °ªÀ» º¸³»±â
-						handler.writer.flush();  //ÇÚµé·¯ ¾ÈÀÇ writer °ª ºñ¿öÁÖ±â
+						handler.writer.writeObject(sendDto); //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writerï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						handler.writer.flush();  //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writer ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 					}
 				} else if(dto.getCommand()==Info.SEND){
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.SEND);
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
 					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //ÇÚµé·¯ ¾ÈÀÇ writer¿¡ °ªÀ» º¸³»±â
-						handler.writer.flush();  //ÇÚµé·¯ ¾ÈÀÇ writer °ª ºñ¿öÁÖ±â
+						handler.writer.writeObject(sendDto); //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writerï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						handler.writer.flush();  //ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½ writer ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 					}
+
 				}
 			}//while
 
@@ -91,5 +102,13 @@ class ChatHandlerObject extends Thread //Ã³¸®ÇØÁÖ´Â °÷(¼ÒÄÏ¿¡ ´ëÇÑ Á¤º¸°¡ ´ã°ÜÀÖ
 	
 		
 	}
-	//´Ù¸¥ Å¬¶óÀÌ¾ğÆ®¿¡°Ô ÀüÃ¼ ¸Ş¼¼Áö º¸³»ÁÖ±â
+
+	//ë‹¤ë¥¸ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì „ì²´ ë©”ì„¸ì§€ ë³´ë‚´ì£¼ê¸°
+	public void broadcast(InfoDTO sendDto) throws IOException {
+		for(ChatHandlerObject handler: list){
+			handler.writer.writeObject(sendDto); //í•¸ë“¤ëŸ¬ ì•ˆì˜ writerì— ê°’ì„ ë³´ë‚´ê¸°
+			handler.writer.flush();  //í•¸ë“¤ëŸ¬ ì•ˆì˜ writer ê°’ ë¹„ì›Œì£¼ê¸°
+		}
+	}
 }
+

@@ -1,32 +1,58 @@
 package Chatting;
 
-import java.net.Socket;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
 
-class ChatServerObject 
+/******************/
+//sinamonì—ì„  ì„œë²„ê°€ ì—´ë ¤ìˆë‹¤ ê°€ì •í•˜ê³  ì„œë²„ì˜¤í”ˆë²„íŠ¼ì„ ì§€ì›€
+
+public class ChatServerObject 
 {
 	private ServerSocket serverSocket;
 	private List <ChatHandlerObject> list;
 	public ChatServerObject(){
-		try{
-			serverSocket= new ServerSocket (9500);
-			System.out.println("¼­¹ö ÁØºñ ¿Ï·á");
-			list = new  ArrayList<ChatHandlerObject>();
-			while(true){
-				Socket socket = serverSocket.accept();
-				ChatHandlerObject handler = new  ChatHandlerObject(socket,list);  //½º·¹µå¸¦ »ı¼ºÇÑ °ÍÀÌ¶û µ¿ÀÏÇÔ! ‹š¹®¿¡ ½ÃÀÚÇØÁÖ¾î¾ß 
-				handler.start();  //½º·¹µå ½ÃÀÛ- ½º·¹µå ½ÇÇà
-				list.add(handler);  //ÇÚµé·¯¸¦ ´ãÀ½( ÀÌ ¸®½ºÆ®ÀÇ °³¼ö°¡ Å¬¶óÀÌ¾ğÆ®ÀÇ °¹¼ö!!)
-			}//while
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+			ServerThread serverThread = new ServerThread();
+			serverThread.start();
 	}
+	
+	class ServerThread extends Thread {
+
+		@Override
+
+		public void run() {			
+
+			try {  //ì„œë²„ ì†Œì¼“ ìƒì„± ì‘ì—…
+
+				serverSocket = new ServerSocket(9500);
+				System.out.println("ì„œë²„ ì¤€ë¹„ ì™„ë£Œ");
+				list = new  ArrayList<ChatHandlerObject>();
+
+				while(true) {
+					Socket socket = serverSocket.accept();
+					ChatHandlerObject handler = new  ChatHandlerObject(socket,list);  //ìŠ¤ë ˆë“œë¥¼ ìƒì„±í•œ ê²ƒì´ë‘ ë™ì¼í•¨! ë–„ë¬¸ì— ì‹œìí•´ì£¼ì–´ì•¼ 
+					handler.start();  //ìŠ¤ë ˆë“œ ì‹œì‘- ìŠ¤ë ˆë“œ ì‹¤í–‰
+					list.add(handler);  //í•¸ë“¤ëŸ¬ë¥¼ ë‹´ìŒ( ì´ ë¦¬ìŠ¤íŠ¸ì˜ ê°œìˆ˜ê°€ í´ë¼ì´ì–¸íŠ¸ì˜ ê°¯ìˆ˜!!)
+				}				
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	
+
 	public static void main(String[] args) 
 	{
 		new ChatServerObject();
 	}
+
 }
+

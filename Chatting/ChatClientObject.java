@@ -1,3 +1,6 @@
+/*********************************************/
+//ì„±í˜¸ê°€ ê³ ì¹ ë¶€ë¶„ 96ì¤„ì¯¤ nicknameë¶€ë¶„
+
 package Chatting;
 
 import javax.swing.*;
@@ -6,6 +9,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.io.*;
+
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 
@@ -22,7 +26,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 
 	public ChatClientObject() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\Window Icon.png"));
-		setTitle("Ã¤ÆÃ¹æ");
+		setTitle("Ã¤ï¿½Ã¹ï¿½");
 
 		/*
 		 * frame = new JFrame(); frame.setBounds(100, 100, 500, 700);
@@ -42,16 +46,16 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		 * panel.setBounds(0, 0, 486, 606); frame.getContentPane().add(panel);
 		 */
 
-		// ¼¾ÅÍ¿¡ TextArea¸¸µé±â
+		// ï¿½ï¿½ï¿½Í¿ï¿½ TextAreaï¿½ï¿½ï¿½ï¿½ï¿½
 		output = new JTextArea();
 		output.setBackground(new Color(255, 204, 204));
 		output.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
 		output.setForeground(new Color(50, 50, 50));
 		output.setEditable(false);
 		JScrollPane scroll = new JScrollPane(output);
-		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Ç×»ó ½ºÅ©·Ñ¹Ù°¡ ¼¼·Î·Î ¶°ÀÖÀ½
-		ImageIcon img2 = new ImageIcon("C:\\Users\\6843w\\OneDrive\\¹ÙÅÁ È­¸é\\±×¸²¼Ò½º\\send buttton3.png");
-		// ÇÏ´Ü¿¡ ¹öÆ°°ú TextArea³Ö±â
+		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // ï¿½×»ï¿½ ï¿½ï¿½Å©ï¿½Ñ¹Ù°ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		ImageIcon img2 = new ImageIcon("C:\\Users\\6843w\\OneDrive\\ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½\\ï¿½×¸ï¿½ï¿½Ò½ï¿½\\send buttton3.png");
+		// ï¿½Ï´Ü¿ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ TextAreaï¿½Ö±ï¿½
 		JPanel bottom = new JPanel();
 		bottom.setBackground(Color.WHITE);
 		bottom.setForeground(Color.RED);
@@ -65,24 +69,24 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		sendBtn.setFont(new Font("LG Smart UI Light", Font.PLAIN, 12));
 		//sendBtn.setSize(60,35);
 		//sendBtn.setBackground(Color.yellow);
-		sendBtn.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
+		sendBtn.setBorderPainted(false); // ï¿½ï¿½Æ° ï¿½×µÎ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		//sendBtn.setOpaque(false);
 		//sendBtn.setBorderPainted(false); 
 		//sendBtn.setFocusPainted(false); 
 		sendBtn.setContentAreaFilled(false);
 
 		
-		bottom.add("Center", input); // ¼¾ÅÍ¿¡ ºÙÀÌ±â
-		bottom.add("East", sendBtn); // µ¿ÂÊ¿¡ ºÙÀÌ±â
-		// container¿¡ ºÙÀÌ±â
+		bottom.add("Center", input); // ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
+		bottom.add("East", sendBtn); // ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
+		// containerï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
 		Container c = this.getContentPane();
-		c.add("Center", scroll); // ¼¾ÅÍ¿¡ ºÙÀÌ±â
-		c.add("South", bottom); // ³²ÂÊ¿¡ ºÙÀÌ±â
-		// À©µµ¿ì Ã¢ ¼³Á¤
+		c.add("Center", scroll); // ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
+		c.add("South", bottom); // ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½
 		setBounds(300, 150, 350, 500);
 		setVisible(true);
 
-		// À©µµ¿ì ÀÌº¥Æ®
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -92,7 +96,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 					InfoDTO dto = new InfoDTO();
 					dto.setNickName(nickName);
 					dto.setCommand(Info.EXIT);
-					writer.writeObject(dto); // ¿ª½½·¯½¬°¡ ÇÊ¿ä°¡ ¾øÀ½
+					writer.writeObject(dto); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½
 					writer.flush();
 				} catch (IOException io) {
 					io.printStackTrace();
@@ -100,148 +104,133 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			}
 		});
 	}
-	
-	
-	
-	public void service() {
-		// ¼­¹ö IP ÀÔ·Â¹Ş±â
-		// String serverIP = JOptionPane.showInputDialog(this, "¼­¹öIP¸¦
-		// ÀÔ·ÂÇÏ¼¼¿ä","¼­¹öIP",JOptionPane.INFORMATION_MESSAGE);
-		String serverIP = JOptionPane.showInputDialog(this, "¼­¹öIP¸¦ ÀÔ·ÂÇÏ¼¼¿ä", "192.168.0.3"); // ±âº»ÀûÀ¸·Î ¾ÆÀÌÇÇ °ªÀÌ ÀÔ·ÂµÇ¾î µé¾î°¡°Ô µÊ
-		if (serverIP == null || serverIP.length() == 0) { // ¸¸¾à °ªÀÌ ÀÔ·ÂµÇÁö ¾Ê¾ÒÀ» ¶§ Ã¢ÀÌ ²¨Áü
-			System.out.println("¼­¹ö IP°¡ ÀÔ·ÂµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+
+
+	public void service(){
+		//ì„œë²„ IP ì…ë ¥ë°›ê¸°
+		//String serverIP = JOptionPane.showInputDialog(this, "ì„œë²„IPë¥¼ ì…ë ¥í•˜ì„¸ìš”","ì„œë²„IP",JOptionPane.INFORMATION_MESSAGE);
+		
+		/********************************************/
+		//String serverIP= JOptionPane.showInputDialog(this,"ì„œë²„IPë¥¼ ì…ë ¥í•˜ì„¸ìš”","192.168.136.60");  //ê¸°ë³¸ì ìœ¼ë¡œ ì•„ì´í”¼ ê°’ì´ ì…ë ¥ë˜ì–´ ë“¤ì–´ê°€ê²Œ ë¨
+		//ë§Œì•½ ipì…ë ¥ì„ ë°›ê³ ì‹¶ìœ¼ë©´ ì—¬ê¸° ì£¼ì„í•´ì œí•˜ë©´ ë¨
+		/**********************************************/
+		
+		/********************************/
+		
+		String serverIP="192.168.35.155";
+		//ì„œë²„ì¸¡ ipê°€ ë³€ê²½ë˜ë©´ ì—¬ê¸°ë¥¼ ë³€ê²½ëœ ì„œë²„ipë¡œ ë°”ê¿”ì£¼ë©´ëœë‹¤
+		/*********************************/
+		
+		if(serverIP==null || serverIP.length()==0){  //ë§Œì•½ ê°’ì´ ì…ë ¥ë˜ì§€ ì•Šì•˜ì„ ë•Œ ì°½ì´ êº¼ì§
+			System.out.println("ì„œë²„ IPê°€ ì…ë ¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
 			System.exit(0);
 		}
-		// ´Ğ³×ÀÓ ¹Ş±â
-		nickName = JOptionPane.showInputDialog(this, "´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä", "´Ğ³×ÀÓ", JOptionPane.INFORMATION_MESSAGE);
-		if (nickName == null || nickName.length() == 0) {
-			nickName = "guest";
+		//ë‹‰ë„¤ì„ ë°›ê¸°
+		/*************************************************/
+		//nickName= JOptionPane.showInputDialog(this,"ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”","ë‹‰ë„¤ì„" ,JOptionPane.INFORMATION_MESSAGE);
+		
+		//ì´ë¶€ë¶„ì„ dbì˜ nicknameìœ¼ë¡œë°›ì•„ì£¼ì†Œ 
+		//nickName=
+		
+		if(nickName == null || nickName.length()==0){
+			nickName="guest";
 		}
-		try {
-			socket = new Socket(serverIP, 9500);
-			// ¿¡·¯ ¹ß»ı
-			reader = new ObjectInputStream(socket.getInputStream());
+		try{
+			socket = new Socket(serverIP,9500);
+			//ì—ëŸ¬ ë°œìƒ
+			reader= new ObjectInputStream(socket.getInputStream());
 			writer = new ObjectOutputStream(socket.getOutputStream());
-			System.out.println("Àü¼Û ÁØºñ ¿Ï·á!");
-
-		} catch (UnknownHostException e) {
-			System.out.println("¼­¹ö¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+			System.out.println("ì „ì†¡ ì¤€ë¹„ ì™„ë£Œ!"); 
+			
+		} catch(UnknownHostException e ){
+			System.out.println("ì„œë²„ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			e.printStackTrace();
 			System.exit(0);
-		} catch (IOException e) {
-			System.out.println("¼­¹ö¿Í ¿¬°áÀÌ ¾ÈµÇ¾ú½À´Ï´Ù.");
+		} catch(IOException e){
+			System.out.println("ì„œë²„ì™€ ì—°ê²°ì´ ì•ˆë˜ì—ˆìŠµë‹ˆë‹¤.");
 			e.printStackTrace();
 			System.exit(0);
 		}
-		try {
-			// ¼­¹ö·Î ´Ğ³×ÀÓ º¸³»±â
-
+		try{
+			//ì„œë²„ë¡œ ë‹‰ë„¤ì„ ë³´ë‚´ê¸°
+			
 			InfoDTO dto = new InfoDTO();
 			dto.setCommand(Info.JOIN);
 			dto.setNickName(nickName);
-			writer.writeObject(dto); // ¿ª½½·¯½¬°¡ ÇÊ¿ä°¡ ¾øÀ½
+			writer.writeObject(dto);  //ì—­ìŠ¬ëŸ¬ì‰¬ê°€ í•„ìš”ê°€ ì—†ìŒ
 			writer.flush();
-		} catch (IOException e) {
+		}catch(IOException e){
 			e.printStackTrace();
 		}
-
-		// ½º·¹µå »ı¼º
-
-		Thread t = new Thread(this);
+		
+		//ìŠ¤ë ˆë“œ ìƒì„±
+		
+		t = new Thread(this);
 		t.start();
 		input.addActionListener(this);
-		sendBtn.addActionListener(this); // ¸ß¼Ç ÀÌº¥Æ® Ãß°¡
+		sendBtn.addActionListener(this);  //ë©•ì…˜ ì´ë²¤íŠ¸ ì¶”ê°€
 	}
-
-	// ½º·¹µå ¿À¹ö¶óÀÌµå
+	//ìŠ¤ë ˆë“œ ì˜¤ë²„ë¼ì´ë“œ 
+		@Override
+		public void run(){
+			//ì„œë²„ë¡œë¶€í„° ë°ì´í„° ë°›ê¸°
+			InfoDTO dto= null;
+			while(true){
+				try{
+					dto = (InfoDTO) reader.readObject();
+					if(dto.getCommand()==Info.EXIT){  //ì„œë²„ë¡œë¶€í„° ë‚´ ìì‹ ì˜ exitë¥¼ ë°›ìœ¼ë©´ ì¢…ë£Œë¨
+						
+						/***************************************************
+						 * ***************************************
+						 */
+						//ì´ë¶€ë¶„ì´ ì¢…ë£Œë¥¼ë‹´ë‹¹í•©ë‹ˆë‹¤
+						reader.close();
+						writer.close();
+						socket.close();
+						//System.exit(0);	//í”„ë¡œê·¸ë¨ì „ì²´ì¢…ë£Œ ì£¼ì„ì²˜ë¦¬
+						break;			//í•œê°œì˜ í”„ë¡œê·¸ë¨ë§Œ ì¢…ë£Œë˜ë„ë¡ ìˆ˜ì •
+					} else if(dto.getCommand()==Info.SEND){
+						output.append(dto.getMessage()+"\n");
+						int pos=output.getText().length();
+						output.setCaretPosition(pos);
+					}
+				}catch(IOException e){
+					e.printStackTrace();
+				}catch(ClassNotFoundException e){
+					e.printStackTrace();
+				}	
+			}
+		}
+    //ActionPerformed
 	@Override
-	public void run() {
-		// ¼­¹ö·ÎºÎÅÍ µ¥ÀÌÅÍ ¹Ş±â
-		InfoDTO dto = null;
-		while (true) {
-			try {
-				dto = (InfoDTO) reader.readObject();
-				if (dto.getCommand() == Info.EXIT) { // ¼­¹ö·ÎºÎÅÍ ³» ÀÚ½ÅÀÇ exit¸¦ ¹ŞÀ¸¸é Á¾·áµÊ
-					reader.close();
-					writer.close();
-					socket.close();
-					System.exit(0);
-				} else if (dto.getCommand() == Info.SEND) {
-					/*if (dto.getWhossend() == who.server) {
-
-					output.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 10));
-					output.append(dto.getMessage() + "\n");
-
-					int pos = output.getText().length();
-					output.setCaretPosition(pos);
-
-					output.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+	public void actionPerformed(ActionEvent e){
+			try{
+				//ì„œë²„ë¡œ ë³´ëƒ„ 
+				//JTextFieldê°’ì„ ì„œë²„ë¡œë³´ë‚´ê¸°
+				//ë²„í¼ ë¹„ìš°ê¸°
+				String msg=input.getText();
+				InfoDTO dto = new InfoDTO();
+				//dto.setNickName(nickName);
+				if(msg.equals("exit")){
+					dto.setCommand(Info.EXIT);
+				} else {
+					dto.setCommand(Info.SEND);
+					dto.setMessage(msg);
+					dto.setNickName(nickName);
 				}
-				else {*/
-					output.append(dto.getMessage() + "\n");
-
-					int pos = output.getText().length();
-					output.setCaretPosition(pos);
-				//}
-			}else if (dto.getCommand() == Info.NOTICE) {
-				/*if (dto.getWhossend() == who.server) {
-
-				output.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 10));
-				output.append(dto.getMessage() + "\n");
-
-				int pos = output.getText().length();
-				output.setCaretPosition(pos);
-
-				output.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+				writer.writeObject(dto);
+				writer.flush();
+				input.setText("");
+				
+			}catch(IOException io){
+				io.printStackTrace();
 			}
-			else {*/
-				String blank = "";
-				for(int i=0;i<(85-(dto.getMessage().length()*3.5))/2;i++) {
-					blank+=" ";
-				}
-				output.append(blank + dto.getMessage() + "\n\n");
-
-				int pos = output.getText().length();
-				output.setCaretPosition(pos);
-			//}
-		}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
-	// ActionPerformed
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		try {
-			// ¼­¹ö·Î º¸³¿
-			// JTextField°ªÀ» ¼­¹ö·Îº¸³»±â
-			// ¹öÆÛ ºñ¿ì±â
-			String msg = input.getText();
-			InfoDTO dto = new InfoDTO();
-			// dto.setNickName(nickName);
-			if (msg.equals("exit")) {
-				dto.setCommand(Info.EXIT);
-				dto.setNickName(nickName);
-			} else {
-				dto.setCommand(Info.SEND);
-				dto.setMessage(msg);
-				dto.setNickName(nickName);
-			}
-			writer.writeObject(dto);
-			writer.flush();
-			input.setText("");
-
-		} catch (IOException io) {
-			io.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		new ChatClientObject().service();
 	}
 }
-//µ¿½Ã Ã¤ÆÃÀ» À§ÇØ ¾²·¹µå¸¦ »ı¼ºÇØÁÖ¾î¾ß ÇÔ
+//ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ ï¿½ï¿½
+

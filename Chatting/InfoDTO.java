@@ -1,19 +1,24 @@
 package Chatting;
+
 import java.util.*;
 import java.io.*;
 
 enum Info {
+
 	JOIN, EXIT, SEND, NOTICE
 }
 //enum who {
 	//me, other, server
 //}
 
+
 class InfoDTO implements Serializable{
 	private String nickName;
 	private String message;
+
 	private Info command;	
 	//private who whossend = who.me;
+
 	
 	public String getNickName(){
 		return nickName;
@@ -21,9 +26,11 @@ class InfoDTO implements Serializable{
 	public Info getCommand(){
 		return command;
 	}
+
 //	public who getWhossend(){
 	//	return whossend;
 	//}
+
 	public String getMessage(){
 		return message;
 	}
@@ -33,9 +40,11 @@ class InfoDTO implements Serializable{
 	public void setCommand(Info command){
 		this.command= command;
 	}
+
 //	public void setWhossend(who whossend){
 	//	this.whossend= whossend;
 	//}
+
 	public void setMessage(String message){
 		this.message= message; 
 	}
@@ -45,9 +54,11 @@ ChatClient.java ---> ChatClientObject.java
 ChatServer.java ---> ChatServerObject.java
 CahtHandler.java ---> ChatHandlerObject.java
 
-BufferedReader¸¦ »ç¿ëÇß´Ù¸é ÀÌ¹ø¿¡´Â °´Ã¼·Î ³Ñ±è
-¸ðµçµ¥ÀÌÅÍ¸¦ StringÀÌ ¾Æ´Ñ InfoDTO·Î º¸³»°í ¹Þ´Â °Í!
-ObjectInputStream°ú ObjectOutputStreamÀ» »ç¿ëÇØ¾ß ÇÔ!!
+
+BufferedReaderï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ ï¿½Ì¹ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ñ±ï¿½
+ï¿½ï¿½çµ¥ï¿½ï¿½ï¿½Í¸ï¿½ Stringï¿½ï¿½ ï¿½Æ´ï¿½ InfoDTOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½!
+ObjectInputStreamï¿½ï¿½ ObjectOutputStreamï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½!!
+
 
 
 */
