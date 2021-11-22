@@ -23,10 +23,15 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	// private String msg;
 	// private InfoDTO dto;
 	private String nickName;
-
+	private Thread t;
 	public ChatClientObject() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\Window Icon.png"));
-		setTitle("ä�ù�");
+		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
+		
+		/*자기 경로에 맞게 IconImage_path바꾸면될듯*/
+		
+		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\Window Icon.png"));
+				setIconImage(Toolkit.getDefaultToolkit().getImage(Image_Path+"\\Window Icon.png"));
+				setTitle("채팅방");
 
 		/*
 		 * frame = new JFrame(); frame.setBounds(100, 100, 500, 700);
@@ -49,12 +54,16 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		// ���Ϳ� TextArea�����
 		output = new JTextArea();
 		output.setBackground(new Color(255, 204, 204));
-		output.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
+		output.setFont(new Font("CookieRun Regular", Font.ITALIC, 15));
 		output.setForeground(new Color(50, 50, 50));
 		output.setEditable(false);
 		JScrollPane scroll = new JScrollPane(output);
 		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // �׻� ��ũ�ѹٰ� ���η� �����
+		
 		ImageIcon img2 = new ImageIcon("C:\\Users\\6843w\\OneDrive\\���� ȭ��\\�׸��ҽ�\\send buttton3.png");
+		
+	
+		
 		// �ϴܿ� ��ư�� TextArea�ֱ�
 		JPanel bottom = new JPanel();
 		bottom.setBackground(Color.WHITE);
@@ -65,7 +74,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		input.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
 		sendBtn = new JButton();
-		sendBtn.setIcon(new ImageIcon("C:\\Users\\6843w\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\\uADF8\uB9BC\uC18C\uC2A4\\send button6.png"));
+		sendBtn.setIcon(new ImageIcon(Image_Path+"\\send button6.png"));
 		sendBtn.setFont(new Font("LG Smart UI Light", Font.PLAIN, 12));
 		//sendBtn.setSize(60,35);
 		//sendBtn.setBackground(Color.yellow);
@@ -194,6 +203,16 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 						int pos=output.getText().length();
 						output.setCaretPosition(pos);
 					}
+					else if (dto.getCommand() == Info.NOTICE) {
+			            String blank = "";
+			            for(int i=0;i<(85-(dto.getMessage().length()*3.5))/2;i++) {
+			               blank+=" ";
+			            }
+			            output.append(blank + dto.getMessage() + "\n\n");
+
+			            int pos = output.getText().length();
+			            output.setCaretPosition(pos);
+			         }
 				}catch(IOException e){
 					e.printStackTrace();
 				}catch(ClassNotFoundException e){

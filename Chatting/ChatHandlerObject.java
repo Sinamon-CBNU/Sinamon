@@ -64,7 +64,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					sendDto.setMessage(nickName+"���� �����Ͽ���ϴ�.");                                  // gui ����� �ּ�
+					sendDto.setMessage(nickName+"님이 퇴장하였습니다.");                                  // gui ����� �ּ�
 					for(ChatHandlerObject handler: list){
 						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
 						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
@@ -77,7 +77,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					sendDto.setMessage(nickName+"���� �����Ͽ���ϴ�.");
+					sendDto.setMessage(nickName+"님이 입장하였습니다.");
 					for(ChatHandlerObject handler: list){
 						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
 						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
@@ -90,7 +90,6 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
 						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
 					}
-
 				}
 			}//while
 
