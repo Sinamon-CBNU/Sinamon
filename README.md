@@ -1,6 +1,7 @@
 # Sinamon
 
 
+
 branch에 대한 간단한 설명을 적어놓겠습니다.
 
 제가 배운 바로
@@ -53,6 +54,7 @@ develop branch로 꼭 이동한 후, 새로운 branch를 만들어야합니다.
 
 만약 새로운 branch에서 기능구현이 끝났다
 그러면 이제 새로운branch ->develop으로 merge하고, develop -> main으로 merge시키는 것입니다.
+
 
 
 
