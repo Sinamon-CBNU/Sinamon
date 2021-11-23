@@ -16,10 +16,10 @@ public class hello extends JFrame {
 		c.setLayout(null);
 		JButton btn1=new JButton("서버오픈");
 		JButton btn2=new JButton("채팅접속");
-		JButton btn3=new JButton("서버종료");
+		JButton btn3=new JButton("알림");
 		btn1.setBounds(250,250,100,100);
 		btn2.setBounds(100,100,100,100);
-		btn3.setBounds(400,400,50,50);
+		btn3.setBounds(400,400,100,100);
 		c.add(btn1);
 		c.add(btn2);
 		c.add(btn3);
@@ -29,13 +29,15 @@ public class hello extends JFrame {
 			}
 		});
 		btn2.addActionListener(new ActionListener() {	//반응
-			public void actionPerformed(ActionEvent e) {
-				new ChatClientObject().service();
+			public void actionPerformed(ActionEvent e) {	//버튼누른사람이 방장이 된다고 가정
+				ChatClientObject client=new ChatClientObject(false);
+				client.service();
 			}
 		});
-		btn2.addActionListener(new ActionListener() {	//반응
+		btn3.addActionListener(new ActionListener() {	//반응
 			public void actionPerformed(ActionEvent e) {
-				//serverThread.interrupted(true);
+				ChatClientObject client=new ChatClientObject(true);
+				client.service();
 			}
 		});
 		

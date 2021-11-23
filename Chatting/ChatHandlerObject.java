@@ -42,7 +42,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			while(true){
 				dto=(InfoDTO)reader.readObject();
 				nickName=dto.getNickName();
-				
+				int roomnumber=dto.getroomnumber();
+				System.out.println("방번호 출력:"+roomnumber);
 
 				//System.out.println("배열 크기:"+ar.length);
 				//사용자가 접속을 끊었을 경우. 프로그램을 끝내서는 안되고 남은 사용자들에게 퇴장메세지를 보내줘야 한다. 
@@ -65,10 +66,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
 					sendDto.setMessage(nickName+"님이 퇴장하였습니다.");                                  // gui ����� �ּ�
-					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
-						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
-					}
+					broadcast(sendDto);
 					break;
 				} else if(dto.getCommand()==Info.JOIN){
 					//��� ����ڿ��� �޼��� ������
@@ -78,18 +76,12 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
 					sendDto.setMessage(nickName+"님이 입장하였습니다.");
-					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
-						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
-					}
+					broadcast(sendDto);
 				} else if(dto.getCommand()==Info.SEND){
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.SEND);
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
-					for(ChatHandlerObject handler: list){
-						handler.writer.writeObject(sendDto); //�ڵ鷯 ���� writer�� ��� ������
-						handler.writer.flush();  //�ڵ鷯 ���� writer �� ����ֱ�
-					}
+					broadcast(sendDto);
 				}
 			}//while
 
@@ -101,6 +93,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	
 		
 	}
+	
+	
 
 	//다른 클라이언트에게 전체 메세지 보내주기
 	public void broadcast(InfoDTO sendDto) throws IOException {
@@ -108,6 +102,11 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
 		}
+	}
+	
+	
+	public ObjectInputStream getreader() {
+		return reader;
 	}
 }
 

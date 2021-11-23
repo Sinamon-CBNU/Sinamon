@@ -13,6 +13,8 @@ import java.io.*;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
 
+
+
 class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	private JTextArea output;
 	private JTextField input;
@@ -24,7 +26,9 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	// private InfoDTO dto;
 	private String nickName;
 	private Thread t;
-	public ChatClientObject() {
+	private boolean room_existence;
+	public ChatClientObject(boolean room_existence) {
+		this.room_existence=room_existence;
 		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		
 		/*자기 경로에 맞게 IconImage_path바꾸면될듯*/
@@ -116,6 +120,10 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 
 
 	public void service(){
+		
+		
+		
+		
 		//서버 IP 입력받기
 		//String serverIP = JOptionPane.showInputDialog(this, "서버IP를 입력하세요","서버IP",JOptionPane.INFORMATION_MESSAGE);
 		
@@ -126,7 +134,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		
 		/********************************/
 		
-		String serverIP="192.168.35.155";
+		String serverIP="172.30.1.44";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
@@ -149,6 +157,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			//에러 발생
 			reader= new ObjectInputStream(socket.getInputStream());
 			writer = new ObjectOutputStream(socket.getOutputStream());
+			
 			System.out.println("전송 준비 완료!"); 
 			
 		} catch(UnknownHostException e ){
@@ -162,8 +171,15 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		}
 		try{
 			//서버로 닉네임 보내기
-			
 			InfoDTO dto = new InfoDTO();
+			if(room_existence==false) {		//방이 생성되지 않았다면
+				dto.setroomexistence(false);	//InfoDTO의 방존재여부를 true
+				dto.setroomnumber();		//InfoDTO의 방의개수증가, 방 번호 할당해줌
+			}
+			else {		//알림버튼을 눌렀을때(이미 방이 존재할때)
+				dto.setroomexistence(true);
+				dto.setroomnumber();
+			}
 			dto.setCommand(Info.JOIN);
 			dto.setNickName(nickName);
 			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
@@ -173,7 +189,6 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		}
 		
 		//스레드 생성
-		
 		t = new Thread(this);
 		t.start();
 		input.addActionListener(this);
@@ -245,10 +260,14 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 				io.printStackTrace();
 			}
 	}
+	
+	public String getnickname() {
+		return nickName;
+	}
 
 	public static void main(String[] args) 
 	{
-		new ChatClientObject().service();
+		//new ChatClientObject().service();
 	}
 }
 //���� ä���� ���� �����带 �������־�� ��

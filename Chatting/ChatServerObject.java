@@ -4,6 +4,7 @@ package Chatting;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class ChatServerObject
 				serverSocket = new ServerSocket(9500);
 				System.out.println("서버 준비 완료");
 				list = new  ArrayList<ChatHandlerObject>();
-
+				
+				int i=0;
 				while(true) {
 					Socket socket = serverSocket.accept();
 					ChatHandlerObject handler = new  ChatHandlerObject(socket,list);  //스레드를 생성한 것이랑 동일함! 떄문에 시자해주어야 
