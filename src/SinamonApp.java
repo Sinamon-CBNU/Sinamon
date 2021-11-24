@@ -293,12 +293,11 @@ public class SinamonApp {
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//글 찾기!!!
 				//searchField 저장하기
-				/************************/
-				/************************/
-				/************************/
-				/************************/
+				/*
+				 * 글 찾기
+				 * 
+				 * */
 			}
 			
 		});
@@ -318,7 +317,6 @@ public class SinamonApp {
 				currPanel=mypagePanel;
 			}
 		});
-		
 		myBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
@@ -336,6 +334,7 @@ public class SinamonApp {
 		recBtn.setBorder(null);
 		necPanel.add(recBtn);
 		
+		/*글쓰기 버튼*/
 		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -348,6 +347,7 @@ public class SinamonApp {
 		writeBtn.setBorder(null);
 		necPanel.add(writeBtn);
 		
+		/*뒤로가기 버튼*/
 		JButton boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -487,9 +487,9 @@ public class SinamonApp {
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//글 찾기!!!
 				//searchField 저장하기
 				/*
+				 * 글 찾기
 				 * 
 				 * */
 			}

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class BoardVO {
 	int num;		//목차
-    String food;	//음식
+    String text;	//음식/생필품
     String name;	//닉네임
     String place;	//장소
     Date date;		//날짜
@@ -20,12 +20,12 @@ public class BoardVO {
         this.num = num;
     }
  
-    //음식
-    public String getFood() {
-        return food;
+    //음식 / 생필품
+    public String getText() {
+        return text;
     }
-    public void setFood(String Food) {
-        this.food = food;
+    public void setText(String text) {
+        this.text = text;
     }
  
     //닉네임
