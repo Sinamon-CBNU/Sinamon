@@ -1,7 +1,9 @@
-/*파일 이미지 경로 설정이 내 데탑의 경로로 되어있기 때문에 이 파일을 열고 싶으면 파일 경로 설정 다 바꿔야됨*/
-/*현재경료를 이용해서 ./이런식으로 하면 Design tool 사용이 안됨*/
+/* ## Read ##
+ * 1. 파일 이미지 경로 설정이 내 데탑의 경로로 되어있기 때문에 이 파일을 열고 싶으면 파일 경로 설정 다 바꿔야됨
+ * 		현재경료를 이용해서 [./]이런식으로 하면 Design tool 사용이 안됨
+ * 2. 게시글 쓰기와 게시글 수정은 x를 누르면 App이 닫힘 >> 일단 나가고 싶으면 뒤로가기 버튼을 눌러야됨
+ * 3. */
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -22,20 +24,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.SystemColor;
 
 public class SinamonApp {
 	
 	//check 임시 ID,PW
 	private final String ID="Hello";
 	private final String PASS="1234";
-	//ID PW
-	/************************/
-	/************************/
-	/************************/
-	/************************/
+	/*
+	 * ID PW 저장
+	 *  
+	 * */
 	
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
 	
@@ -43,6 +44,7 @@ public class SinamonApp {
 	private JTextField idField;
 	private JPasswordField pwField;
 	private JPanel currPanel;	//현재 패널
+	private JPanel bfPanel;	//전 before 패널
 	private JTextField joinIdField;
 	private JTextField joinNameField;
 	private JTextField joinPwField;
@@ -51,17 +53,21 @@ public class SinamonApp {
 	private JButton enrollBtn;
 	private JButton backBtn;
 	private JButton clickBtn;
+	private JButton recBtn;
+	private JButton searchBtn;
 	private JTable table;
 	private JTable history;
-	private JCheckBox centralChckbx_1;
-	private JCheckBox centralChckbx_2;
-	private JCheckBox westChckbx_3;
-	private JCheckBox bonChckbx_4;
-	private JCheckBox yangseongChckbx_5;
-	private JCheckBox yangjinChckbx_6;
+	private JCheckBox frontCkBox;
+	private JCheckBox centralCkBox;
+	private JCheckBox westCkBox;
+	private JCheckBox backCkBox;
+	private JCheckBox bonCkBox;
+	private JCheckBox yangseongCkBox;
+	private JCheckBox yangjinCkBox;
 	private JTextField searchField;
 	private JButton MPbackBtn;
-
+	private JCheckBox frontCkBx;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -91,18 +97,21 @@ public class SinamonApp {
 	private void initialize() {
 		//frame 설정
 		frame = new JFrame();
+		frame.setTitle("시나몬");
 		frame.setBounds(100, 100, 960, 540);
 		frame.setPreferredSize(new Dimension(960,540));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//화면을 닫으면 프로그램 종료
 		frame.setResizable(false); 		//크기 고정
 		
 		//상대경로로 하는 법 알아보는 중... 
-		//ImagePanel boardPanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(SinamonApp.class.getResource("/Image/board.png")));
+		//ImagePanel foodPanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(SinamonApp.class.getResource("/Image/board.png")));
 		
 		ImagePanel mypagePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\mypage.png").getImage());
 		frame.getContentPane().add(mypagePanel);
-		ImagePanel boardPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\board.png").getImage());
-		frame.getContentPane().add(boardPanel);
+		ImagePanel foodPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\board.png").getImage());
+		frame.getContentPane().add(foodPanel);
+		ImagePanel necPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\board.png").getImage());
+		frame.getContentPane().add(necPanel);
 		ImagePanel choicePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\choice.png").getImage());
 		frame.getContentPane().add(choicePanel);
 		ImagePanel joinPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\join.png").getImage());
@@ -114,13 +123,13 @@ public class SinamonApp {
 		mypagePanel.setBounds(0,0,960,540);	//패널 사이즈
 		mypagePanel.setLayout(null);
 		
-		String[] hHeader=new String[] {"번호","날짜","시간","음 식", "시나몬 현황"};
+		String[] hHeader=new String[] {"번호","날짜","시간","음식/생필품", "시나몬 현황"};
 		//예시
 		Object[][] hData=new Object[][] {
 			{"01","11/1","12:00","푸라닭","완료"},
 			{"02","11/3","17:00","엽떡","완료"},
 			{"03","11/4","21:00","곱창전골","완료"},
-			{"04","11/20","23:00","닭발","완료"},
+			{"04","11/20","23:00","휴지","완료"},
 			{"05","12/1","12:00","스시","예정"},
 		};
 		
@@ -148,8 +157,8 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				boardPanel.setVisible(true);
-				currPanel=boardPanel;
+				bfPanel.setVisible(true);
+				currPanel=bfPanel;
 			}
 		});
 		MPbackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
@@ -157,48 +166,52 @@ public class SinamonApp {
 		MPbackBtn.setBorder(null);
 		mypagePanel.add(MPbackBtn);
 		
-
-		/****************************boardPanel (게시판 패널)*****************************************/
+		/****************************necPanel (게시판 패널)*****************************************/
 		
-		boardPanel.setBounds(0, 0, 960, 540);
-		boardPanel.setLayout(null);
+		necPanel.setBounds(0, 0, 960, 540);
+		necPanel.setLayout(null);
 		/*게시판 table*/
-		String[] header=new String[] {"번호","장소","시간","음  식","작성자","채팅"};
+		String[] necHeader=new String[] {"번호","장소","시간","생 필 품","작성자","채팅"};
 		//예시
-		Object[][] data=new Object[][] {
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
-			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"}
-			
+		Object[][] necData=new Object[][] {
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"},
+			{"01","16시","서문","휴지 나눠요","초코왕자","채팅하기"}
 		};
-		DefaultTableModel mod=new DefaultTableModel(data,header) {
+		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// 수정 불가
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
 		};
-		table=new JTable(mod);
+		table=new JTable(necMod);
 		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
 	    colC.setBackground(new Color(255, 255, 208));
 	    table.getColumnModel().getColumn(5).setCellRenderer(colC);	//테이블 채팅-> 노란색
 	    //테이블 행 열 간격
-        table.getColumnModel().getColumn(0).setPreferredWidth(10);
-        table.getColumnModel().getColumn(1).setPreferredWidth(10);
-        table.getColumnModel().getColumn(2).setPreferredWidth(10);
-        table.getColumnModel().getColumn(4).setPreferredWidth(10);
-        table.getColumnModel().getColumn(5).setPreferredWidth(10);
+        table.getColumnModel().getColumn(0).setPreferredWidth(1);
+        table.getColumnModel().getColumn(1).setPreferredWidth(1);
+        table.getColumnModel().getColumn(2).setPreferredWidth(1);
+        table.getColumnModel().getColumn(4).setPreferredWidth(1);
+        table.getColumnModel().getColumn(5).setPreferredWidth(1);
 		table.setRowHeight(30);
 		table.setFont(new Font("Sanserif", Font.BOLD, 17));
 		table.setPreferredScrollableViewportSize(new Dimension(700,600));
 		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
         table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table 여러개 선택 불가
         /*수정하고 싶은 테이블을 클릭하면 게시글 수정창이 나타남*/
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -214,56 +227,56 @@ public class SinamonApp {
         });
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(243, 88, 687, 392);
-		boardPanel.add(scrollPane);
+		necPanel.add(scrollPane);
 		
-		JCheckBox frontChckbx = new JCheckBox("");
-		frontChckbx.setForeground(Color.WHITE);
-		frontChckbx.setBackground(Color.PINK);
-		frontChckbx.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		frontChckbx.setBounds(62, 175, 21, 21);
-		boardPanel.add(frontChckbx);
+		frontCkBox = new JCheckBox("");
+		frontCkBox.setForeground(Color.WHITE);
+		frontCkBox.setBackground(Color.PINK);
+		frontCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		frontCkBox.setBounds(62, 175, 21, 21);
+		necPanel.add(frontCkBox);
 		
-		centralChckbx_1 = new JCheckBox("");
-		centralChckbx_1.setForeground(Color.WHITE);
-		centralChckbx_1.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		centralChckbx_1.setBackground(Color.PINK);
-		centralChckbx_1.setBounds(133, 175, 21, 21);
-		boardPanel.add(centralChckbx_1);
+		centralCkBox = new JCheckBox("");
+		centralCkBox.setForeground(Color.WHITE);
+		centralCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		centralCkBox.setBackground(Color.PINK);
+		centralCkBox.setBounds(133, 175, 21, 21);
+		necPanel.add(centralCkBox);
 		
-		centralChckbx_2 = new JCheckBox("");
-		centralChckbx_2.setForeground(Color.WHITE);
-		centralChckbx_2.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		centralChckbx_2.setBackground(Color.PINK);
-		centralChckbx_2.setBounds(62, 382, 21, 21);
-		boardPanel.add(centralChckbx_2);
+		westCkBox = new JCheckBox("");
+		westCkBox.setForeground(Color.WHITE);
+		westCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		westCkBox.setBackground(Color.PINK);
+		westCkBox.setBounds(62, 382, 21, 21);
+		necPanel.add(westCkBox);
 		
-		westChckbx_3 = new JCheckBox("");
-		westChckbx_3.setForeground(Color.WHITE);
-		westChckbx_3.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		westChckbx_3.setBackground(Color.PINK);
-		westChckbx_3.setBounds(133, 382, 21, 21);
-		boardPanel.add(westChckbx_3);
+		backCkBox = new JCheckBox("");
+		backCkBox.setForeground(Color.WHITE);
+		backCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		backCkBox.setBackground(Color.PINK);
+		backCkBox.setBounds(133, 382, 21, 21);
+		necPanel.add(backCkBox);
 		
-		bonChckbx_4 = new JCheckBox("");
-		bonChckbx_4.setForeground(Color.WHITE);
-		bonChckbx_4.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		bonChckbx_4.setBackground(new Color(255, 245, 238));
-		bonChckbx_4.setBounds(133, 210, 21, 21);
-		boardPanel.add(bonChckbx_4);
+		bonCkBox = new JCheckBox("");
+		bonCkBox.setForeground(Color.WHITE);
+		bonCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		bonCkBox.setBackground(new Color(255, 245, 238));
+		bonCkBox.setBounds(133, 210, 21, 21);
+		necPanel.add(bonCkBox);
 		
-		yangseongChckbx_5 = new JCheckBox("");
-		yangseongChckbx_5.setForeground(Color.WHITE);
-		yangseongChckbx_5.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		yangseongChckbx_5.setBackground(new Color(255, 245, 238));
-		yangseongChckbx_5.setBounds(145, 254, 21, 21);
-		boardPanel.add(yangseongChckbx_5);
+		yangseongCkBox = new JCheckBox("");
+		yangseongCkBox.setForeground(Color.WHITE);
+		yangseongCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		yangseongCkBox.setBackground(new Color(255, 245, 238));
+		yangseongCkBox.setBounds(145, 254, 21, 21);
+		necPanel.add(yangseongCkBox);
 		
-		yangjinChckbx_6 = new JCheckBox("");
-		yangjinChckbx_6.setForeground(Color.WHITE);
-		yangjinChckbx_6.setFont(new Font("HY엽서M", Font.BOLD, 30));
-		yangjinChckbx_6.setBackground(new Color(255, 245, 238));
-		yangjinChckbx_6.setBounds(145, 298, 21, 21);
-		boardPanel.add(yangjinChckbx_6);
+		yangjinCkBox = new JCheckBox("");
+		yangjinCkBox.setForeground(Color.WHITE);
+		yangjinCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		yangjinCkBox.setBackground(new Color(255, 245, 238));
+		yangjinCkBox.setBounds(145, 298, 21, 21);
+		necPanel.add(yangjinCkBox);
 		
 		/*글 찾기 검색란*/
 		searchField = new JTextField("");
@@ -272,7 +285,7 @@ public class SinamonApp {
 		searchField.setFont(new Font("Dialog", Font.PLAIN, 15));
 		searchField.setBounds(686, 29, 149, 36);
 		searchField.setBorder(null);
-		boardPanel.add(searchField);
+		necPanel.add(searchField);
 		searchField.setColumns(10);
 		
 		/*글 찾기 버튼*/
@@ -292,13 +305,15 @@ public class SinamonApp {
 		searchBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\search_btn.PNG"));
 		searchBtn.setBounds(836, 25, 40, 41);
 		searchBtn.setBorder(null);
-		boardPanel.add(searchBtn);
+		necPanel.add(searchBtn);
 		
+		/*회원정보 버튼*/
 		JButton myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
+				bfPanel=currPanel;
 				mypagePanel.setVisible(true);
 				currPanel=mypagePanel;
 			}
@@ -307,8 +322,9 @@ public class SinamonApp {
 		myBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
-		boardPanel.add(myBtn);
+		necPanel.add(myBtn);
 		
+		/*장소추천 버튼*/
 		JButton recBtn = new JButton("");
 		recBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -316,9 +332,9 @@ public class SinamonApp {
 			}
 		});
 		recBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\rec_btn.png"));
-		recBtn.setBounds(54, 487, 105, 36);
+		recBtn.setBounds(55, 485, 102, 37);
 		recBtn.setBorder(null);
-		boardPanel.add(recBtn);
+		necPanel.add(recBtn);
 		
 		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
@@ -328,8 +344,215 @@ public class SinamonApp {
 			}
 		});
 		writeBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write_btn.PNG"));
-		writeBtn.setBounds(861, 487, 78, 35);
-		boardPanel.add(writeBtn);
+		writeBtn.setBounds(864, 488, 78, 35);
+		writeBtn.setBorder(null);
+		necPanel.add(writeBtn);
+		
+		JButton boardBackBtn = new JButton("");
+		boardBackBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currPanel.setVisible(false);
+				choicePanel.setVisible(true);
+				currPanel = choicePanel;
+			}
+		});
+		boardBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		boardBackBtn.setBounds(0, 3, 49, 45);
+		boardBackBtn.setBorder(null);
+		necPanel.add(boardBackBtn);
+		
+
+		/****************************foodPanel (게시판 패널)*****************************************/
+		
+		foodPanel.setBounds(0, 0, 960, 540);
+		foodPanel.setLayout(null);
+		/*게시판 table*/
+		String[] header=new String[] {"번호","장소","시간","음  식","작성자","채팅"};
+		//예시
+		Object[][] data=new Object[][] {
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"},
+			{"01","16시","서문","푸라닭 나눠먹어요","초코왕자","채팅하기"}
+			
+		};
+		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// 수정 불가
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
+		table=new JTable(foodMod);
+	    table.getColumnModel().getColumn(5).setCellRenderer(colC);	//테이블 채팅-> 노란색
+	    //테이블 행 열 간격
+        table.getColumnModel().getColumn(0).setPreferredWidth(1);
+        table.getColumnModel().getColumn(1).setPreferredWidth(1);
+        table.getColumnModel().getColumn(2).setPreferredWidth(1);
+        table.getColumnModel().getColumn(4).setPreferredWidth(1);
+        table.getColumnModel().getColumn(5).setPreferredWidth(1);
+		table.setRowHeight(30);
+		table.setFont(new Font("Sanserif", Font.BOLD, 17));
+		table.setPreferredScrollableViewportSize(new Dimension(700,600));
+		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
+        table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table 여러개 선택 불가
+        /*수정하고 싶은 테이블을 클릭하면 게시글 수정창이 나타남*/
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int rowNum = table.getSelectedRow();
+                //해당 게시글의 데이터를 value object에 담아서 수정창을 구성할 수 있도록
+                BoardVO vo = new BoardVO();
+                //해당 행의 게시글 데이터(list)를 넣고
+                //vo = list.get(rowNum);
+                //수정창 열림!
+                new BoardEdit();
+            }
+        });
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(243, 88, 687, 392);
+		foodPanel.add(scrollPane);
+		
+		frontCkBx = new JCheckBox("");
+		frontCkBx.setForeground(Color.WHITE);
+		frontCkBx.setBackground(Color.PINK);
+		frontCkBx.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		frontCkBx.setBounds(62, 175, 21, 21);
+		foodPanel.add(frontCkBx);
+		
+		centralCkBox = new JCheckBox("");
+		centralCkBox.setForeground(Color.WHITE);
+		centralCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		centralCkBox.setBackground(Color.PINK);
+		centralCkBox.setBounds(133, 175, 21, 21);
+		foodPanel.add(centralCkBox);
+		
+		westCkBox = new JCheckBox("");
+		westCkBox.setForeground(Color.WHITE);
+		westCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		westCkBox.setBackground(Color.PINK);
+		westCkBox.setBounds(62, 382, 21, 21);
+		foodPanel.add(westCkBox);
+		
+		backCkBox = new JCheckBox("");
+		backCkBox.setForeground(Color.WHITE);
+		backCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		backCkBox.setBackground(Color.PINK);
+		backCkBox.setBounds(133, 382, 21, 21);
+		foodPanel.add(backCkBox);
+		
+		bonCkBox = new JCheckBox("");
+		bonCkBox.setForeground(Color.WHITE);
+		bonCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		bonCkBox.setBackground(new Color(255, 245, 238));
+		bonCkBox.setBounds(133, 210, 21, 21);
+		foodPanel.add(bonCkBox);
+		
+		yangseongCkBox = new JCheckBox("");
+		yangseongCkBox.setForeground(Color.WHITE);
+		yangseongCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		yangseongCkBox.setBackground(new Color(255, 245, 238));
+		yangseongCkBox.setBounds(145, 254, 21, 21);
+		foodPanel.add(yangseongCkBox);
+		
+		yangjinCkBox = new JCheckBox("");
+		yangjinCkBox.setForeground(Color.WHITE);
+		yangjinCkBox.setFont(new Font("HY엽서M", Font.BOLD, 30));
+		yangjinCkBox.setBackground(new Color(255, 245, 238));
+		yangjinCkBox.setBounds(145, 298, 21, 21);
+		foodPanel.add(yangjinCkBox);
+		
+		/*글 찾기 검색란*/
+		searchField = new JTextField("");
+		searchField.setToolTipText("");
+		searchField.setForeground(Color.DARK_GRAY);
+		searchField.setFont(new Font("Dialog", Font.PLAIN, 15));
+		searchField.setBounds(686, 29, 149, 36);
+		searchField.setBorder(null);
+		foodPanel.add(searchField);
+		searchField.setColumns(10);
+		
+		/*글 찾기 버튼*/
+		searchBtn = new JButton("");
+		searchBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//글 찾기!!!
+				//searchField 저장하기
+				/*
+				 * 
+				 * */
+			}
+		});
+		searchBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\search_btn.PNG"));
+		searchBtn.setBounds(836, 25, 40, 41);
+		searchBtn.setBorder(null);
+		foodPanel.add(searchBtn);
+		
+		/*회원정보 버튼*/
+		myBtn = new JButton("");
+		myBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currPanel.setVisible(false);
+				bfPanel=currPanel;
+				mypagePanel.setVisible(true);
+				currPanel=mypagePanel;
+			}
+		});
+		myBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\my_btn.PNG"));
+		myBtn.setBounds(886, 20, 49, 48);
+		myBtn.setBorder(null);
+		foodPanel.add(myBtn);
+		
+		/*장소추천 버튼*/
+		recBtn = new JButton("");
+		recBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//장소추천 event
+			}
+		});
+		recBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\rec_btn.png"));
+		recBtn.setBounds(55, 485, 102, 37);
+		recBtn.setBorder(null);
+		foodPanel.add(recBtn);
+		
+		/*글쓰기 버튼*/
+		writeBtn = new JButton("");
+		writeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//글 작성 event
+				new BoardWrite();
+			}
+		});
+		writeBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write_btn.PNG"));
+		writeBtn.setBounds(864, 488, 78, 35);
+		writeBtn.setBorder(null);
+		foodPanel.add(writeBtn);
+		
+		/*뒤로가기 버튼*/
+		boardBackBtn = new JButton("");
+		boardBackBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currPanel.setVisible(false);
+				choicePanel.setVisible(true);
+				currPanel = choicePanel;
+			}
+		});
+		boardBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		boardBackBtn.setBounds(0, 3, 49, 45);
+		boardBackBtn.setBorder(null);
+		foodPanel.add(boardBackBtn);
 		
 		/****************************Choice panel (시나 음식 시나 생필품)*********************************************/
 		
@@ -341,8 +564,8 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				boardPanel.setVisible(true);
-				currPanel = boardPanel;
+				foodPanel.setVisible(true);
+				currPanel = foodPanel;
 			}	
 		});
 		foodBtn.setBounds(127, 154, 307, 309);
@@ -351,6 +574,14 @@ public class SinamonApp {
 		choicePanel.add(foodBtn);
 		
 		JButton necBtn = new JButton("");
+		necBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currPanel.setVisible(false);
+				necPanel.setVisible(true);
+				currPanel = necPanel;
+			}	
+		});
 		necBtn.setBounds(525, 154, 307, 309);
 		necBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\Ch_nec.PNG"));
 		necBtn.setBorder(null);
@@ -393,13 +624,6 @@ public class SinamonApp {
 		JComboBox comboBox = new JComboBox(place);
 		comboBox.setBounds(583, 225, 106, 27);
 		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 17));
-		
-		comboBox.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//사는 곳 정보 저장
-			}
-		});
 		joinPanel.add(comboBox);
 		
 		joinNickField = new JTextField();
@@ -415,10 +639,14 @@ public class SinamonApp {
 		enrollBtn.addActionListener(new ActionListener(){	
 
 			@Override
-			public void actionPerformed(ActionEvent e) {	//회원가입 데이터 저장
+			public void actionPerformed(ActionEvent e) {	//등록하기 버튼을 눌렀을 때의 동작
 				try {
-					/*****호성이가 저장해야돼에에ㅔ*********/
+					/*
+					 * 회원가입 데이터 저장하기
+					 *  
+					 * */
 					//getText()로 데이터 저장
+					//장소(ComboBox)-comboBox.getSelectedItem().toString()로 데이터 저장
 					
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null,"You Failed to Enroll");
@@ -457,7 +685,7 @@ public class SinamonApp {
 		frame.setPreferredSize(loginPanel.getDimension());
 		
 		idField = new JTextField();
-		idField.setBounds(183, 272, 199, 24);
+		idField.setBounds(183, 274, 198, 24);
 		idField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
 		loginPanel.add(idField);
 		idField.setColumns(10);
@@ -476,6 +704,10 @@ public class SinamonApp {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				/*
+				 * ID PW 비교
+				 *  
+				 * */
 				if(ID.equals(idField.getText()) && PASS.equals(pwField.getText())){
 					currPanel.setVisible(false);
 					choicePanel.setVisible(true);
@@ -505,10 +737,9 @@ public class SinamonApp {
 		joinBtn.setPressedIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\join_click_btn.PNG"));
 		loginPanel.add(joinBtn);
 		
-		
-		
 		joinPanel.setVisible(false);
-		boardPanel.setVisible(false);
+		necPanel.setVisible(false);
+		foodPanel.setVisible(false);
 		choicePanel.setVisible(false);
 		mypagePanel.setVisible(false);
 	}

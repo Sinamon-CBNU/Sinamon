@@ -1,6 +1,6 @@
 import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.Dimension;
+//import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,115 +10,95 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.Font;
+import java.awt.BorderLayout;
+import javax.swing.JComboBox;
 
-public class BoardEdit extends JFrame {
-	private JTextField food;	
-	private JTextField time;	
+public class BoardEdit {
+
+	private JFrame frame;
+	private JTextArea chFoodArea;	
+	private JTextField chTimeField;
+	private JComboBox chPlaceBox;
+	//final int num=vo.getNum(); 	//목차 변경 불가
+	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
 	
-	//public BoardEdit(BoardVO vo) {
-	public BoardEdit() { 
-		//final int num=vo.getNum(); 	//목차 변경 불가
-		final int num=01; 	//목차 변경 불가
-		
-		setBackground(new Color(249,140,150));
-		setBounds(100, 100, 450, 280);
-		//setBounds(new Rectangle(600, 0, 450, 280));
-        setTitle("게시글 수정");
-        getContentPane().setLayout(null);
-        
-        //음식
-        JLabel timeLabel = new JLabel("시간");
-        timeLabel.setBounds(12, 25, 57, 15);
-        getContentPane().add(timeLabel);
- 
-        //time = new JTextField(vo.gettime());
-        time = new JTextField();
-        time.setBounds(81, 22, 340, 21);
-        getContentPane().add(time);
-        time.setColumns(10);
- 
-        
-        JLabel lblNewLabel_1 = new JLabel("음 식");
-        lblNewLabel_1.setBounds(12, 59, 57, 15);
-        getContentPane().add(lblNewLabel_1);
- 
-        //JTextArea textArea = new JTextArea(vo.getFood());
-        JTextArea food = new JTextArea();
-        food.setLineWrap(true);
-        food.setRows(5);
-        food.setBounds(81, 53, 340, 69);
-        getContentPane().add(food);
- 
-        JLabel lblNewLabel_2 = new JLabel("작성자");
-        lblNewLabel_2.setBounds(12, 140, 57, 15);
-        getContentPane().add(lblNewLabel_2);
- 
-        //name = new JTextField(vo.getName());
-        JLabel name = new JLabel("닉네임");
-        name.setBounds(81, 137, 116, 21);
-        getContentPane().add(name);
-        
- 
-        JButton btnWrite = new JButton("글수정");
-        //btnWrite.setIcon(new ImageIcon();
-        btnWrite.setBounds(81, 180, 97, 23);
-        btnWrite.addActionListener(new ActionListener() {
- 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //DB 객체 생성
-                //BoardVO vo = new BoardVO();	//value object 객체 생성
- 
-                String changefood = food.getText();
-                String changeTime = time.getText();
-               
-                /*vo.setNum(num);
-                vo.setfood(food.getText());
-                vo.setContent(textArea.getText());
-                vo.setName(name.getText());
- 
-                DB에.update(vo);*/
- 
-                setVisible(false);
- 
-            }
-        });
-        getContentPane().add(btnWrite);
- 
-        JButton btnDel = new JButton("글삭제");
-        //btnDel.setIcon(new ImageIcon());
-        btnDel.setBounds(190, 180, 97, 23);
-        btnDel.addActionListener(new ActionListener() {
- 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	//DB 객체 생성
-                //BoardVO vo = new BoardVO();	//value object 객체 생성
- 
-                /*vo.setNum(num);	//목차 삭제
- 
-                DB에.delete(vo);*/
- 
-                setVisible(false);
-            }
-        });
-        getContentPane().add(btnDel);
- 
-        JButton btnClose = new JButton("닫기");
-        //btnClose.setIcon(new ImageIcon());
-        btnClose.setBounds(299, 180, 97, 23);
-        btnClose.addActionListener(new ActionListener() {
- 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-        getContentPane().add(btnClose);
- 
-        setVisible(true);
+	/**
+	 * Create the application.
+	 */
+	public BoardEdit() {
+		initialize();
 	}
-	//UI Check
-	 //public static void main(String[] args) { new BoardEdit(); }
-}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setTitle("게시글 수정");
+		frame.getContentPane().setBackground(Color.PINK);
+		frame.setBounds(100, 100, 460, 340);
+		frame.setPreferredSize(new Dimension(450,300));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ImagePanel editPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit.png").getImage());
+		frame.getContentPane().add(editPanel);
+		editPanel.setLayout(null);
+		
+		chTimeField = new JTextField();
+		chTimeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		chTimeField.setBounds(87, 121, 320, 24);
+		chTimeField.setBorder(null);
+		editPanel.add(chTimeField);
+		chTimeField.setColumns(10);
+		
+		chPlaceBox = new JComboBox(place);
+		chPlaceBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		chPlaceBox.setBounds(87, 80, 320, 23);
+		editPanel.add(chPlaceBox);
+		
+		chFoodArea = new JTextArea();
+		chFoodArea.setBounds(87, 164, 320, 69);
+		editPanel.add(chFoodArea);
+		
+		JButton editBtn = new JButton("");
+		editBtn.addActionListener(new ActionListener() {
+			 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	/***수정 구현하기!!!***/
+                frame.setVisible(false);
+            }
+        });
+		editBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit_btn.PNG"));
+		editBtn.setBounds(257, 253, 80, 24);
+		editPanel.add(editBtn);
+		
+		JButton deleteBtn = new JButton("");
+		deleteBtn.addActionListener(new ActionListener() {
+			 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	/***삭제 구현하기!!!***/
+                frame.setVisible(false);
+            }
+        });
+		deleteBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\delete_btn.PNG"));
+		deleteBtn.setBounds(337, 253, 80, 24);
+		editPanel.add(deleteBtn);
+	
+		JButton chBackBtn = new JButton("");
+		chBackBtn.addActionListener(new ActionListener() { 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+            }
+        });
+		chBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		chBackBtn.setBounds(4, 5, 20, 23);
+		chBackBtn.setBorder(null);
+		editPanel.add(chBackBtn);
+ 
+        frame.setVisible(true);
+	}
+}
