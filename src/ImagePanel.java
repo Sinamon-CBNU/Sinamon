@@ -10,7 +10,7 @@ public class ImagePanel extends JPanel{
 		this.img=img;
 		setSize(new Dimension(img.getWidth(null),img.getHeight(null)));
 		setPreferredSize(new Dimension(img.getWidth(null),img.getHeight(null)));
-		setLayout(null);	//wnddkd 배치
+		setLayout(null);	//중앙 배치
 	}
 	
 	//randering
@@ -20,6 +20,6 @@ public class ImagePanel extends JPanel{
 	
 	//get 가로,세로 길이
 	public Dimension getDimension(){
-		return new Dimension(img.getWidth(null),img.getHeight(null)+47);
+		return new Dimension(img.getWidth(null)+16,img.getHeight(null)+39);
 	}
 }
