@@ -34,7 +34,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 		this.userlist=userlist;
 		writer = new ObjectOutputStream(socket.getOutputStream());
 		reader = new ObjectInputStream(socket.getInputStream());
-		System.out.println("handler check!");
+		
 		//순서가 뒤바뀌면 값을 입력받지 못하는 상황이 벌어지기 때문에 반드시 writer부터 생성시켜주어야 함!!!!!!
 
 		
@@ -44,11 +44,11 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 		String nickName;
 		try{
 			while(true){
-				System.out.println("checkpoint14");
+				
 				dto=(InfoDTO)reader.readObject();
 				nickName=dto.getNickName();
 				int roomnumber=dto.getroomnumber();
-				System.out.println("받은 룸넘버"+roomnumber);
+				
 				
 				//if(userlist.size()==2) {
 					//System.out.println("제발돼라!!");
@@ -78,7 +78,6 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					broadcast(sendDto);
 					break;
 				} else if(dto.getCommand()==Info.JOIN){
-					System.out.println("여기오십니까");
 					//��� ����ڿ��� �޼��� ������
 					//nickName = dto.getNickName();
 					//��� Ŭ���̾�Ʈ���� ���� �޼��� ������ ��
@@ -86,15 +85,15 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
 					sendDto.setMessage(nickName+"님이 입장하였습니다.");
-					//sendDto.sethandlerroomnumber(dto.getroomnumber());
+					
+					sendDto.sethandlerroomnumber(dto.getroomnumber());
 					broadcast(sendDto);
 				} else if(dto.getCommand()==Info.SEND){
+					System.out.println("내가속한 룸:"+roomid);
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.SEND);
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
-					System.out.println("dto의 정보:"+dto.getroomnumber());
-					System.out.println("senddto의 정보: "+sendDto.getroomnumber());
-					//sendDto.sethandlerroomnumber(dto.getroomnumber());
+					sendDto.sethandlerroomnumber(dto.getroomnumber());
 					broadcast(sendDto);
 				}
 			}//while
@@ -111,38 +110,30 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	
 
 	//다른 클라이언트에게 전체 메세지 보내주기
-	/*public void broadcast(InfoDTO sendDto) throws IOException {
-		System.out.println("흐름파악");
-		//Room eachroom=RoomManager.getroom(roomid);
-		System.out.println("마지막확인"+sendDto.getroomnumber());
-		Room eachroom2=RoomManager.getroom(sendDto.getroomnumber());
-		System.out.println("eachroom2의 룸정보는?!"+sendDto.getroomnumber());
-		for(ChatHandlerObject handler : eachroom2.getuser()) {
-			System.out.println("입장하셨습니다");
+	public void broadcast(InfoDTO sendDto) throws IOException {
+		
+		Room eachroom=RoomManager.getroom(roomid);
+		
+		for(ChatHandlerObject handler : eachroom.getuser()) {
+			
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
 		}
-	}*/
+	}
 	
-	public void broadcast(InfoDTO sendDto) throws IOException {
+	
+	/*public void broadcast(InfoDTO sendDto) throws IOException {
 		
 		if(userlist==null) {
 			System.out.println("userlist는 null입니다");
 		}
 		
-		/*for(ChatHandlerObject handler : userlist) {
-			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
-			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
-		}*/
-		//Room room1;
-		//int roomid=sendDto.getroomnumber();
-		//room1=RoomManager.getroom(roomid);
 		
 		for(ChatHandlerObject handler : userlist) {
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
 		}
-	}
+	}*/
 	
 }
 

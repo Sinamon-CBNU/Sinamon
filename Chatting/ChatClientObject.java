@@ -195,7 +195,6 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
 			writer.flush();
 			setTitle("채팅방"+dto.getroomnumber());
-			System.out.println("checkpoint4");
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -213,9 +212,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			InfoDTO dto= null;
 			while(true){
 				try{
-					System.out.println("checkpoint5");
 					dto = (InfoDTO) reader.readObject();
-					System.out.println("checkpoint6");
 					if(dto.getCommand()==Info.EXIT){  //서버로부터 내 자신의 exit를 받으면 종료됨
 						
 						/***************************************************
@@ -233,10 +230,10 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 						output.append(dto.getMessage()+"\n");
 						int pos=output.getText().length();
 						output.setCaretPosition(pos);
-						System.out.println("객체란그런것인가?");
+						
 					}
 					else if (dto.getCommand() == Info.NOTICE) {
-						System.out.println("넙니까");
+						
 			            String blank = "";
 			            for(int i=0;i<(85-(dto.getMessage().length()*3.5))/2;i++) {
 			               blank+=" ";
@@ -257,7 +254,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	@Override
 	public void actionPerformed(ActionEvent e){
 			try{
-				System.out.println("혹시여깁니까");
+				
 				//서버로 보냄 
 				//JTextField값을 서버로보내기
 				//버퍼 비우기
