@@ -22,12 +22,15 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	private Socket socket;
 	private ObjectInputStream reader = null;
 	private ObjectOutputStream writer = null;
+	private BufferedReader br;
+	private PrintWriter pw;
 	// private String msg;
 	// private InfoDTO dto;
 	private String nickName;
 	private Thread t;
 	private boolean room_existence;
 	public ChatClientObject(boolean room_existence) {
+		System.out.println("client object check1");
 		this.room_existence=room_existence;
 		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		
@@ -116,6 +119,8 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 				}
 			}
 		});
+		
+		
 	}
 
 
@@ -152,14 +157,11 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		if(nickName == null || nickName.length()==0){
 			nickName="guest";
 		}
-		try{
+		try{	//서버에 소켓 보내줌
 			socket = new Socket(serverIP,9500);
 			//에러 발생
 			reader= new ObjectInputStream(socket.getInputStream());
 			writer = new ObjectOutputStream(socket.getOutputStream());
-			
-			System.out.println("전송 준비 완료!"); 
-			
 		} catch(UnknownHostException e ){
 			System.out.println("서버를 찾을 수 없습니다.");
 			e.printStackTrace();
@@ -172,18 +174,28 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		try{
 			//서버로 닉네임 보내기
 			InfoDTO dto = new InfoDTO();
+	
+			
 			if(room_existence==false) {		//방이 생성되지 않았다면
 				dto.setroomexistence(false);	//InfoDTO의 방존재여부를 true
 				dto.setroomnumber();		//InfoDTO의 방의개수증가, 방 번호 할당해줌
+				//writer.writeObject(dto);
+				//writer.flush();
 			}
 			else {		//알림버튼을 눌렀을때(이미 방이 존재할때)
 				dto.setroomexistence(true);
 				dto.setroomnumber();
 			}
 			dto.setCommand(Info.JOIN);
+			//dto.setCommand(Info.NOTICE);
 			dto.setNickName(nickName);
+			
+			//System.out.println("dto의 정보:"+dto.getroomnumber());
+			//System.out.println("senddto의 정보: "+sendDto.getroomnumber());
 			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
 			writer.flush();
+			setTitle("채팅방"+dto.getroomnumber());
+			System.out.println("checkpoint4");
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -201,7 +213,9 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			InfoDTO dto= null;
 			while(true){
 				try{
+					System.out.println("checkpoint5");
 					dto = (InfoDTO) reader.readObject();
+					System.out.println("checkpoint6");
 					if(dto.getCommand()==Info.EXIT){  //서버로부터 내 자신의 exit를 받으면 종료됨
 						
 						/***************************************************
@@ -211,14 +225,18 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 						reader.close();
 						writer.close();
 						socket.close();
+						//pw.close();
+						//br.close();
 						//System.exit(0);	//프로그램전체종료 주석처리
 						break;			//한개의 프로그램만 종료되도록 수정
 					} else if(dto.getCommand()==Info.SEND){
 						output.append(dto.getMessage()+"\n");
 						int pos=output.getText().length();
 						output.setCaretPosition(pos);
+						System.out.println("객체란그런것인가?");
 					}
 					else if (dto.getCommand() == Info.NOTICE) {
+						System.out.println("넙니까");
 			            String blank = "";
 			            for(int i=0;i<(85-(dto.getMessage().length()*3.5))/2;i++) {
 			               blank+=" ";
@@ -239,6 +257,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	@Override
 	public void actionPerformed(ActionEvent e){
 			try{
+				System.out.println("혹시여깁니까");
 				//서버로 보냄 
 				//JTextField값을 서버로보내기
 				//버퍼 비우기
@@ -261,13 +280,9 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			}
 	}
 	
-	public String getnickname() {
-		return nickName;
-	}
-
 	public static void main(String[] args) 
 	{
-		//new ChatClientObject().service();
+		new ChatClientObject(true).service();
 	}
 }
 //���� ä���� ���� �����带 �������־�� ��
