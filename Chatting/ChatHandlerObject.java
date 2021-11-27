@@ -84,7 +84,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					sendDto.setMessage(nickName+"님이 입장하였습니다.");
+					boolean a=ClickOption.getchattingclicked();
+					sendDto.setMessage(nickName+"님이 입장하였습니다."+a);
 					
 					sendDto.sethandlerroomnumber(dto.getroomnumber());
 					broadcast(sendDto);
@@ -93,7 +94,6 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.SEND);
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
-					sendDto.sethandlerroomnumber(dto.getroomnumber());
 					broadcast(sendDto);
 				}
 			}//while

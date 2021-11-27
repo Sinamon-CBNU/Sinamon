@@ -19,7 +19,8 @@ class InfoDTO implements Serializable{
 	private boolean room_existence; //방번호 존재 여부
 	private Info command;	
 	private Room room;
-	
+	private boolean chatclick=false;
+	private boolean noticeclick=false;
 	
 	
 	//private who whossend = who.me;
@@ -40,6 +41,12 @@ class InfoDTO implements Serializable{
 	}
 	public List<ChatHandlerObject> getuserlist(){
 		return room.getuser();
+	}
+	public boolean getchatclick() {
+		return chatclick;
+	}
+	public boolean getnoticeclick() {
+		return noticeclick;
 	}
 	
 	
@@ -91,6 +98,13 @@ class InfoDTO implements Serializable{
 
 	public void setMessage(String message){
 		this.message= message; 
+	}
+	
+	public void setchatclick() {
+		chatclick=true;
+	}
+	public void setnoticeclick() {
+		noticeclick=true;
 	}
 }
 /*

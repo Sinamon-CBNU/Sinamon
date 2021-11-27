@@ -1,6 +1,7 @@
 package Chatting;
 
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,8 +29,9 @@ public class ChatServerObject
 	private Room room;
 	private int roomid;
 	private int userlistsize=0;
+	private boolean chattingclicked;		//채팅클릭인지 알림클릭인지 구별해줌
 	public ChatServerObject() {
-	
+		
 		//BufferedReader br=null;
 		//PrintWriter pw=null;
 
@@ -44,6 +46,9 @@ public class ChatServerObject
 				
 				while(true) {
 					
+					
+					chattingclicked=ClickOption.getchattingclicked();
+					System.out.println("아잌"+chattingclicked);
 					if(userlistsize==2) {		//두명이 다들어왔으면 (지금은 3명접속받은상태)
 						//room.deleteuser();					// 방에있는 인원 제거(이미 이 방의 정보는 
 						room=new Room();	//room 새로 할당
@@ -57,13 +62,19 @@ public class ChatServerObject
 						System.out.println("!"+roomid);
 						room.setroomid(roomid);
 					}
+					 //chattingclicked=ClickOption.chattingclicked;
+					// System.out.println("어이"+chattingclicked);
 					
-			
 					Socket socket = serverSocket.accept();
-					//ChatHandlerObject handler = new  ChatHandlerObject(socket,room);
+					
+					System.out.println(RoomManager.getroomid());
+					
+					//ClickOption.setchattingclicked();
+					 System.out.println("아잌"+chattingclicked);
 					ChatHandlerObject handler = new  ChatHandlerObject(socket,userlist,room);
+					//ChatHandlerObject handler = new  ChatHandlerObject(socket,userlist,roomlist.get(방번호));
 					
-					
+					//여기서 추가해주고
 					
 					handler.start();  //스레드 시작- 스레드 실행
 					userlist.add(handler);
@@ -72,62 +83,7 @@ public class ChatServerObject
 					userlistsize=RoomManager.eachroomusersize();
 					
 					
-					/*if(room.getuser().size()==2) {		//2명되면 
-						RoomManager.setroom(room);		//방을 roommanager에 추가해줌
-						roomid=RoomManager.getroomcount();  //현재 방번호 roommanager에서 받아서 roomidset해줌
-						room.setroomid(roomid);	// roomidset해줌
-						room.deleteuser();             //전달해주고 room 비워줌
-					}*/
-					 
-					/* if(room.getuser().size()==2) {		//두명이 다들어왔으면 (지금은 3명접속받은상태)
-						room.deleteuser();					// 방에있는 인원 제거(이미 이 방의 정보는 
-						userlistsize=room.getuserlistsize();//ChatHandlerObject로 전달해주었다)
-					}
-					 
 					
-					else if(userlistsize==0) {	//아무도없을때 한명이 방을들어오면 방을 생성해준다
-						RoomManager.setroom(room);
-						roomid=RoomManager.getroomid();
-						System.out.println("서버에용roomid="+roomid);
-						System.out.println("roomlist의 길이="+RoomManager.getroomlistsize());
-						room.setroomid(roomid);
-					}
-				*/
-					 
-					
-					
-					//br = new BufferedReader(
-					       // new InputStreamReader(socket.getInputStream()));
-					//pw = new PrintWriter(socket.getOutputStream());
-					
-					//writer = new ObjectOutputStream(socket.getOutputStream());
-				
-					//reader = new ObjectInputStream(socket.getInputStream());
-					
-					/*try{
-						dto = (InfoDTO) reader.readObject();
-					} catch(IOException e){
-						e.printStackTrace();
-					}catch(ClassNotFoundException e){
-						e.printStackTrace();
-					}	*/
-					//System.out.println(dto.getroomnumber());
-					
-					//System.out.println(br.readLine());
-					
-					
-					
-				
-				/*
-					System.out.println("checkpoint11");
-					handler.start();  //스레드 시작- 스레드 실행
-					System.out.println("checkpoint12");
-					userlist.add(handler);
-					room.setuser(handler);	//room에다가 user추가해줌
-					userlistsize=room.getuserlistsize();
-					 System.out.println("userlist의 사이즈(2):"+room.getuserlistsize());
-					System.out.println("checkpoint13");
-					*/
 					
 				}	
 			}
@@ -143,6 +99,7 @@ public class ChatServerObject
 	public static void main(String[] args) 
 	{
 		new ChatServerObject();
+		
 	}
 
 }

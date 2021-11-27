@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 
 class ChatClientObject extends JFrame implements ActionListener, Runnable {
+	
+	
 	private JTextArea output;
 	private JTextField input;
 	private JButton sendBtn;
@@ -30,6 +32,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	private Thread t;
 	private boolean room_existence;
 	public ChatClientObject(boolean room_existence) {
+		
 		System.out.println("client object check1");
 		this.room_existence=room_existence;
 		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
@@ -61,7 +64,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		// ���Ϳ� TextArea�����
 		output = new JTextArea();
 		output.setBackground(new Color(255, 204, 204));
-		output.setFont(new Font("CookieRun Regular", Font.ITALIC, 15));
+		output.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
 		output.setForeground(new Color(50, 50, 50));
 		output.setEditable(false);
 		JScrollPane scroll = new JScrollPane(output);
@@ -127,7 +130,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	public void service(){
 		
 		
-		
+		ClickOption.setchattingclicked();
 		
 		//서버 IP 입력받기
 		//String serverIP = JOptionPane.showInputDialog(this, "서버IP를 입력하세요","서버IP",JOptionPane.INFORMATION_MESSAGE);
@@ -139,7 +142,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		
 		/********************************/
 		
-		String serverIP="172.30.1.44";
+		String serverIP="192.168.136.108";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
@@ -158,6 +161,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			nickName="guest";
 		}
 		try{	//서버에 소켓 보내줌
+			
 			socket = new Socket(serverIP,9500);
 			//에러 발생
 			reader= new ObjectInputStream(socket.getInputStream());
@@ -179,12 +183,15 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			if(room_existence==false) {		//방이 생성되지 않았다면
 				dto.setroomexistence(false);	//InfoDTO의 방존재여부를 true
 				dto.setroomnumber();		//InfoDTO의 방의개수증가, 방 번호 할당해줌
+				dto.setchatclick();
+				
 				//writer.writeObject(dto);
 				//writer.flush();
 			}
 			else {		//알림버튼을 눌렀을때(이미 방이 존재할때)
 				dto.setroomexistence(true);
 				dto.setroomnumber();
+				dto.setnoticeclick();
 			}
 			dto.setCommand(Info.JOIN);
 			//dto.setCommand(Info.NOTICE);

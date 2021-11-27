@@ -30,6 +30,12 @@ public class hello extends JFrame {
 		});
 		btn2.addActionListener(new ActionListener() {	//반응
 			public void actionPerformed(ActionEvent e) {	//버튼누른사람이 방장이 된다고 가정
+				//ClickOption.setchattingclicked();
+				//boolean a=ClickOption.getchattingclicked();
+				//System.out.println(a);
+				//RoomManager.setroomid();
+				//System.out.println(RoomManager.getroomid());
+				ClickOption.setchattingclicked();
 				ChatClientObject client=new ChatClientObject(false);
 				client.service();
 			}

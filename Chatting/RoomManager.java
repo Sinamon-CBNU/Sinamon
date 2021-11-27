@@ -19,6 +19,10 @@ public class RoomManager {
 		eachroom.setuser(handler);		//방의 userlist에 handler를 추가해준다
 	}
 	
+	public static void setroomid() {
+		roomid=9999;
+	}
+	
 	public static void setroom(Room room) {
 		roomlist.add(room);		//room추가해준 후
 		roomcount++;		//roomcount 증가
