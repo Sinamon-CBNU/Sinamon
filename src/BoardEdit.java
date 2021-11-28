@@ -1,18 +1,16 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 //import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import java.awt.Font;
-import java.awt.BorderLayout;
-import javax.swing.JComboBox;
 
 public class BoardEdit {
 
@@ -58,6 +56,7 @@ public class BoardEdit {
 		editPanel.add(chPlaceBox);
 		
 		chFoodArea = new JTextArea();
+		chFoodArea.setLineWrap(true);
 		chFoodArea.setBounds(87, 164, 320, 69);
 		editPanel.add(chFoodArea);
 		

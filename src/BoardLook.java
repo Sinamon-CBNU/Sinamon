@@ -1,5 +1,4 @@
-//package sinamon_project;
-
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class BoardWrite {
+public class BoardLook {
 
 	private JFrame frame;
 	private JTextArea titleArea;	
@@ -22,7 +21,7 @@ public class BoardWrite {
 	/**
 	 * Create the application.
 	 */
-	public BoardWrite(String board_name, Object[] curr_user) {
+	public BoardLook(String board_name, Object[] curr_user) {
 		initialize(board_name, curr_user);
 	}
 
@@ -36,28 +35,24 @@ public class BoardWrite {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\write.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
-		timeField = new JTextField();						//나누는 시간
+		timeField = new JTextField();						//������ �ð�
 		timeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		timeField.setBounds(87, 121, 320, 24);
 		timeField.setBorder(null);
 		writePanel.add(timeField);
 		timeField.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox(place);			//장소
+		JComboBox comboBox = new JComboBox(place);			//��� 
 		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		comboBox.setBounds(87, 80, 320, 23);
 		writePanel.add(comboBox);
 		
-		JTextArea titleArea = new JTextArea();				//제목
+		JTextArea titleArea = new JTextArea();
 		titleArea.setLineWrap(true);
-		/*
-		 * 폰트 추가!!
-		 * */
-		titleArea.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		titleArea.setBounds(87, 164, 320, 69);
 		writePanel.add(titleArea);
 		
@@ -68,9 +63,9 @@ public class BoardWrite {
             	String timeString = "'" + timeField.getText() + "'";
             	String placeString = "'" + comboBox.getSelectedItem().toString() + "'";
             	String titleString = "'" + titleArea.getText() + "'";
-            	String nicknameString = "'" + curr_user[2] + "'";		//닉네임
+            	String nicknameString = "'" + curr_user[2] + "'";		//�г���
             	int home_id = 0;
-            	//정문1 중문2 후문3 서문4 양성재5 양진재6 본관7
+            	//����1 �߹�2 �Ĺ�3 ����4 �缺��5 ������6 ����7
             	switch (placeString) {
             	case "'정 문'": {
 					home_id = 1;
@@ -114,7 +109,7 @@ public class BoardWrite {
             	}
             }
         });
-		enrollBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\cmp_btn.PNG"));
+		enrollBtn.setIcon(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\cmp_btn.PNG"));
 		enrollBtn.setBounds(337, 253, 78, 24);
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
@@ -126,14 +121,11 @@ public class BoardWrite {
                 frame.setVisible(false);
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		backSBtn.setIcon(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\back_s_btn.PNG"));
 		backSBtn.setBounds(4, 5, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);
-	
-		
- 
+
         frame.setVisible(true);
 	}
-
 }
