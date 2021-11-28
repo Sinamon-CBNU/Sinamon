@@ -17,7 +17,7 @@ public class BoardLook {
 	private JTextField timeField;
 	private JComboBox placeBox;
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
-	
+	private String imagepath;
 	/**
 	 * Create the application.
 	 */
@@ -29,13 +29,14 @@ public class BoardLook {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(String board_name, Object[] curr_user) {
+		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		frame = new JFrame();
 		frame.setTitle("게시글 쓰기");
 		frame.setBounds(100, 100, 460, 340);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\write.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(imagepath+"\\write.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
@@ -109,7 +110,7 @@ public class BoardLook {
             	}
             }
         });
-		enrollBtn.setIcon(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\cmp_btn.PNG"));
+		enrollBtn.setIcon(new ImageIcon(imagepath+"\\cmp_btn.PNG"));
 		enrollBtn.setBounds(337, 253, 78, 24);
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
@@ -121,7 +122,7 @@ public class BoardLook {
                 frame.setVisible(false);
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon_DB\\Image\\back_s_btn.PNG"));
+		backSBtn.setIcon(new ImageIcon(imagepath+"\\back_s_btn.PNG"));
 		backSBtn.setBounds(4, 5, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);

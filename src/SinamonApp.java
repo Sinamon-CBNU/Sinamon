@@ -1,7 +1,7 @@
 /* ## Read ##
- * 1. ÆÄÀÏ ÀÌ¹ÌÁö °æ·Î ¼³Á¤ÀÌ ³» µ¥Å¾ÀÇ °æ·Î·Î µÇ¾îÀÖ±â ¶§¹®¿¡ ÀÌ ÆÄÀÏÀ» ¿­°í ½ÍÀ¸¸é ÆÄÀÏ °æ·Î ¼³Á¤ ´Ù ¹Ù²ã¾ßµÊ
- * 		ÇöÀç°æ·á¸¦ ÀÌ¿ëÇØ¼­ [./]ÀÌ·±½ÄÀ¸·Î ÇÏ¸é Design tool »ç¿ëÀÌ ¾ÈµÊ
- * 2. °Ô½Ã±Û ¾²±â¿Í °Ô½Ã±Û ¼öÁ¤Àº x¸¦ ´©¸£¸é AppÀÌ ´ÝÈû >> ÀÏ´Ü ³ª°¡°í ½ÍÀ¸¸é µÚ·Î°¡±â ¹öÆ°À» ´­·¯¾ßµÊ
+ * 1. ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å¾ï¿½ï¿½ ï¿½ï¿½Î·ï¿½ ï¿½Ç¾ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù²ï¿½ßµï¿½
+ * 		ï¿½ï¿½ï¿½ï¿½ï¿½á¸¦ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ [./]ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ Design tool ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½
+ * 2. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Appï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ >> ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½
  * 3. */
 
 import java.awt.Color;
@@ -32,24 +32,24 @@ import javax.swing.table.TableModel;
 
 public class SinamonApp {
 	
-	//check ÀÓ½Ã ID,PW
+	//check ï¿½Ó½ï¿½ ID,PW
 	private final String ID="Hello";
 	private final String PASS="1234";
 	String food_board;
 	String nec_board;
 	Object[] curr_user;
 	/*
-	 * ID PW ÀúÀå
+	 * ID PW ï¿½ï¿½ï¿½ï¿½
 	 *  
 	 * */
 	
-	private final String place[]= {"Á¤ ¹®", "Áß ¹®","¼­ ¹®","ÈÄ ¹®","º» °ü","¾ç ¼º Àç","¾ç Áø Àç"};
+	private final String place[]= {"ï¿½ï¿½ ï¿½ï¿½", "ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½"};
 	
 	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
-	private JPanel currPanel;	//ÇöÀç ÆÐ³Î
-	private JPanel bfPanel;	//Àü before ÆÐ³Î
+	private JPanel currPanel;	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+	private JPanel bfPanel;	//ï¿½ï¿½ before ï¿½Ð³ï¿½
 	private JTextField joinIdField;
 	private JTextField joinNameField;
 	private JTextField joinPwField;
@@ -72,7 +72,7 @@ public class SinamonApp {
 	private JTextField searchField;
 	private JButton MPbackBtn;
 	private JCheckBox frontCkBx;
-	
+	private String imagepath;
 	/**
 	 * Launch the application.
 	 */
@@ -100,60 +100,62 @@ public class SinamonApp {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//frame ¼³Á¤
+		//frame ï¿½ï¿½ï¿½ï¿½
 		frame = new JFrame();
-		frame.setTitle("½Ã³ª¸ó");
+		frame.setTitle("ï¿½Ã³ï¿½ï¿½ï¿½");
 		frame.setBounds(100, 100, 960, 540);
 		frame.setPreferredSize(new Dimension(960,540));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//È­¸éÀ» ´ÝÀ¸¸é ÇÁ·Î±×·¥ Á¾·á
-		frame.setResizable(false); 		//Å©±â °íÁ¤
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½
+		frame.setResizable(false); 		//Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
-		//»ó´ë°æ·Î·Î ÇÏ´Â ¹ý ¾Ë¾Æº¸´Â Áß... 
+		//ï¿½ï¿½ï¿½ï¿½Î·ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½Ë¾Æºï¿½ï¿½ï¿½ ï¿½ï¿½... 
 		//ImagePanel foodPanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(SinamonApp.class.getResource("/Image/board.png")));
 		
-		ImagePanel mypagePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\mypage.png").getImage());
+		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
+		
+		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(imagepath+"\\mypage.png").getImage());
 		frame.getContentPane().add(mypagePanel);
-		ImagePanel foodPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\board.png").getImage());
+		ImagePanel foodPanel = new ImagePanel(new ImageIcon(imagepath+"\\board.png").getImage());
 		frame.getContentPane().add(foodPanel);
-		ImagePanel necPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\board.png").getImage());
+		ImagePanel necPanel = new ImagePanel(new ImageIcon(imagepath+"\\board.png").getImage());
 		frame.getContentPane().add(necPanel);
-		ImagePanel choicePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\choice.png").getImage());
+		ImagePanel choicePanel = new ImagePanel(new ImageIcon(imagepath+"\\choice.png").getImage());
 		frame.getContentPane().add(choicePanel);
-		ImagePanel joinPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\join.png").getImage());
+		ImagePanel joinPanel = new ImagePanel(new ImageIcon(imagepath+"\\join.png").getImage());
 		frame.getContentPane().add(joinPanel);
-		ImagePanel loginPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\login.png").getImage());
+		ImagePanel loginPanel = new ImagePanel(new ImageIcon(imagepath+"\\login.png").getImage());
 		frame.getContentPane().add(loginPanel);
 	
-		/**************************** My page (È¸¿ø È÷½ºÅä¸® ÆÐ³Î)*****************************************/
-		mypagePanel.setBounds(0,0,960,540);	//ÆÐ³Î »çÀÌÁî
+		/**************************** My page (È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ä¸® ï¿½Ð³ï¿½)*****************************************/
+		mypagePanel.setBounds(0,0,960,540);	//ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		mypagePanel.setLayout(null);
 		
-		String[] hHeader=new String[] {"¹øÈ£","À½½Ä/»ýÇÊÇ°", "½Ã³ª¸ó ÇöÈ²","¾à¼ÓÁ¤º¸"};
-		//¿¹½Ã
+		String[] hHeader=new String[] {"ï¿½ï¿½È£","ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ç°", "ï¿½Ã³ï¿½ï¿½ï¿½ ï¿½ï¿½È²","ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"};
+		//ï¿½ï¿½ï¿½ï¿½
 		Object[][] hData=new Object[][] {
-			{"01","Çª¶ó´ß","¿Ï·á","º¸±â"},
-			{"02","¿±¶±","¿Ï·á","º¸±â"},
-			{"03","°öÃ¢Àü°ñ","¿Ï·á","º¸±â"},
-			{"04","ÈÞÁö","¿Ï·á","º¸±â"},
-			{"05","½º½Ã","¿¹Á¤","º¸±â"}
+			{"01","Çªï¿½ï¿½ï¿½","ï¿½Ï·ï¿½","ï¿½ï¿½ï¿½ï¿½"},
+			{"02","ï¿½ï¿½ï¿½ï¿½","ï¿½Ï·ï¿½","ï¿½ï¿½ï¿½ï¿½"},
+			{"03","ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½","ï¿½Ï·ï¿½","ï¿½ï¿½ï¿½ï¿½"},
+			{"04","ï¿½ï¿½ï¿½ï¿½","ï¿½Ï·ï¿½","ï¿½ï¿½ï¿½ï¿½"},
+			{"05","ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½"}
 		};
-		 //³»¿ë ¼öÁ¤ ºÒ°¡ 
+		 //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ 
 		DefaultTableModel modH = new DefaultTableModel(hData,hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             }
         };
         history =new JTable(modH);
-        /*¼öÁ¤ÇÏ°í ½ÍÀº Å×ÀÌºíÀ» Å¬¸¯ÇÏ¸é °Ô½Ã±Û ¼öÁ¤Ã¢ÀÌ ³ªÅ¸³²*/
+        /*ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½*/
         history.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //int rowNum = history.getSelectedRow();
-                //ÇØ´ç °Ô½Ã±ÛÀÇ µ¥ÀÌÅÍ¸¦ value object¿¡ ´ã¾Æ¼­ ¼öÁ¤Ã¢À» ±¸¼ºÇÒ ¼ö ÀÖµµ·Ï
+                //ï¿½Ø´ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ value objectï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½
                 BoardVO vo = new BoardVO();
-                //ÇØ´ç ÇàÀÇ °Ô½Ã±Û µ¥ÀÌÅÍ(list)¸¦ ³Ö°í
+                //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(list)ï¿½ï¿½ ï¿½Ö°ï¿½
                 //vo = list.get(rowNum);
-                //¼öÁ¤Ã¢ ¿­¸²!
+                //ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½!
                 new BoardEdit();
             }
         });
@@ -161,16 +163,16 @@ public class SinamonApp {
         	  
         DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
 	    colC.setBackground(new Color(255, 255, 208));
-	    history.getColumnModel().getColumn(3).setCellRenderer(colC);	//Å×ÀÌºí Ã¤ÆÃ-> ³ë¶õ
+	    history.getColumnModel().getColumn(3).setCellRenderer(colC);	//ï¿½ï¿½ï¿½Ìºï¿½ Ã¤ï¿½ï¿½-> ï¿½ï¿½ï¿½
         history.setRowHeight(25);
 		history.setFont(new Font("Sanserif", Font.BOLD, 15));
 		DefaultTableCellRenderer colH = new DefaultTableCellRenderer();
 	    colH.setForeground(Color.BLUE);
 	    history.getColumnModel().getColumn(2).setCellRenderer(colH);
 		history.setPreferredScrollableViewportSize(new Dimension(700,600));
-        history.getTableHeader().setReorderingAllowed(false); // ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        history.getTableHeader().setResizingAllowed(false); // ÄÃ·³ Å©±â Á¶Àý ºÒ°¡
-		JScrollPane hScrollPane = new JScrollPane(history);		//½ºÅ©·Ñ ÆÐÀÎ
+        history.getTableHeader().setReorderingAllowed(false); // ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ò°ï¿½
+        history.getTableHeader().setResizingAllowed(false); // ï¿½Ã·ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+		JScrollPane hScrollPane = new JScrollPane(history);		//ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		hScrollPane.setBounds(113, 316, 730, 186);
 		mypagePanel.add(hScrollPane);
 		
@@ -183,23 +185,23 @@ public class SinamonApp {
 				currPanel=bfPanel;
 			}
 		});
-		MPbackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		MPbackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
 		MPbackBtn.setBounds(10, 10, 51, 46);
 		MPbackBtn.setBorder(null);
 		mypagePanel.add(MPbackBtn);
 		
-		/****************************necPanel (»ýÇÊÇ° °Ô½ÃÆÇ ÆÐ³Î)*****************************************/
+		/****************************necPanel (ï¿½ï¿½ï¿½ï¿½Ç° ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½)*****************************************/
 		
 		necPanel.setBounds(0, 0, 960, 540);
 		necPanel.setLayout(null);
-		/*°Ô½ÃÆÇ table*/
-		String[] necHeader=new String[] {"¹øÈ£","Àå¼Ò","½Ã°£","»ý ÇÊ Ç°","ÀÛ¼ºÀÚ","ÇöÈ²","Ã¤ÆÃ"};
-		//¿¹½Ã
+		/*ï¿½Ô½ï¿½ï¿½ï¿½ table*/
+		String[] necHeader=new String[] {"ï¿½ï¿½È£","ï¿½ï¿½ï¿½","ï¿½Ã°ï¿½","ï¿½ï¿½ ï¿½ï¿½ Ç°","ï¿½Û¼ï¿½ï¿½ï¿½","ï¿½ï¿½È²","Ã¤ï¿½ï¿½"};
+		//ï¿½ï¿½ï¿½ï¿½
 		Object[][] necData=new Object[][] {
-			{"01","¼­¹®","16½Ã","ÈÞÁö ³ª´²¿ä","ÃÊÄÚ¿ÕÀÚ","¿¹Á¤","Ã¤ÆÃÇÏ±â"},
-			{"02","Áß¹®","12-2½Ã", "ÇÃ¸®½º 1+1 ³ª´²¿ä", "ÃÊÄÚ°øÁÖ","ÁøÇà Áß","Ã¤ÆÃÇÏ±â"}		
+			{"01","ï¿½ï¿½ï¿½ï¿½","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"02","ï¿½ß¹ï¿½","12-2ï¿½ï¿½", "ï¿½Ã¸ï¿½ï¿½ï¿½ 1+1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"}		
 		};
-		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// ¼öÁ¤ ºÒ°¡
+		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
@@ -207,7 +209,7 @@ public class SinamonApp {
 		table=new JTable(necMod);
         table.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		//¼±ÅÃÇÑ ¼¿ÀÇ Çà ¹øÈ£°è»ê 
+        		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ 
         		int row = table.getSelectedRow();
                 int col = table.getSelectedColumn();
                 new BoardWrite(nec_board,curr_user);
@@ -216,37 +218,37 @@ public class SinamonApp {
 				 */
         	}
         });
-        table.getColumn("ÇöÈ²").setCellRenderer(colC);	//Å×ÀÌºí Ã¤ÆÃ-> ³ë¶õ»ö
-	    //Å×ÀÌºí °£°Ý Á¶Á¤
+        table.getColumn("ï¿½ï¿½È²").setCellRenderer(colC);	//ï¿½ï¿½ï¿½Ìºï¿½ Ã¤ï¿½ï¿½-> ï¿½ï¿½ï¿½ï¿½ï¿½
+	    //ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
 	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
 	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
 	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
 	    
-	    table.getColumn("¹øÈ£").setPreferredWidth(5);
-        table.getColumn("¹øÈ£").setCellRenderer(celAlignCenter);
-        table.getColumn("Àå¼Ò").setPreferredWidth(7);
-        table.getColumn("Àå¼Ò").setCellRenderer(celAlignCenter);
-        table.getColumn("½Ã°£").setPreferredWidth(7);
-        table.getColumn("½Ã°£").setCellRenderer(celAlignCenter);
-        table.getColumn("ÀÛ¼ºÀÚ").setPreferredWidth(10);
-        table.getColumn("ÀÛ¼ºÀÚ").setCellRenderer(celAlignCenter);
-        table.getColumn("Ã¤ÆÃ").setPreferredWidth(10);
-        table.getColumn("Ã¤ÆÃ").setCellRenderer(celAlignCenter);
-        table.getColumn("ÇöÈ²").setPreferredWidth(10);
-        table.getColumn("ÇöÈ²").setCellRenderer(celAlignCenter);
+	    table.getColumn("ï¿½ï¿½È£").setPreferredWidth(5);
+        table.getColumn("ï¿½ï¿½È£").setCellRenderer(celAlignCenter);
+        table.getColumn("ï¿½ï¿½ï¿½").setPreferredWidth(7);
+        table.getColumn("ï¿½ï¿½ï¿½").setCellRenderer(celAlignCenter);
+        table.getColumn("ï¿½Ã°ï¿½").setPreferredWidth(7);
+        table.getColumn("ï¿½Ã°ï¿½").setCellRenderer(celAlignCenter);
+        table.getColumn("ï¿½Û¼ï¿½ï¿½ï¿½").setPreferredWidth(10);
+        table.getColumn("ï¿½Û¼ï¿½ï¿½ï¿½").setCellRenderer(celAlignCenter);
+        table.getColumn("Ã¤ï¿½ï¿½").setPreferredWidth(10);
+        table.getColumn("Ã¤ï¿½ï¿½").setCellRenderer(celAlignCenter);
+        table.getColumn("ï¿½ï¿½È²").setPreferredWidth(10);
+        table.getColumn("ï¿½ï¿½È²").setCellRenderer(celAlignCenter);
         
 		table.setRowHeight(30);
 		table.setFont(new Font("Sanserif", Font.BOLD, 17));
 		table.setPreferredScrollableViewportSize(new Dimension(700,600));
-		table.getTableHeader().setReorderingAllowed(false); // ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        table.getTableHeader().setResizingAllowed(false); // ÄÃ·³ Å©±â Á¶Àý ºÒ°¡
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ¿©·¯°³ ¼±ÅÃ ºÒ°¡
+		table.getTableHeader().setReorderingAllowed(false); // ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ò°ï¿½
+        table.getTableHeader().setResizingAllowed(false); // ï¿½Ã·ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(243, 88, 687, 392);
 		necPanel.add(scrollPane);
 		
-		/*±Û Ã£±â °Ë»ö¶õ*/
+		/*ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½*/
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
@@ -256,25 +258,25 @@ public class SinamonApp {
 		necPanel.add(searchField);
 		searchField.setColumns(10);
 		
-		/*±Û Ã£±â ¹öÆ°*/
+		/*ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		JButton searchBtn = new JButton("");
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//searchField ÀúÀåÇÏ±â
+				//searchField ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				/*
-				 * ±Û Ã£±â
+				 * ï¿½ï¿½ Ã£ï¿½ï¿½
 				 * 
 				 * */
 			}
 			
 		});
-		searchBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\search_btn.PNG"));
+		searchBtn.setIcon(new ImageIcon(imagepath+"\\search_btn.PNG"));
 		searchBtn.setBounds(836, 25, 40, 41);
 		searchBtn.setBorder(null);
 		necPanel.add(searchBtn);
 		
-		/*È¸¿øÁ¤º¸ ¹öÆ°*/
+		/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		JButton myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
@@ -285,27 +287,27 @@ public class SinamonApp {
 				currPanel=mypagePanel;
 			}
 		});
-		myBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\my_btn.PNG"));
+		myBtn.setIcon(new ImageIcon(imagepath+"\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
 		necPanel.add(myBtn);
 		
 		
-		/*±Û¾²±â ¹öÆ°*/
+		/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//±Û ÀÛ¼º event
+				//ï¿½ï¿½ ï¿½Û¼ï¿½ event
 				new BoardWrite(food_board, curr_user);
 			}
 		});
-		writeBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write_btn.PNG"));
+		writeBtn.setIcon(new ImageIcon(imagepath+"\\write_btn.PNG"));
 		writeBtn.setBounds(864, 488, 78, 35);
 		writeBtn.setBorder(null);
 		necPanel.add(writeBtn);
 		
-		/*µÚ·Î°¡±â ¹öÆ°*/
+		/*ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		JButton boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -314,70 +316,70 @@ public class SinamonApp {
 				currPanel = choicePanel;
 			}
 		});
-		boardBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		boardBackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
 		boardBackBtn.setBounds(0, 491, 49, 45);
 		boardBackBtn.setBorder(null);
 		necPanel.add(boardBackBtn);
 		
 
-		/****************************foodPanel (À½½Ä °Ô½ÃÆÇ ÆÐ³Î)*****************************************/
+		/****************************foodPanel (ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½)*****************************************/
 		
 		foodPanel.setBounds(0, 0, 960, 540);
 		foodPanel.setLayout(null);
-		/*°Ô½ÃÆÇ table*/
-		String[] header=new String[] {"¹øÈ£","Àå¼Ò","½Ã°£","À½  ½Ä","ÀÛ¼ºÀÚ","Ã¤ÆÃ"};
-		//¿¹½Ã
+		/*ï¿½Ô½ï¿½ï¿½ï¿½ table*/
+		String[] header=new String[] {"ï¿½ï¿½È£","ï¿½ï¿½ï¿½","ï¿½Ã°ï¿½","ï¿½ï¿½  ï¿½ï¿½","ï¿½Û¼ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½"};
+		//ï¿½ï¿½ï¿½ï¿½
 		Object[][] data=new Object[][] {
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"},
-			{"01","16½Ã","¼­¹®","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","Ã¤ÆÃÇÏ±â"}
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"},
+			{"01","16ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½","Çªï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½","ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½","Ã¤ï¿½ï¿½ï¿½Ï±ï¿½"}
 			
 		};
-		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// ¼öÁ¤ ºÒ°¡
+		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
 		};
 		table=new JTable(foodMod);
-	    table.getColumnModel().getColumn(5).setCellRenderer(colC);	//Å×ÀÌºí Ã¤ÆÃ-> ³ë¶õ»ö
-	    //Å×ÀÌºí Çà ¿­ °£°Ý
+	    table.getColumnModel().getColumn(5).setCellRenderer(colC);	//ï¿½ï¿½ï¿½Ìºï¿½ Ã¤ï¿½ï¿½-> ï¿½ï¿½ï¿½ï¿½ï¿½
+	    //ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         table.getColumnModel().getColumn(0).setPreferredWidth(1);
         table.getColumnModel().getColumn(1).setPreferredWidth(1);
         table.getColumnModel().getColumn(2).setPreferredWidth(1);
         table.getColumnModel().getColumn(4).setPreferredWidth(1);
         table.getColumnModel().getColumn(5).setPreferredWidth(1);
-		/*//Å×ÀÌºí ÀÌ¸§ ¹Ù²ã¾ß µ¿ÀÛ ½ÇÇàµÊ
-		 * table.getColumn("¹øÈ£").setPreferredWidth(5);
-		 * table.getColumn("¹øÈ£").setCellRenderer(celAlignCenter);
-		 * table.getColumn("Àå¼Ò").setPreferredWidth(7);
-		 * table.getColumn("Àå¼Ò").setCellRenderer(celAlignCenter);
-		 * table.getColumn("½Ã°£").setPreferredWidth(7);
-		 * table.getColumn("½Ã°£").setCellRenderer(celAlignCenter);
-		 * table.getColumn("ÀÛ¼ºÀÚ").setPreferredWidth(10);
-		 * table.getColumn("ÀÛ¼ºÀÚ").setCellRenderer(celAlignCenter);
-		 * table.getColumn("Ã¤ÆÃ").setPreferredWidth(10);
-		 * table.getColumn("Ã¤ÆÃ").setCellRenderer(celAlignCenter);
-		 * table.getColumn("ÇöÈ²").setPreferredWidth(10);
-		 * table.getColumn("ÇöÈ²").setCellRenderer(celAlignCenter);
+		/*//ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ì¸ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		 * table.getColumn("ï¿½ï¿½È£").setPreferredWidth(5);
+		 * table.getColumn("ï¿½ï¿½È£").setCellRenderer(celAlignCenter);
+		 * table.getColumn("ï¿½ï¿½ï¿½").setPreferredWidth(7);
+		 * table.getColumn("ï¿½ï¿½ï¿½").setCellRenderer(celAlignCenter);
+		 * table.getColumn("ï¿½Ã°ï¿½").setPreferredWidth(7);
+		 * table.getColumn("ï¿½Ã°ï¿½").setCellRenderer(celAlignCenter);
+		 * table.getColumn("ï¿½Û¼ï¿½ï¿½ï¿½").setPreferredWidth(10);
+		 * table.getColumn("ï¿½Û¼ï¿½ï¿½ï¿½").setCellRenderer(celAlignCenter);
+		 * table.getColumn("Ã¤ï¿½ï¿½").setPreferredWidth(10);
+		 * table.getColumn("Ã¤ï¿½ï¿½").setCellRenderer(celAlignCenter);
+		 * table.getColumn("ï¿½ï¿½È²").setPreferredWidth(10);
+		 * table.getColumn("ï¿½ï¿½È²").setCellRenderer(celAlignCenter);
 		 */
 		table.setRowHeight(30);
 		table.setFont(new Font("Sanserif", Font.BOLD, 17));
 		table.setPreferredScrollableViewportSize(new Dimension(700,600));
-		table.getTableHeader().setReorderingAllowed(false); // ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        table.getTableHeader().setResizingAllowed(false); // ÄÃ·³ Å©±â Á¶Àý ºÒ°¡
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ¿©·¯°³ ¼±ÅÃ ºÒ°¡
+		table.getTableHeader().setReorderingAllowed(false); // ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ò°ï¿½
+        table.getTableHeader().setResizingAllowed(false); // ï¿½Ã·ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
         
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(189, 92, 746, 392);
@@ -385,7 +387,7 @@ public class SinamonApp {
 		
 		
 		
-		/*±Û Ã£±â °Ë»ö¶õ*/
+		/*ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½*/
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
@@ -395,24 +397,24 @@ public class SinamonApp {
 		foodPanel.add(searchField);
 		searchField.setColumns(10);
 		
-		/*±Û Ã£±â ¹öÆ°*/
+		/*ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		searchBtn = new JButton("");
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//searchField ÀúÀåÇÏ±â
+				//searchField ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 				/*
-				 * ±Û Ã£±â
+				 * ï¿½ï¿½ Ã£ï¿½ï¿½
 				 * 
 				 * */
 			}
 		});
-		searchBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\search_btn.PNG"));
+		searchBtn.setIcon(new ImageIcon(imagepath+"\\search_btn.PNG"));
 		searchBtn.setBounds(836, 25, 40, 41);
 		searchBtn.setBorder(null);
 		foodPanel.add(searchBtn);
 		
-		/*È¸¿øÁ¤º¸ ¹öÆ°*/
+		/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
@@ -423,25 +425,25 @@ public class SinamonApp {
 				currPanel=mypagePanel;
 			}
 		});
-		myBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\my_btn.PNG"));
+		myBtn.setIcon(new ImageIcon(imagepath+"\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
 		foodPanel.add(myBtn);
 		
-		/*±Û¾²±â ¹öÆ°*/
+		/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//±Û ÀÛ¼º event
+				//ï¿½ï¿½ ï¿½Û¼ï¿½ event
 				new BoardWrite(nec_board,curr_user);
 			}
 		});
-		writeBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write_btn.PNG"));
+		writeBtn.setIcon(new ImageIcon(imagepath+"\\write_btn.PNG"));
 		writeBtn.setBounds(864, 488, 78, 35);
 		writeBtn.setBorder(null);
 		foodPanel.add(writeBtn);
 		
-		/*µÚ·Î°¡±â ¹öÆ°*/
+		/*ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°*/
 		boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -450,12 +452,12 @@ public class SinamonApp {
 				currPanel = choicePanel;
 			}
 		});
-		boardBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		boardBackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
 		boardBackBtn.setBounds(0, 491, 49, 45);
 		boardBackBtn.setBorder(null);
 		foodPanel.add(boardBackBtn);
 		
-		/****************************Choice panel (½Ã³ª À½½Ä ½Ã³ª »ýÇÊÇ°)*********************************************/
+		/****************************Choice panel (ï¿½Ã³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã³ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°)*********************************************/
 		
 		choicePanel.setBounds(0, 0, 960, 540);
 		choicePanel.setLayout(null);
@@ -470,7 +472,7 @@ public class SinamonApp {
 			}	
 		});
 		foodBtn.setBounds(127, 154, 307, 309);
-		foodBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\Ch_food.PNG"));
+		foodBtn.setIcon(new ImageIcon(imagepath+"\\Ch_food.PNG"));
 		foodBtn.setBorder(null);
 		choicePanel.add(foodBtn);
 		
@@ -484,12 +486,12 @@ public class SinamonApp {
 			}	
 		});
 		necBtn.setBounds(525, 154, 307, 309);
-		necBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\Ch_nec.PNG"));
+		necBtn.setIcon(new ImageIcon(imagepath+"\\Ch_nec.PNG"));
 		necBtn.setBorder(null);
 		choicePanel.add(necBtn);
 		
 		
-		/**********************************Join panel (È¸¿ø°¡ÀÔ ÆÐ³Î)******************************************/
+		/**********************************Join panel (È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½)******************************************/
 		
 		joinPanel.setBounds(0, 0, 960, 540);
 		joinPanel.setLayout(null);
@@ -524,7 +526,7 @@ public class SinamonApp {
 		
 		JComboBox comboBox = new JComboBox(place);
 		comboBox.setBounds(583, 225, 106, 27);
-		comboBox.setFont(new Font("HY¿±¼­M", Font.PLAIN, 17));
+		comboBox.setFont(new Font("HYï¿½ï¿½ï¿½ï¿½M", Font.PLAIN, 17));
 		joinPanel.add(comboBox);
 		
 		joinNickField = new JTextField();
@@ -540,27 +542,27 @@ public class SinamonApp {
 		enrollBtn.addActionListener(new ActionListener(){	
 
 			@Override
-			public void actionPerformed(ActionEvent e) {	//µî·ÏÇÏ±â ¹öÆ°À» ´­·¶À» ¶§ÀÇ µ¿ÀÛ
+			public void actionPerformed(ActionEvent e) {	//ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				try {
 					/*
-					 * È¸¿ø°¡ÀÔ µ¥ÀÌÅÍ ÀúÀåÇÏ±â
+					 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 					 *  
 					 * */
-					//getText()·Î µ¥ÀÌÅÍ ÀúÀå
-					//Àå¼Ò(ComboBox)-comboBox.getSelectedItem().toString()·Î µ¥ÀÌÅÍ ÀúÀå
+					//getText()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					//ï¿½ï¿½ï¿½(ComboBox)-comboBox.getSelectedItem().toString()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null,"You Failed to Enroll");
 				}
-				JOptionPane.showMessageDialog(null,"È¸¿ø°¡ÀÔÀ» ÃàÇÏÇÕ´Ï´Ù!");
+				JOptionPane.showMessageDialog(null,"È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½!");
 				currPanel.setVisible(false);
 				loginPanel.setVisible(true);
 				currPanel = (JPanel) loginPanel;				
 			}		
 		});
-		enrollBtn.setPressedIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\enroll_click_btn.PNG"));
+		enrollBtn.setPressedIcon(new ImageIcon(imagepath+"\\enroll_click_btn.PNG"));
 		joinPanel.add(enrollBtn);
-		enrollBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\enroll_btn.PNG"));
+		enrollBtn.setIcon(new ImageIcon(imagepath+"\\enroll_btn.PNG"));
 		
 		backBtn = new JButton("");
 		backBtn.setBounds(5, 10, 49, 49);
@@ -574,10 +576,10 @@ public class SinamonApp {
 				currPanel = (JPanel) loginPanel;				
 			}		
 		});
-		backBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_btn.PNG"));
+		backBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
 		joinPanel.add(backBtn);
 		
-		/***************************************login panel(·Î±×ÀÎ ÆÐ³Î)***************************************/
+		/***************************************login panel(ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½)***************************************/
 		
 		loginPanel.setBounds(0, 0, 960, 540);
 		loginPanel.setLayout(null);
@@ -606,7 +608,7 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/*
-				 * ID PW ºñ±³
+				 * ID PW ï¿½ï¿½
 				 *  
 				 * */
 				if(ID.equals(idField.getText()) && PASS.equals(pwField.getText())){
@@ -619,8 +621,8 @@ public class SinamonApp {
 				}
 			}
 		});
-		loginBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\login_btn.PNG"));
-		loginBtn.setPressedIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\login_click_btn.PNG"));
+		loginBtn.setIcon(new ImageIcon(imagepath+"\\login_btn.PNG"));
+		loginBtn.setPressedIcon(new ImageIcon(imagepath+"\\login_click_btn.PNG"));
 		loginPanel.add(loginBtn);
 		
 		JButton joinBtn = new JButton("");		//joinBtn
@@ -634,8 +636,8 @@ public class SinamonApp {
 				currPanel = joinPanel;
 			}
 		});
-		joinBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\join_btn.PNG"));
-		joinBtn.setPressedIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\join_click_btn.PNG"));
+		joinBtn.setIcon(new ImageIcon(imagepath+"\\join_btn.PNG"));
+		joinBtn.setPressedIcon(new ImageIcon(imagepath+"\\join_click_btn.PNG"));
 		loginPanel.add(joinBtn);
 		
 		joinPanel.setVisible(false);

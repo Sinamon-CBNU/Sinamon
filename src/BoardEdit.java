@@ -18,8 +18,9 @@ public class BoardEdit {
 	private JTextArea chFoodArea;	
 	private JTextField chTimeField;
 	private JComboBox chPlaceBox;
-	//final int num=vo.getNum(); 	//¸ñÂ÷ º¯°æ ºÒ°¡
-	private final String place[]= {"Á¤ ¹®", "Áß ¹®","¼­ ¹®","ÈÄ ¹®","º» °ü","¾ç ¼º Àç","¾ç Áø Àç"};
+	//final int num=vo.getNum(); 	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+	private final String place[]= {"ï¿½ï¿½ ï¿½ï¿½", "ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½"};
+	private String imagepath;
 	
 	/**
 	 * Create the application.
@@ -32,26 +33,27 @@ public class BoardEdit {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		frame = new JFrame();
-		frame.setTitle("°Ô½Ã±Û ¼öÁ¤");
+		frame.setTitle("ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		frame.getContentPane().setBackground(Color.PINK);
 		frame.setBounds(100, 100, 460, 340);
 		frame.setPreferredSize(new Dimension(450,300));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ImagePanel editPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit.png").getImage());
+		ImagePanel editPanel = new ImagePanel(new ImageIcon(imagepath+"\\edit.png").getImage());
 		frame.getContentPane().add(editPanel);
 		editPanel.setLayout(null);
 		
 		chTimeField = new JTextField();
-		chTimeField.setFont(new Font("HY¿±¼­M", Font.PLAIN, 15));
+		chTimeField.setFont(new Font("HYï¿½ï¿½ï¿½ï¿½M", Font.PLAIN, 15));
 		chTimeField.setBounds(87, 121, 320, 24);
 		chTimeField.setBorder(null);
 		editPanel.add(chTimeField);
 		chTimeField.setColumns(10);
 		
 		chPlaceBox = new JComboBox(place);
-		chPlaceBox.setFont(new Font("HY¿±¼­M", Font.PLAIN, 15));
+		chPlaceBox.setFont(new Font("HYï¿½ï¿½ï¿½ï¿½M", Font.PLAIN, 15));
 		chPlaceBox.setBounds(87, 80, 320, 23);
 		editPanel.add(chPlaceBox);
 		
@@ -65,11 +67,11 @@ public class BoardEdit {
 			 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	/***¼öÁ¤ ±¸ÇöÇÏ±â!!!***/
+            	/***ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½!!!***/
                 frame.setVisible(false);
             }
         });
-		editBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit_btn.PNG"));
+		editBtn.setIcon(new ImageIcon(imagepath+"\\edit_btn.PNG"));
 		editBtn.setBounds(257, 253, 80, 24);
 		editPanel.add(editBtn);
 		
@@ -78,11 +80,11 @@ public class BoardEdit {
 			 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	/***»èÁ¦ ±¸ÇöÇÏ±â!!!***/
+            	/***ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½!!!***/
                 frame.setVisible(false);
             }
         });
-		deleteBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\delete_btn.PNG"));
+		deleteBtn.setIcon(new ImageIcon(imagepath+"\\delete_btn.PNG"));
 		deleteBtn.setBounds(337, 253, 80, 24);
 		editPanel.add(deleteBtn);
 	
@@ -93,7 +95,7 @@ public class BoardEdit {
                 frame.setVisible(false);
             }
         });
-		chBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		chBackBtn.setIcon(new ImageIcon(imagepath+"\\back_s_btn.PNG"));
 		chBackBtn.setBounds(4, 5, 20, 23);
 		chBackBtn.setBorder(null);
 		editPanel.add(chBackBtn);
