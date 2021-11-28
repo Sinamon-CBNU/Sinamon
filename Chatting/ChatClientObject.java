@@ -143,7 +143,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		
 		/********************************/
 		
-		String serverIP="192.168.136.108";
+		String serverIP="49.143.47.208";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
