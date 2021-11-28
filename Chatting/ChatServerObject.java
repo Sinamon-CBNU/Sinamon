@@ -2,13 +2,9 @@ package Chatting;
 
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -29,14 +25,17 @@ public class ChatServerObject
 	private Room room;
 	private int roomid;
 	private int userlistsize=0;
-	private boolean chattingclicked;		//채팅클릭인지 알림클릭인지 구별해줌
+	private boolean chattingclicked;
+	//private boolean chattingclicked;		//채팅클릭인지 알림클릭인지 구별해줌
 	public ChatServerObject() {
+		
+	
 		
 		//BufferedReader br=null;
 		//PrintWriter pw=null;
 
 			try {  //서버 소켓 생성 작업
-		
+				new hello();
 				serverSocket = new ServerSocket(9500);
 				
 				System.out.println("서버 준비 완료");
@@ -45,10 +44,15 @@ public class ChatServerObject
 				InfoDTO dto= null;
 				
 				while(true) {
-					
-					
+					/*
 					chattingclicked=ClickOption.getchattingclicked();
-					System.out.println("아잌"+chattingclicked);
+					if(chattingclicked==true)
+					{
+						
+					}
+					
+					
+					//System.out.println("아잌"+chattingclicked);
 					if(userlistsize==2) {		//두명이 다들어왔으면 (지금은 3명접속받은상태)
 						//room.deleteuser();					// 방에있는 인원 제거(이미 이 방의 정보는 
 						room=new Room();	//room 새로 할당
@@ -62,24 +66,33 @@ public class ChatServerObject
 						System.out.println("!"+roomid);
 						room.setroomid(roomid);
 					}
-					 //chattingclicked=ClickOption.chattingclicked;
-					// System.out.println("어이"+chattingclicked);
-					
+					*/
 					Socket socket = serverSocket.accept();
+					/*
+					try{dto=(InfoDTO)reader.readObject();
+					}catch(ClassNotFoundException e) {
+						e.printStackTrace();
+					}*/
 					
-					System.out.println(RoomManager.getroomid());
+					//System.out.println("server roomid"+dto.getroomid());
+					System.out.println("2");
+					System.out.println("serveroomid"+RoomManager.getroomid());
+					//chattingclicked=ClickOption.getchattingclicked();
+					System.out.println("하하"+ClickOption.getchattingclicked());
+		
 					
-					//ClickOption.setchattingclicked();
-					 System.out.println("아잌"+chattingclicked);
-					ChatHandlerObject handler = new  ChatHandlerObject(socket,userlist,room);
-					//ChatHandlerObject handler = new  ChatHandlerObject(socket,userlist,roomlist.get(방번호));
 					
+					//ChatHandlerObject handler = new  ChatHandlerObject(socket,userlist,room);
+					
+					ChatHandlerObject handler1 = new ChatHandlerObject(socket);
+					ChatHandlerObject handler2=new ChatHandlerObject(handler1);
+					System.out.println("handler2'sa"+handler2.a);
 					//여기서 추가해주고
 					
-					handler.start();  //스레드 시작- 스레드 실행
-					userlist.add(handler);
-					//room.setuser(handler);	//room에다가 user추가해줌
-					RoomManager.setroomhandler(handler);
+					
+					handler2.start();  //스레드 시작- 스레드 실행
+					userlist.add(handler1);
+					//RoomManager.setroomhandler(handler);
 					userlistsize=RoomManager.eachroomusersize();
 					
 					

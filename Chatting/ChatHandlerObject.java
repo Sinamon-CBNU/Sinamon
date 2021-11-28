@@ -1,15 +1,10 @@
 package Chatting;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-import java.util.List;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.List;
 
 
 class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 정보가 담겨있는 곳. 소켓을 처리함)
@@ -17,21 +12,20 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 {
 	private ObjectInputStream reader;
 	private ObjectOutputStream writer;
+	public int a=0;
 	private Socket socket;
 	//private InfoDTO dto;
 	///private Info command;
 	private List <ChatHandlerObject> userlist;
 	private Room room;
 	private int roomid;
+	private ChatHandlerObject handler;
 	
 	//생성자
 
-	public ChatHandlerObject(Socket socket, List<ChatHandlerObject> userlist, Room room) throws IOException {
+	public ChatHandlerObject(Socket socket) throws IOException {
 		
 		this.socket = socket;
-		this.roomid=room.getroomid();
-		this.room=room;
-		this.userlist=userlist;
 		writer = new ObjectOutputStream(socket.getOutputStream());
 		reader = new ObjectInputStream(socket.getInputStream());
 		
@@ -39,15 +33,43 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 
 		
 	}
+	public ChatHandlerObject(ChatHandlerObject handler) {
+		this.handler=handler;
+	}
+	
+	public Socket getsocket() {
+		return socket;
+	}
+	public ObjectOutputStream getwriter() {
+		return writer;
+	}
+	public ObjectInputStream getreader() {
+		return reader;
+	}
+	public int getroomid() {
+		return roomid;
+	}
 	public void run(){
 		InfoDTO dto = null;
 		String nickName;
 		try{
+			int loopcount=0;
 			while(true){
-				
+				System.out.println("handler2'a in handler"+a);
+				System.out.println("handlerroomid"+RoomManager.getroomid());
+	//			dto=(InfoDTO)reader.readObject();
+				reader=handler.getreader();
 				dto=(InfoDTO)reader.readObject();
+				System.out.println("여기다ㅣ"+dto.getroomid());
+				if(loopcount==0) {	//루프첫바퀴때만 방생성및 handler추가해줌
+				roomid=dto.getroomid();
+				Room eachroom=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
+				eachroom.setuser(handler);	//방에 handler추가
+				}
+				
+				
 				nickName=dto.getNickName();
-				int roomnumber=dto.getroomnumber();
+				int roomnumber=dto.getroomid();
 				
 				
 				//if(userlist.size()==2) {
@@ -84,10 +106,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
 					//sendDto.setWhossend(who.server);
-					boolean a=ClickOption.getchattingclicked();
-					sendDto.setMessage(nickName+"님이 입장하였습니다."+a);
-					
-					sendDto.sethandlerroomnumber(dto.getroomnumber());
+					sendDto.setMessage(nickName+"님이 입장하였습니다.");
+					sendDto.sethandlerroomnumber(dto.getroomid());
 					broadcast(sendDto);
 				} else if(dto.getCommand()==Info.SEND){
 					System.out.println("내가속한 룸:"+roomid);
@@ -96,6 +116,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
 					broadcast(sendDto);
 				}
+				loopcount++;
 			}//while
 
 		} catch(IOException e){
@@ -111,11 +132,10 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 
 	//다른 클라이언트에게 전체 메세지 보내주기
 	public void broadcast(InfoDTO sendDto) throws IOException {
-		
-		Room eachroom=RoomManager.getroom(roomid);
-		
+		System.out.println("음?"+roomid);
+		Room eachroom=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
 		for(ChatHandlerObject handler : eachroom.getuser()) {
-			
+			System.out.println("handler's room="+handler.getroomid());
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
 		}
