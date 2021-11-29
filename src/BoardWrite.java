@@ -1,3 +1,4 @@
+//DB 관련 코드는 잠시 주석처리해둠
 //package sinamon_project;
 
 import java.awt.Font;
@@ -33,7 +34,6 @@ public class BoardWrite {
 		frame = new JFrame();
 		frame.setTitle("게시글 쓰기");
 		frame.setBounds(100, 100, 460, 340);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//db_connection connection = new db_connection();
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write.png").getImage());
@@ -61,7 +61,7 @@ public class BoardWrite {
 		titleArea.setBounds(87, 164, 320, 69);
 		writePanel.add(titleArea);
 		
-		JButton enrollBtn = new JButton("");
+		JButton enrollBtn = new JButton("");				//등록 버튼
 		enrollBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -119,7 +119,7 @@ public class BoardWrite {
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
 		
-		JButton backSBtn = new JButton("");			//�ڷΰ��� 
+		JButton backSBtn = new JButton("");			//뒤로가기 버튼 
 		backSBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {

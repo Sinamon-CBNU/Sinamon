@@ -18,7 +18,6 @@ public class BoardEdit {
 	private JTextArea chFoodArea;	
 	private JTextField chTimeField;
 	private JComboBox chPlaceBox;
-	//final int num=vo.getNum(); 	//목차 변경 불가
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
 	
 	/**
@@ -37,7 +36,6 @@ public class BoardEdit {
 		frame.getContentPane().setBackground(Color.PINK);
 		frame.setBounds(100, 100, 460, 340);
 		frame.setPreferredSize(new Dimension(450,300));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ImagePanel editPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit.png").getImage());
 		frame.getContentPane().add(editPanel);
