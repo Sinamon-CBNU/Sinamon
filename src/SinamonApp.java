@@ -294,7 +294,7 @@ public class SinamonApp {
         ntable.getColumn("장소").setCellRenderer(celAlignCenter);
         ntable.getColumn("시간").setPreferredWidth(80);
         ntable.getColumn("시간").setCellRenderer(celAlignCenter);
-        ntable.getColumn("제목").setPreferredWidth(247);
+        ntable.getColumn("제목").setPreferredWidth(306);
         ntable.getColumn("작성자").setPreferredWidth(100);
         ntable.getColumn("작성자").setCellRenderer(celAlignCenter);
         ntable.getColumn("현황").setPreferredWidth(80);
@@ -305,12 +305,12 @@ public class SinamonApp {
        
 		ntable.setRowHeight(30);
 		ntable.setFont(new Font("Sanserif", Font.BOLD, 17));
-		ntable.setPreferredScrollableViewportSize(new Dimension(687,392));
+		ntable.setPreferredScrollableViewportSize(new Dimension(746,392));
 		ntable.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
         ntable.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
         ntable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table 여러개 선택 불가
 		JScrollPane scrollPane = new JScrollPane(ntable);
-		scrollPane.setBounds(243, 88, 687, 392);
+		scrollPane.setBounds(189, 92, 746, 392);;
 		necPanel.add(scrollPane);
 		
 		/*글 찾기 검색란*/
@@ -412,7 +412,7 @@ public class SinamonApp {
         ftable.getColumn("장소").setCellRenderer(celAlignCenter);
         ftable.getColumn("시간").setPreferredWidth(80);
         ftable.getColumn("시간").setCellRenderer(celAlignCenter);
-        ftable.getColumn("제목").setPreferredWidth(247);
+        ftable.getColumn("제목").setPreferredWidth(306);
         ftable.getColumn("작성자").setPreferredWidth(100);
         ftable.getColumn("작성자").setCellRenderer(celAlignCenter);
         ftable.getColumn("현황").setPreferredWidth(80);
@@ -422,7 +422,7 @@ public class SinamonApp {
      
 		ftable.setRowHeight(30);
 		ftable.setFont(new Font("Sanserif", Font.BOLD, 17));
-		ftable.setPreferredScrollableViewportSize(new Dimension(700,600));
+		ftable.setPreferredScrollableViewportSize(new Dimension(746, 392));
 		ftable.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
         ftable.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
         ftable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table 여러개 선택 불가

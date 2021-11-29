@@ -34,11 +34,11 @@ public class InfoEdit {
 	 */
 	private void initialize(Object[] curr_user) {
 		frame = new JFrame();
-		frame.setTitle("게시글 쓰기");
+		frame.setTitle("회원정보 수정");
 		frame.setBounds(100, 100, 460, 340);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit_info.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\edit_info.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
@@ -128,7 +128,7 @@ public class InfoEdit {
         		frame.setVisible(false);	//창 닫기
             }
         });
-		enrollBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\cmp_btn.PNG"));	//edit complete button
+		enrollBtn.setIcon(new ImageIcon(".\\Image\\cmp_btn.PNG"));	//edit complete button
 		enrollBtn.setBounds(337, 253, 78, 24);
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
@@ -140,7 +140,7 @@ public class InfoEdit {
                 frame.setVisible(false);	//창 닫기
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		backSBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
 		backSBtn.setBounds(3, 1, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);

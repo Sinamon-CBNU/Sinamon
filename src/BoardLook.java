@@ -32,10 +32,9 @@ public class BoardLook {
 		frame = new JFrame();
 		frame.setTitle("게시글 보기");
 		frame.setBounds(100, 100, 460, 340);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\view.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
@@ -66,7 +65,7 @@ public class BoardLook {
         		frame.setVisible(false);	//창 닫기	
             }
         });
-		cmpBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\done_btn.PNG"));
+		cmpBtn.setIcon(new ImageIcon(".\\Image\\done_btn.PNG"));
 		cmpBtn.setBounds(263, 253, 155, 24);
 		cmpBtn.setBorder(null);
 		writePanel.add(cmpBtn);
@@ -78,7 +77,7 @@ public class BoardLook {
                 frame.setVisible(false);		//창닫기
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		backSBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
 		backSBtn.setBounds(3, 3, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);

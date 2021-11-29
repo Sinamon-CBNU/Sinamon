@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 public class BoardEdit {
 
 	private JFrame frame;
-	private JTextArea chFoodArea;	
+	private JTextArea chTitleArea;	
 	private JTextField chTimeField;
 	private JComboBox chPlaceBox;
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
@@ -37,64 +37,65 @@ public class BoardEdit {
 		frame.setBounds(100, 100, 460, 340);
 		frame.setPreferredSize(new Dimension(450,300));
 		
-		ImagePanel editPanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit.png").getImage());
+		ImagePanel editPanel = new ImagePanel(new ImageIcon(".\\Image\\edit.png").getImage());
 		frame.getContentPane().add(editPanel);
 		editPanel.setLayout(null);
 		
-		chTimeField = new JTextField();
+		chTimeField = new JTextField();		//change time 시간 바꾸기
 		chTimeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		chTimeField.setBounds(87, 121, 320, 24);
 		chTimeField.setBorder(null);
 		editPanel.add(chTimeField);
 		chTimeField.setColumns(10);
 		
-		chPlaceBox = new JComboBox(place);
+		chPlaceBox = new JComboBox(place);		//change place 장소 바꾸기
 		chPlaceBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		chPlaceBox.setBounds(87, 80, 320, 23);
 		editPanel.add(chPlaceBox);
 		
-		chFoodArea = new JTextArea();
-		chFoodArea.setLineWrap(true);
-		chFoodArea.setBounds(87, 164, 320, 69);
-		editPanel.add(chFoodArea);
+		chTitleArea = new JTextArea();			//change title 제목 바꾸기
+		chTitleArea.setLineWrap(true);
+		chTitleArea.setBounds(87, 164, 320, 69);
+		editPanel.add(chTitleArea);
 		
+		//수정 버튼
 		JButton editBtn = new JButton("");
-		editBtn.addActionListener(new ActionListener() {
-			 
+		editBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
             	/***수정 구현하기!!!***/
                 frame.setVisible(false);
             }
         });
-		editBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\edit_btn.PNG"));
+		editBtn.setIcon(new ImageIcon(".\\Image\\edit_btn.PNG"));
 		editBtn.setBounds(257, 253, 80, 24);
 		editPanel.add(editBtn);
 		
+		//삭제 버튼
 		JButton deleteBtn = new JButton("");
 		deleteBtn.addActionListener(new ActionListener() {
-			 
             @Override
             public void actionPerformed(ActionEvent e) {
             	/***삭제 구현하기!!!***/
                 frame.setVisible(false);
             }
         });
-		deleteBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\delete_btn.PNG"));
+		deleteBtn.setIcon(new ImageIcon(".\\Image\\delete_btn.PNG"));
 		deleteBtn.setBounds(337, 253, 80, 24);
 		editPanel.add(deleteBtn);
-	
-		JButton chBackBtn = new JButton("");
-		chBackBtn.addActionListener(new ActionListener() { 
+		
+		//뒤로가기 버튼
+		JButton backBtn = new JButton("");
+		backBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
+                frame.setVisible(false);	//해당 창 닫기
             }
         });
-		chBackBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
-		chBackBtn.setBounds(4, 5, 20, 23);
-		chBackBtn.setBorder(null);
-		editPanel.add(chBackBtn);
+		backBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
+		backBtn.setBounds(4, 5, 20, 23);
+		backBtn.setBorder(null);
+		editPanel.add(backBtn);
  
         frame.setVisible(true);
 	}

@@ -36,7 +36,7 @@ public class BoardWrite {
 		frame.setBounds(100, 100, 460, 340);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\write.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\write.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
@@ -114,7 +114,7 @@ public class BoardWrite {
             	}
             }
         });
-		enrollBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\cmp_btn.PNG"));
+		enrollBtn.setIcon(new ImageIcon(".\\Image\\cmp_btn.PNG"));
 		enrollBtn.setBounds(337, 253, 78, 24);
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
@@ -126,7 +126,7 @@ public class BoardWrite {
                 frame.setVisible(false);
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
+		backSBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
 		backSBtn.setBounds(4, 5, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);
