@@ -40,7 +40,7 @@ public class BoardLook {
         Image logo=tk.getImage(".\\Image\\logo.png");
         frame.setIconImage(logo);
 		
-		db_connection connection = new db_connection();
+		//db_connection connection = new db_connection();
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
 		frame.getContentPane().add(writePanel);

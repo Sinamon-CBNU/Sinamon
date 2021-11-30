@@ -1,5 +1,6 @@
 package SinamonUI;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -7,9 +8,15 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -91,17 +98,31 @@ public class SinamonApp {
 	public SinamonApp() {
 		initialize();
 	}
-
+	
 	 public class MyTableCellRenderer extends DefaultTableCellRenderer{ 
 		 @Override 
-		 public ChatBtnDesign getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) { 
-			 ChatBtnDesign chatBtn = null; 
-			 chatBtn = new ChatBtnDesign("채팅하기");
-		 	 chatBtn.setFont(new Font("고도 M", Font.BOLD, 15));
-		 	 chatBtn.addActionListener(e -> { System.out.println("good");}); 
+		 public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) { 
+			 Component chatBtn = null; 
+			 if(column==6){
+				 chatBtn = new JButton("채팅하기");
+				 chatBtn.setFont(new Font("고도 M", Font.BOLD, 13));
+				 ((JButton) chatBtn).addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.print("good");
+						}
+					});
+
+			}
 			 return chatBtn; 
-		 } 
+		 }
+
 	 }
+	 class MyMouserAdapter extends MouseAdapter{
+			public void mouseClicked(MouseEvent e) {
+				System.out.print("good");
+			}
+		}
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -512,9 +533,9 @@ public class SinamonApp {
         ftable.getColumn("제목").setPreferredWidth(306);
         ftable.getColumn("작성자").setPreferredWidth(100);
         ftable.getColumn("작성자").setCellRenderer(celAlignCenter);
-        ftable.getColumn("현황").setPreferredWidth(80);
+        ftable.getColumn("현황").setPreferredWidth(70);
         ftable.getColumn("현황").setCellRenderer(celOrCenter);
-        ftable.getColumn("채팅").setPreferredWidth(80);
+        ftable.getColumn("채팅").setPreferredWidth(90);
         ftable.getColumn("채팅").setCellRenderer(renderer);	//채팅버튼 구현
      
 		ftable.setRowHeight(30);

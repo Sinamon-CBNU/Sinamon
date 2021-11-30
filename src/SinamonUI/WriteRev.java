@@ -40,7 +40,7 @@ public class WriteRev {
         Image logo=tk.getImage(".\\Image\\logo.png");
         frame.setIconImage(logo);
         
-		db_connection connection = new db_connection();
+		//db_connection connection = new db_connection();
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\rev.png").getImage());
 		frame.getContentPane().add(writePanel);
