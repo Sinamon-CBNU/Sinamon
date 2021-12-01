@@ -35,6 +35,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	}
 	public ChatHandlerObject(ChatHandlerObject handler) {
 		this.handler=handler;
+		writer=handler.getwriter();
+		reader=handler.getreader();
 	}
 	
 	public Socket getsocket() {
@@ -57,9 +59,9 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			while(true){
 				System.out.println("handler2'a in handler"+a);
 				System.out.println("handlerroomid"+RoomManager.getroomid());
-	            //dto=(InfoDTO)reader.readObject();
-				reader=handler.getreader();
-				dto=(InfoDTO)reader.readObject();
+	            dto=(InfoDTO)reader.readObject();
+				//reader=handler.getreader();
+				//dto=(InfoDTO)reader.readObject();
 				System.out.println("여기다ㅣ"+dto.getroomid());
 				if(loopcount==0) {	//루프첫바퀴때만 방생성및 handler추가해줌
 				roomid=dto.getroomid();
@@ -67,10 +69,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 				eachroom.setuser(handler);	//방에 handler추가
 				}
 				
-				
 				nickName=dto.getNickName();
-				int roomnumber=dto.getroomid();
-				
 				
 				
 
@@ -80,21 +79,19 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			
 					InfoDTO sendDto = new InfoDTO();
 					//나가려고 exit를 보낸 클라이언트에게 답변 보내기
-
-					sendDto.setCommand(Info.EXIT);
+					sendDto.setMessage(nickName+"님이 퇴장하였습니다.");
+					sendDto.setCommand(Info.NOTICE);
+					broadcast(sendDto);
+					
+					writer=handler.getwriter();
 					writer.writeObject(sendDto);
 					writer.flush();
 
-					reader.close();
-					writer.close();
-					socket.close();
+		
+					
 
-					//room.deleteuser();
-					userlist.remove(this);
-
-					sendDto.setCommand(Info.NOTICE);
-					sendDto.setMessage(nickName+"님이 퇴장하였습니다.");
-					broadcast(sendDto);
+					sendDto.setCommand(Info.EXIT);
+				
 					break;
 				} else if(dto.getCommand()==Info.JOIN){
 					//��� ����ڿ��� �޼��� ������
@@ -131,6 +128,8 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 		System.out.println("음?"+roomid);
 		Room eachroom=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
 		for(ChatHandlerObject handler : eachroom.getuser()) {
+			
+
 			System.out.println("handler's room="+handler.getroomid());
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기

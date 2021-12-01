@@ -3,24 +3,41 @@
 
 package Chatting;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.io.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.ImageIcon;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 
-class ChatClientObject extends JFrame implements ActionListener, Runnable {
+class ChatClientObject extends JFrame implements Runnable {
 	
 	
 	private JTextArea output;
 	private JTextField input;
 	private JButton sendBtn;
+	private JButton confirmBtn;
 	private Socket socket;
 	private ObjectInputStream reader = null;
 	private ObjectOutputStream writer = null;
@@ -33,8 +50,6 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 	private Thread t;
 	private int roomid;
 	public ChatClientObject(int roomid) {
-		
-		System.out.println("client object check1");
 		this.roomid=roomid;
 		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		
@@ -66,7 +81,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		input = new JTextField();
 		input.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
 		input.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
+		
 		sendBtn = new JButton();
 		sendBtn.setIcon(new ImageIcon(Image_Path+"\\send button6.png"));
 		sendBtn.setFont(new Font("LG Smart UI Light", Font.PLAIN, 12));
@@ -77,10 +92,14 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		//sendBtn.setBorderPainted(false); 
 		//sendBtn.setFocusPainted(false); 
 		sendBtn.setContentAreaFilled(false);
-
+		confirmBtn = new JButton();
+		confirmBtn.setIcon(new ImageIcon(Image_Path+"\\send button6.png"));
+		confirmBtn.setBorderPainted(false); 
+		confirmBtn.setContentAreaFilled(false);
 		
 		bottom.add("Center", input); // ���Ϳ� ���̱�
 		bottom.add("East", sendBtn); // ���ʿ� ���̱�
+		bottom.add("West", confirmBtn);
 		// container�� ���̱�
 		Container c = this.getContentPane();
 		c.add("Center", scroll); // ���Ϳ� ���̱�
@@ -126,7 +145,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		
 		/********************************/
 		
-		String serverIP="192.168.136.60";
+		String serverIP="192.168.0.13";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
@@ -164,7 +183,7 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			dto.setCommand(Info.JOIN);
 			//dto.setCommand(Info.NOTICE);
 			dto.setNickName(nickName);
-
+			System.out.println("식사이여");
 			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
 			writer.flush();
 			setTitle("채팅방"+dto.getroomid());
@@ -175,8 +194,9 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 		//스레드 생성
 		t = new Thread(this);
 		t.start();
-		input.addActionListener(this);
-		sendBtn.addActionListener(this);  //멕션 이벤트 추가
+		input.addActionListener(new sendActionListener());
+		sendBtn.addActionListener(new sendActionListener());
+		confirmBtn.addActionListener(new confirmBtnActionListener());//멕션 이벤트 추가
 	}
 	//스레드 오버라이드 
 		@Override
@@ -216,39 +236,46 @@ class ChatClientObject extends JFrame implements ActionListener, Runnable {
 			            int pos = output.getText().length();
 			            output.setCaretPosition(pos);
 			         }
-				}catch(IOException e){
+				}
+				catch(IOException e){
 					e.printStackTrace();
 				}catch(ClassNotFoundException e){
 					e.printStackTrace();
 				}	
+				
 			}
 		}
-    //ActionPerformed
-	@Override
-	public void actionPerformed(ActionEvent e){
-			try{
-				
-				//서버로 보냄 
-				//JTextField값을 서버로보내기
-				//버퍼 비우기
-				String msg=input.getText();
-				InfoDTO dto = new InfoDTO();
-				//dto.setNickName(nickName);
-				if(msg.equals("exit")){
-					dto.setCommand(Info.EXIT);
-				} else {
-					dto.setCommand(Info.SEND);
-					dto.setMessage(msg);
-					dto.setNickName(nickName);
+		
+		class sendActionListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String msg = input.getText();
+					InfoDTO dto = new InfoDTO();
+					if (msg.equals("exit")) {
+						dto.setCommand(Info.EXIT);
+					} else {
+						dto.setCommand(Info.SEND);
+						dto.setMessage(msg);
+						dto.setNickName(nickName);
+					}
+					writer.writeObject(dto);
+					writer.flush();
+					input.setText("");
+
+				} catch (IOException io) {
+					io.printStackTrace();
 				}
-				writer.writeObject(dto);
-				writer.flush();
-				input.setText("");
-				
-			}catch(IOException io){
-				io.printStackTrace();
 			}
-	}
+		}
+
+		class confirmBtnActionListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == confirmBtn)
+					System.out.print("확정버튼 누르셨습니다.");
+
+			}
+
+		}
 	
 	public static void main(String[] args) 
 	{

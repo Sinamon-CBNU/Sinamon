@@ -26,6 +26,7 @@ public class ChatServerObject
 	private int roomid;
 	private int userlistsize=0;
 	private boolean chattingclicked;
+	private boolean serverrun=true;
 	//private boolean chattingclicked;		//채팅클릭인지 알림클릭인지 구별해줌
 	public ChatServerObject() {
 		
@@ -34,8 +35,8 @@ public class ChatServerObject
 		//BufferedReader br=null;
 		//PrintWriter pw=null;
 
-			try {  //서버 소켓 생성 작업
-				new hello();
+		/*	try {  //서버 소켓 생성 작업
+				//new hello();
 				serverSocket = new ServerSocket(9500);
 				
 				System.out.println("서버 준비 완료");
@@ -43,7 +44,7 @@ public class ChatServerObject
 				room=new Room();
 				InfoDTO dto= null;
 				
-				while(true) {
+				while(serverrun) {
 					Socket socket = serverSocket.accept();
 					ChatHandlerObject handler1 = new ChatHandlerObject(socket);
 					ChatHandlerObject handler2=new ChatHandlerObject(handler1);
@@ -58,13 +59,47 @@ public class ChatServerObject
 				e.printStackTrace();
 		
 		}
-
+*/
+	}
+	public void serverrun() {
+		try {  //서버 소켓 생성 작업
+			new hello();
+			serverSocket = new ServerSocket(9500);
+			
+			System.out.println("채팅서버 준비 완료");
+			userlist=new ArrayList<ChatHandlerObject>();
+			room=new Room();
+			InfoDTO dto= null;
+			
+			while(serverrun) {
+				System.out.println("check1");
+				Socket socket = serverSocket.accept();
+				ChatHandlerObject handler1 = new ChatHandlerObject(socket);
+				ChatHandlerObject handler2=new ChatHandlerObject(handler1);
+				
+				handler2.start();  //스레드 시작- 스레드 실행
+				userlist.add(handler1);
+				userlistsize=RoomManager.eachroomusersize();
+			}	
+			System.out.println("check2");
+		}
+		
+		 catch (IOException e) {
+			e.printStackTrace();
+	
+	}
+	}
+	
+	public void serverdown() {
+		serverrun=false;
+		System.out.println("채팅서버 종료");
+		
 	}
 	
 
 	public static void main(String[] args) 
 	{
-		new ChatServerObject();
+		new ChatServerObject().serverrun();
 		
 	}
 

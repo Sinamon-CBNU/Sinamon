@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+
+import Chatting.ChatServerObject;
 
 public class SinamonApp {
 	
@@ -77,29 +79,31 @@ public class SinamonApp {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		ChatServerObject chattingserver=new ChatServerObject();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SinamonApp window = new SinamonApp();
+					SinamonApp window = new SinamonApp(chattingserver);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		chattingserver.serverrun();
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public SinamonApp() {
-		initialize();
+	public SinamonApp(ChatServerObject chattingserver) {
+		initialize(chattingserver);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(ChatServerObject chattingserver) {
 		//frame ����
 		frame = new JFrame();
 		frame.setTitle("�ó���");
@@ -612,6 +616,7 @@ public class SinamonApp {
 				 *  
 				 * */
 				if(ID.equals(idField.getText()) && PASS.equals(pwField.getText())){
+					chattingserver.serverdown();
 					currPanel.setVisible(false);
 					choicePanel.setVisible(true);
 					currPanel = choicePanel;
