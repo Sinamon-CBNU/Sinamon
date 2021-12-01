@@ -540,11 +540,11 @@ public class SinamonApp {
 		};
 		ftable=new JTable(foodMod);
 		//테이블이 채팅하기 셀을 클릭하면 채팅창이 나타남
-        	ntable.addMouseListener(new MouseAdapter() {
+        	ftable.addMouseListener(new MouseAdapter() {
            		@Override
            		public void mouseClicked(MouseEvent e) {
-            			int row = ntable.getSelectedRow();	//해당 셀의 행을 받아올 수 있음
-                		int col = ntable.getSelectedColumn();	//해당 셀의 열을 받아올 수 있음
+            			int row = ftable.getSelectedRow();	//해당 셀의 행을 받아올 수 있음
+                		int col = ftable.getSelectedColumn();	//해당 셀의 열을 받아올 수 있음
 				if(col==6){	
 					/*
 					* 채팅창 구현!!
