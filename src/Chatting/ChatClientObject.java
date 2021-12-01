@@ -31,7 +31,7 @@ import javax.swing.JTextField;
 
 
 
-class ChatClientObject extends JFrame implements Runnable {
+public class ChatClientObject extends JFrame implements Runnable {
 	
 	
 	private JTextArea output;
@@ -49,8 +49,10 @@ class ChatClientObject extends JFrame implements Runnable {
 	private String nickName;
 	private Thread t;
 	private int roomid;
-	public ChatClientObject(int roomid) {
+	private String roomname;
+	public ChatClientObject(int roomid,String roomname) {
 		this.roomid=roomid;
+		this.roomname=roomname;
 		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		
 		/*자기 경로에 맞게 IconImage_path바꾸면될듯*/
@@ -145,7 +147,7 @@ class ChatClientObject extends JFrame implements Runnable {
 		
 		/********************************/
 		
-		String serverIP="192.168.0.13";
+		String serverIP="49.143.47.208";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
@@ -179,14 +181,28 @@ class ChatClientObject extends JFrame implements Runnable {
 		try{
 			//handler로 닉네임 보내기
 			dto = new InfoDTO();
+			
+			if(roomname.equals("nec")) {
+				dto.setroomname(roomname);
+				dto.setnecroomid(roomid);
+				setTitle("생필품 채팅방"+dto.getnecroomid());
+			}
+			else if(roomname.equals("food")) {
+				dto.setroomname(roomname);
+				dto.setfoodroomid(roomid);
+				setTitle("음식 채팅방"+dto.getfoodroomid());
+			}
+			else {
+				System.out.println("roomname error!!");
+			}
+			
 			dto.setroomid(roomid);
 			dto.setCommand(Info.JOIN);
 			//dto.setCommand(Info.NOTICE);
 			dto.setNickName(nickName);
-			System.out.println("식사이여");
 			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
 			writer.flush();
-			setTitle("채팅방"+dto.getroomid());
+			//setTitle("채팅방"+dto.getroomid());
 		}catch(IOException e){
 			e.printStackTrace();
 		}

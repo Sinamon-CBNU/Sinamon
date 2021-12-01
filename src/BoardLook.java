@@ -17,7 +17,7 @@ public class BoardLook {
 	private JTextField timeField;
 	private JComboBox placeBox;
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
-	private String imagepath;
+	
 	/**
 	 * Create the application.
 	 */
@@ -29,27 +29,25 @@ public class BoardLook {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(String board_name, Object[] curr_user) {
-		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		frame = new JFrame();
-		frame.setTitle("게시글 쓰기");
+		frame.setTitle("게시글 보기");
 		frame.setBounds(100, 100, 460, 340);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon(imagepath+"\\write.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
-		timeField = new JTextField();						//������ �ð�
+		timeField = new JTextField();						//시간
 		timeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
 		timeField.setBounds(87, 121, 320, 24);
 		timeField.setBorder(null);
 		writePanel.add(timeField);
 		timeField.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox(place);			//��� 
+		JComboBox comboBox = new JComboBox(place);			//장소
 		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		comboBox.setBounds(87, 80, 320, 23);
+		comboBox.setBounds(84, 80, 328, 23);
 		writePanel.add(comboBox);
 		
 		JTextArea titleArea = new JTextArea();
@@ -57,73 +55,30 @@ public class BoardLook {
 		titleArea.setBounds(87, 164, 320, 69);
 		writePanel.add(titleArea);
 		
-		JButton enrollBtn = new JButton("");
-		enrollBtn.addActionListener(new ActionListener() { 
+		JButton cmpBtn = new JButton("");			//진행 완료 버튼
+		cmpBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	String timeString = "'" + timeField.getText() + "'";
-            	String placeString = "'" + comboBox.getSelectedItem().toString() + "'";
-            	String titleString = "'" + titleArea.getText() + "'";
-            	String nicknameString = "'" + curr_user[2] + "'";		//�г���
-            	int home_id = 0;
-            	//����1 �߹�2 �Ĺ�3 ����4 �缺��5 ������6 ����7
-            	switch (placeString) {
-            	case "'정 문'": {
-					home_id = 1;
-					break;
-				}
-				case "'중 문'": {
-					home_id = 2;
-					break;
-				}
-				case "'후 문'": {
-					home_id = 3;
-					break;
-				}
-				case "'서 문'": {
-					home_id = 4;
-					break;
-				}
-				case "'양 성 재'": {
-					home_id = 5;
-					break;
-				}
-				case "'양 진 재'": {
-					home_id = 6;
-					break;
-				}
-				case "'본 관'": {
-					home_id = 7;
-					break;
-				}
-				default:
-					throw new IllegalArgumentException("Unexpected value: " + placeString);
-				}
-            
-            	//insert_board_contents(String board_name, int home_id, String time, String title, String nickname)
-            	if(timeString.equals("''") || titleString.equals("''")) {
-            		frame.setVisible(false);
-            	}
-            	else {
-            		//connection.insert_board_contents(board_name, home_id, timeString, titleString, nicknameString);
-            		frame.setVisible(false);
-            	}
+            	/*
+            	 * '현황': 진행 중 -> 완료 바꾸기
+            	 */
+        		frame.setVisible(false);	//창 닫기	
             }
         });
-		enrollBtn.setIcon(new ImageIcon(imagepath+"\\cmp_btn.PNG"));
-		enrollBtn.setBounds(337, 253, 78, 24);
-		enrollBtn.setBorder(null);
-		writePanel.add(enrollBtn);
+		cmpBtn.setIcon(new ImageIcon(".\\Image\\done_btn.PNG"));
+		cmpBtn.setBounds(263, 253, 155, 24);
+		cmpBtn.setBorder(null);
+		writePanel.add(cmpBtn);
 		
-		JButton backSBtn = new JButton("");			//�ڷΰ��� 
+		JButton backSBtn = new JButton("");			//뒤로가기 버튼
 		backSBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
+                frame.setVisible(false);		//창닫기
             }
         });
-		backSBtn.setIcon(new ImageIcon(imagepath+"\\back_s_btn.PNG"));
-		backSBtn.setBounds(4, 5, 20, 23);
+		backSBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
+		backSBtn.setBounds(3, 3, 20, 23);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);
 

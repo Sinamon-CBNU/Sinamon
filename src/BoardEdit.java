@@ -15,12 +15,10 @@ import javax.swing.JTextField;
 public class BoardEdit {
 
 	private JFrame frame;
-	private JTextArea chFoodArea;	
+	private JTextArea chTitleArea;	
 	private JTextField chTimeField;
 	private JComboBox chPlaceBox;
-	//final int num=vo.getNum(); 	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
-	private final String place[]= {"ï¿½ï¿½ ï¿½ï¿½", "ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½","ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½"};
-	private String imagepath;
+	private final String place[]= {"Á¤ ¹®", "Áß ¹®","¼­ ¹®","ÈÄ ¹®","º» °ü","¾ç ¼º Àç","¾ç Áø Àç"};
 	
 	/**
 	 * Create the application.
@@ -33,72 +31,71 @@ public class BoardEdit {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		frame = new JFrame();
-		frame.setTitle("ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		frame.setTitle("°Ô½Ã±Û ¼öÁ¤");
 		frame.getContentPane().setBackground(Color.PINK);
 		frame.setBounds(100, 100, 460, 340);
 		frame.setPreferredSize(new Dimension(450,300));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ImagePanel editPanel = new ImagePanel(new ImageIcon(imagepath+"\\edit.png").getImage());
+		ImagePanel editPanel = new ImagePanel(new ImageIcon(".\\Image\\edit.png").getImage());
 		frame.getContentPane().add(editPanel);
 		editPanel.setLayout(null);
 		
-		chTimeField = new JTextField();
-		chTimeField.setFont(new Font("HYï¿½ï¿½ï¿½ï¿½M", Font.PLAIN, 15));
+		chTimeField = new JTextField();		//change time ½Ã°£ ¹Ù²Ù±â
+		chTimeField.setFont(new Font("HY¿±¼­M", Font.PLAIN, 15));
 		chTimeField.setBounds(87, 121, 320, 24);
 		chTimeField.setBorder(null);
 		editPanel.add(chTimeField);
 		chTimeField.setColumns(10);
 		
-		chPlaceBox = new JComboBox(place);
-		chPlaceBox.setFont(new Font("HYï¿½ï¿½ï¿½ï¿½M", Font.PLAIN, 15));
+		chPlaceBox = new JComboBox(place);		//change place Àå¼Ò ¹Ù²Ù±â
+		chPlaceBox.setFont(new Font("HY¿±¼­M", Font.PLAIN, 15));
 		chPlaceBox.setBounds(87, 80, 320, 23);
 		editPanel.add(chPlaceBox);
 		
-		chFoodArea = new JTextArea();
-		chFoodArea.setLineWrap(true);
-		chFoodArea.setBounds(87, 164, 320, 69);
-		editPanel.add(chFoodArea);
+		chTitleArea = new JTextArea();			//change title Á¦¸ñ ¹Ù²Ù±â
+		chTitleArea.setLineWrap(true);
+		chTitleArea.setBounds(87, 164, 320, 69);
+		editPanel.add(chTitleArea);
 		
+		//¼öÁ¤ ¹öÆ°
 		JButton editBtn = new JButton("");
-		editBtn.addActionListener(new ActionListener() {
-			 
+		editBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	/***ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½!!!***/
+            	/***¼öÁ¤ ±¸ÇöÇÏ±â!!!***/
                 frame.setVisible(false);
             }
         });
-		editBtn.setIcon(new ImageIcon(imagepath+"\\edit_btn.PNG"));
+		editBtn.setIcon(new ImageIcon(".\\Image\\edit_btn.PNG"));
 		editBtn.setBounds(257, 253, 80, 24);
 		editPanel.add(editBtn);
 		
+		//»èÁ¦ ¹öÆ°
 		JButton deleteBtn = new JButton("");
 		deleteBtn.addActionListener(new ActionListener() {
-			 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	/***ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½!!!***/
+            	/***»èÁ¦ ±¸ÇöÇÏ±â!!!***/
                 frame.setVisible(false);
             }
         });
-		deleteBtn.setIcon(new ImageIcon(imagepath+"\\delete_btn.PNG"));
+		deleteBtn.setIcon(new ImageIcon(".\\Image\\delete_btn.PNG"));
 		deleteBtn.setBounds(337, 253, 80, 24);
 		editPanel.add(deleteBtn);
-	
-		JButton chBackBtn = new JButton("");
-		chBackBtn.addActionListener(new ActionListener() { 
+		
+		//µÚ·Î°¡±â ¹öÆ°
+		JButton backBtn = new JButton("");
+		backBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
+                frame.setVisible(false);	//ÇØ´ç Ã¢ ´Ý±â
             }
         });
-		chBackBtn.setIcon(new ImageIcon(imagepath+"\\back_s_btn.PNG"));
-		chBackBtn.setBounds(4, 5, 20, 23);
-		chBackBtn.setBorder(null);
-		editPanel.add(chBackBtn);
+		backBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
+		backBtn.setBounds(4, 5, 20, 23);
+		backBtn.setBorder(null);
+		editPanel.add(backBtn);
  
         frame.setVisible(true);
 	}

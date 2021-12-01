@@ -1,3 +1,4 @@
+//DB 관련 코드는 잠시 주석처리해둠
 //package sinamon_project;
 
 import java.awt.Font;
@@ -18,7 +19,7 @@ public class BoardWrite {
 	private JTextField timeField;
 	private JComboBox placeBox;
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
-	private String imagepath;
+	private boolean is_enrolled;
 	/**
 	 * Create the application.
 	 */
@@ -26,46 +27,45 @@ public class BoardWrite {
 		initialize(board_name, curr_user);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	public boolean return_is_enrolled() {
+		if(is_enrolled == true) {		//등록되었으면 true 리턴
+			return true;
+		}
+		return false;
+	}
 	private void initialize(String board_name, Object[] curr_user) {
-		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
 		frame = new JFrame();
 		frame.setTitle("게시글 쓰기");
 		frame.setBounds(100, 100, 460, 340);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//db_connection connection = new db_connection();
+		db_connection connection = new db_connection();
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon(imagepath+"\\write.png").getImage());
+		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\write.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
-		timeField = new JTextField();						//나누는 시간
-		timeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		timeField = new JTextField(); //나누는 시간
+		timeField.setFont(new Font("고도 m", Font.PLAIN, 17));
 		timeField.setBounds(87, 121, 320, 24);
 		timeField.setBorder(null);
-		writePanel.add(timeField);
 		timeField.setColumns(10);
+		writePanel.add(timeField);
 		
-		JComboBox comboBox = new JComboBox(place);			//장소
-		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		comboBox.setBounds(87, 80, 320, 23);
+		JComboBox comboBox = new JComboBox(place); //장소
+		comboBox.setFont(new Font("고도 m", Font.PLAIN, 15));
+		comboBox.setBounds(83, 80, 330, 25);
 		writePanel.add(comboBox);
 		
 		JTextArea titleArea = new JTextArea();				//제목
 		titleArea.setLineWrap(true);
-		/*
-		 * 폰트 추가!!
-		 * */
-		titleArea.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		titleArea.setFont(new Font("고도 m", Font.PLAIN, 17));
 		titleArea.setBounds(87, 164, 320, 69);
 		writePanel.add(titleArea);
 		
-		JButton enrollBtn = new JButton("");
+		JButton enrollBtn = new JButton("");				//등록 버튼
 		enrollBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
+            	is_enrolled = true;
             	String timeString = "'" + timeField.getText() + "'";
             	String placeString = "'" + comboBox.getSelectedItem().toString() + "'";
             	String titleString = "'" + titleArea.getText() + "'";
@@ -105,35 +105,34 @@ public class BoardWrite {
 					throw new IllegalArgumentException("Unexpected value: " + placeString);
 				}
             
-            	//insert_board_contents(String board_name, int home_id, String time, String title, String nickname)
+  
             	if(timeString.equals("''") || titleString.equals("''")) {
             		frame.setVisible(false);
             	}
             	else {
-            		//connection.insert_board_contents(board_name, home_id, timeString, titleString, nicknameString);
+            		connection.insert_board_contents(board_name, home_id, timeString, titleString, nicknameString);
             		frame.setVisible(false);
             	}
             }
         });
-		enrollBtn.setIcon(new ImageIcon(imagepath+"\\cmp_btn.PNG"));
-		enrollBtn.setBounds(337, 253, 78, 24);
+		enrollBtn.setIcon(new ImageIcon(".\\Image\\cmp_btn.PNG"));
+		enrollBtn.setBounds(339, 253, 76, 24);
 		enrollBtn.setBorder(null);
 		writePanel.add(enrollBtn);
 		
-		JButton backSBtn = new JButton("");			//�ڷΰ��� 
+		JButton backSBtn = new JButton("");			//뒤로가기 버튼 
 		backSBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
+            	is_enrolled = false;
                 frame.setVisible(false);
             }
         });
-		backSBtn.setIcon(new ImageIcon("C:\\Users\\SeoMinjung\\eclipse-workspace\\Sinamon\\Image\\back_s_btn.PNG"));
-		backSBtn.setBounds(4, 5, 20, 23);
+		backSBtn.setIcon(new ImageIcon(".\\Image\\back_s_btn.PNG"));
+		backSBtn.setBounds(0, 0, 24, 28);
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);
 	
-		
- 
         frame.setVisible(true);
 	}
 

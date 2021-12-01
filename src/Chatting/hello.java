@@ -13,9 +13,15 @@ public class hello extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Room room;
+		Room foodroom;
+		Room necroom;
 		for(int i=0; i<1000; i++) {
 		room=new Room();
 		RoomManager.setroom(room);
+		necroom=new Room();
+		foodroom=new Room();
+		RoomManager.setroom(necroom);
+		RoomManager.setroom(foodroom);
 		}
 		
 		Container c=getContentPane();
@@ -37,20 +43,20 @@ public class hello extends JFrame {
 		
 		btn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				ChatClientObject client=new ChatClientObject(0);
-				client.service();
+				//ChatClientObject client=new ChatClientObject(0);
+				//client.service();
 			}
 		});
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChatClientObject client=new ChatClientObject(1);
-				client.service();
+				//ChatClientObject client=new ChatClientObject(1);
+				//client.service();
 			}
 		});
 		btn3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChatClientObject client=new ChatClientObject(2);
-				client.service();
+				//ChatClientObject client=new ChatClientObject(2);
+				//client.service();
 			}
 		});
 		

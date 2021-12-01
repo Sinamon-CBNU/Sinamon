@@ -20,7 +20,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	private Room room;
 	private int roomid;
 	private ChatHandlerObject handler;
-	
+	private String roomname;
 	//생성자
 
 	public ChatHandlerObject(Socket socket) throws IOException {
@@ -57,16 +57,24 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 		try{
 			int loopcount=0;
 			while(true){
-				System.out.println("handler2'a in handler"+a);
-				System.out.println("handlerroomid"+RoomManager.getroomid());
 	            dto=(InfoDTO)reader.readObject();
-				//reader=handler.getreader();
-				//dto=(InfoDTO)reader.readObject();
-				System.out.println("여기다ㅣ"+dto.getroomid());
 				if(loopcount==0) {	//루프첫바퀴때만 방생성및 handler추가해줌
-				roomid=dto.getroomid();
-				Room eachroom=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
-				eachroom.setuser(handler);	//방에 handler추가
+				
+				roomname=dto.getroomname();
+				
+				if(roomname.equals("nec")) {
+					roomid=dto.getnecroomid();
+					Room eachnecroom=RoomManager.getnecroom(roomid);
+					eachnecroom.setuser(handler);
+				}
+				else if(roomname.equals("food")) {
+					roomid=dto.getfoodroomid();
+					Room eachfoodroom=RoomManager.getfoodroom(roomid);
+					eachfoodroom.setuser(handler);
+				}
+				else {
+					System.out.println("roomname 오류");
+				}
 				}
 				
 				nickName=dto.getNickName();
@@ -125,12 +133,20 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 
 	//다른 클라이언트에게 전체 메세지 보내주기
 	public void broadcast(InfoDTO sendDto) throws IOException {
-		System.out.println("음?"+roomid);
-		Room eachroom=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
+		Room eachroom;
+		if(roomname.equals("nec")) {
+			 eachroom=RoomManager.getnecroom(roomid);
+		}
+		else if(roomname.equals("food")) {
+			 eachroom=RoomManager.getfoodroom(roomid);
+		}
+		else {
+			eachroom=RoomManager.getnecroom(roomid);
+			System.out.println("roomname error!");
+		}
+		
+		//Room eachroom2=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
 		for(ChatHandlerObject handler : eachroom.getuser()) {
-			
-
-			System.out.println("handler's room="+handler.getroomid());
 			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
 			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
 		}

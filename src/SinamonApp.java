@@ -1,18 +1,13 @@
-/* ## Read ##
- * 1. ���� �̹��� ��� ������ �� ��ž�� ��η� �Ǿ��ֱ� ������ �� ������ ���� ������ ���� ��� ���� �� �ٲ�ߵ�
- * 		�����Ḧ �̿��ؼ� [./]�̷������� �ϸ� Design tool ����� �ȵ�
- * 2. �Խñ� ����� �Խñ� ������ x�� ������ App�� ���� >> �ϴ� ������ ������ �ڷΰ��� ��ư�� �����ߵ�
- * 3. */
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,30 +25,28 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import Chatting.ChatServerObject;
+import Chatting.*;
 
 public class SinamonApp {
 	
 	//check �ӽ� ID,PW
+	String board_name;
 	private final String ID="Hello";
 	private final String PASS="1234";
-	String food_board;
-	String nec_board;
-	Object[] curr_user;
-	/*
-	 * ID PW ����
-	 *  
-	 * */
-	
 	private final String place[]= {"�� ��", "�� ��","�� ��","�� ��","�� ��","�� �� ��","�� �� ��"};
+	
+	public Object[][] food_board_data = new Object[100][6];		//���� �Խù� �Խ��ǿ� ��� �迭
+	public Object[][] nec_board_data = new Object[100][6];		//����ǰ �Խù� �Խ��ǿ� ��� �迭
+	public Object[][] my_board_data = new Object[100][2];		//���� �� �Խù� ������������ ��� �迭 �� ��ȣ, ����, �ϷῩ��
+	Object[] curr_user = new Object[6];		//���� �α������� ����� ���� ���� �迭
 	
 	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
 	private JPanel currPanel;	//���� �г�
 	private JPanel bfPanel;	//�� before �г�
-	private JTextField joinIdField;
 	private JTextField joinNameField;
+	private JTextField joinIdField;
 	private JTextField joinPwField;
 	private JTextField joinPwCheckField;
 	private JTextField joinNickField;
@@ -62,8 +55,12 @@ public class SinamonApp {
 	private JButton clickBtn;
 	private JButton recBtn;
 	private JButton searchBtn;
-	private JTable table;
-	private JTable history;
+	private JTable ftable;			//���� �Խ����� table
+	private JTable ntable;			//����ǰ �Խ����� table
+	private JTable history1;		//Mypage-���� �� ��
+	private JTable history2;		//Mypage-���� �ó��� �� history
+	private JScrollPane h1ScrollPane;	//Mypage-���� �� �� ���̺��� ��ũ������
+	private JScrollPane h2ScrollPane;	///Mypage-���� �ó��� �� history ���̺��� ��ũ������
 	private JCheckBox frontCkBox;
 	private JCheckBox centralCkBox;
 	private JCheckBox westCkBox;
@@ -74,7 +71,9 @@ public class SinamonApp {
 	private JTextField searchField;
 	private JButton MPbackBtn;
 	private JCheckBox frontCkBx;
-	private String imagepath;
+	private String id="Hello";
+	private String password="1234";
+	public boolean serverrun=false;
 	/**
 	 * Launch the application.
 	 */
@@ -97,89 +96,125 @@ public class SinamonApp {
 	 * Create the application.
 	 */
 	public SinamonApp(ChatServerObject chattingserver) {
-		initialize(chattingserver);
+		db_connection connection = new db_connection();			//�����ͺ��̽� ���� ��ü
+		//while(true) {
+			initialize(connection,chattingserver);
+		//}
+		
 	}
-
+	
+	//ä�� ��ư ������ �� ����
+	 public class TableCellRenderer extends DefaultTableCellRenderer{ 
+		 @Override 
+		 public ChatBtnDesign getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) { 
+			 ChatBtnDesign chatBtn = null; 
+			 chatBtn = new ChatBtnDesign("채팅버튼");
+		 	 chatBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
+		 	 //������ �ȵ�....>>���ñ��� �ذ��Ҳ�...
+		 	 chatBtn.addActionListener(e -> { System.out.println("good");});
+			 return chatBtn; 
+		 } 
+	 }
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(ChatServerObject chattingserver) {
-		//frame ����
-		frame = new JFrame();
-		frame.setTitle("�ó���");
-		frame.setBounds(100, 100, 960, 540);
-		frame.setPreferredSize(new Dimension(960,540));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//ȭ���� ������ ���α׷� ����
-		frame.setResizable(false); 		//ũ�� ����
+	//���������� �г� ����
+	private JPanel Create_Mypage_Panel(db_connection connection) {
+		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
+	    colC.setBackground(new Color(255, 255, 208));	
+	    //table�� �� ������ ����
+	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
+	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
+	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
+	    //'��Ȳ'���� ���� ���� ����� ��� ������ ���� DefaultTableCellRenderer ��ü ����
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
+	    
+		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(".\\Image\\mypage.png").getImage());
+		frame.getContentPane().add(mypagePanel);	
 		
-		//����η� �ϴ� �� �˾ƺ��� ��... 
-		//ImagePanel foodPanel = new ImagePanel(Toolkit.getDefaultToolkit().getImage(SinamonApp.class.getResource("/Image/board.png")));
-		
-		imagepath="D:\\Eclipse\\workspace\\Sinamon\\Image";
-		
-		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(imagepath+"\\mypage.png").getImage());
-		frame.getContentPane().add(mypagePanel);
-		ImagePanel foodPanel = new ImagePanel(new ImageIcon(imagepath+"\\board.png").getImage());
-		frame.getContentPane().add(foodPanel);
-		ImagePanel necPanel = new ImagePanel(new ImageIcon(imagepath+"\\board.png").getImage());
-		frame.getContentPane().add(necPanel);
-		ImagePanel choicePanel = new ImagePanel(new ImageIcon(imagepath+"\\choice.png").getImage());
-		frame.getContentPane().add(choicePanel);
-		ImagePanel joinPanel = new ImagePanel(new ImageIcon(imagepath+"\\join.png").getImage());
-		frame.getContentPane().add(joinPanel);
-		ImagePanel loginPanel = new ImagePanel(new ImageIcon(imagepath+"\\login.png").getImage());
-		frame.getContentPane().add(loginPanel);
-	
-		/**************************** My page (ȸ�� �����丮 �г�)*****************************************/
 		mypagePanel.setBounds(0,0,960,540);	//�г� ������
 		mypagePanel.setLayout(null);
 		
-		String[] hHeader=new String[] {"��ȣ","����/����ǰ", "�ó��� ��Ȳ","�������"};
-		//����
-		Object[][] hData=new Object[][] {
-			{"01","Ǫ���","�Ϸ�","����"},
-			{"02","����","�Ϸ�","����"},
-			{"03","��â����","�Ϸ�","����"},
-			{"04","����","�Ϸ�","����"},
-			{"05","����","����","����"}
-		};
-		 //���� ���� �Ұ� 
-		DefaultTableModel modH = new DefaultTableModel(hData,hHeader) {
+		//history1 ���� - [���� �� ��]
+		String[] hHeader=new String[] {"����", "��Ȳ"};	//�����丮 ���̺� ���
+		String nickname = "'" + curr_user[2] + "'";
+		my_board_data = connection.return_my_board(nickname);
+		
+		//DefaultTableModel�� ����Ͽ� ���� ���� �Ұ��ϰ�
+		DefaultTableModel modH1 = new DefaultTableModel(my_board_data, hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             }
         };
-        history =new JTable(modH);
-        /*�����ϰ� ���� ���̺��� Ŭ���ϸ� �Խñ� ����â�� ��Ÿ��*/
-        history.addMouseListener(new MouseAdapter() {
+        history1 =new JTable(modH1);
+        //���̺��� "����"�� ���, Ŭ���ϸ� �Խñ� ����â�� ��Ÿ��
+        history1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //int rowNum = history.getSelectedRow();
-                //�ش� �Խñ��� �����͸� value object�� ��Ƽ� ����â�� ������ �� �ֵ���
-                BoardVO vo = new BoardVO();
-                //�ش� ���� �Խñ� ������(list)�� �ְ�
-                //vo = list.get(rowNum);
-                //����â ����!
-                new BoardEdit();
+            	int row = history1.getSelectedRow();
+                int col = history1.getSelectedColumn();
+                String value=(String) history1.getValueAt(row,col);		//������ ���� ���� �����Ͽ�
+            	if(value.equals("����"))	{								//'����'�� ���
+            		new BoardEdit();									//����â�� ��Ÿ��
+            	}
             }
         });
+		//���̺� ���� ����
+        history1.setRowHeight(25);	//���̺� �� ����
+		history1.setFont(new Font("Sanserif", Font.BOLD, 15));	//���̺� ��Ʈ
+	    history1.getColumn("����").setPreferredWidth(300);			//���̺� �� ����
+	    history1.getColumn("��Ȳ").setPreferredWidth(80);
+	    history1.getColumn("��Ȳ").setCellRenderer(celOrCenter);	//'��Ȳ': ���� �Ķ���, ��� ����
+		history1.setPreferredScrollableViewportSize(new Dimension(380,256));
+        history1.getTableHeader().setReorderingAllowed(false); 	// �÷��� �̵� �Ұ�
+        history1.getTableHeader().setResizingAllowed(false); 	// �÷� ũ�� ���� �Ұ�
 		
-        	  
-        DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
-	    colC.setBackground(new Color(255, 255, 208));
-	    history.getColumnModel().getColumn(3).setCellRenderer(colC);	//���̺� ä��-> ���
-        history.setRowHeight(25);
-		history.setFont(new Font("Sanserif", Font.BOLD, 15));
-		DefaultTableCellRenderer colH = new DefaultTableCellRenderer();
-	    colH.setForeground(Color.BLUE);
-	    history.getColumnModel().getColumn(2).setCellRenderer(colH);
-		history.setPreferredScrollableViewportSize(new Dimension(700,600));
-        history.getTableHeader().setReorderingAllowed(false); // �÷��� �̵� �Ұ�
-        history.getTableHeader().setResizingAllowed(false); // �÷� ũ�� ���� �Ұ�
-		JScrollPane hScrollPane = new JScrollPane(history);		//��ũ�� ����
-		hScrollPane.setBounds(113, 316, 730, 186);
-		mypagePanel.add(hScrollPane);
+        h1ScrollPane = new JScrollPane(history1);	//table�� ��ũ�� ��������
+		h1ScrollPane.setBounds(77, 254, 380, 256);
+		mypagePanel.add(h1ScrollPane);
 		
+		//history2 ���� - [���� �ó��� �� history]
+		Object[][] hData2 = connection.return_get_in_board(nickname);
+		
+		//DefaultTableModel�� ����Ͽ� ���� ���� �Ұ��ϰ�
+		DefaultTableModel modH2 = new DefaultTableModel(hData2,hHeader) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };
+        history2 =new JTable(modH2);
+        //���̺��� "������"�� ���, Ŭ���ϸ� �Խñ� ����â�� ��Ÿ��
+        history2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	int row = history2.getSelectedRow();
+                int col = history2.getSelectedColumn();
+                String value=(String) history2.getValueAt(row,col);         //������ ���� ���� �����Ͽ�
+                if(value.equals("������")) {                          //'���� ��'�� ���
+                	new BoardLook(board_name,curr_user);               //�Խñ� ���� â�� ��Ÿ��
+                }
+            }
+        });
+
+		//���̺� ���� ����
+        history2.setRowHeight(25);	//���̺� �� ����
+		history2.setFont(new Font("Sanserif", Font.BOLD, 15));	//���̺� ��Ʈ
+	    history2.getColumn("����").setPreferredWidth(300);			//���̺� �� ����
+	    history2.getColumn("��Ȳ").setPreferredWidth(80);
+	    history2.getColumn("��Ȳ").setCellRenderer(celOrCenter);	//'��Ȳ': ���� �Ķ���, ��� ����
+		history2.setPreferredScrollableViewportSize(new Dimension(380,256));
+        history2.getTableHeader().setReorderingAllowed(false); 	// �÷��� �̵� �Ұ�
+        history2.getTableHeader().setResizingAllowed(false); 	// �÷� ũ�� ���� �Ұ�
+		
+        h2ScrollPane = new JScrollPane(history2);	//table�� ��ũ�� ��������
+		h2ScrollPane.setBounds(499, 254, 380, 256);
+		mypagePanel.add(h2ScrollPane);
+		
+		//Mypage �ڷΰ��� ��ư
 		MPbackBtn = new JButton("");
 		MPbackBtn.addActionListener(new ActionListener() {
 			@Override
@@ -189,67 +224,101 @@ public class SinamonApp {
 				currPanel=bfPanel;
 			}
 		});
-		MPbackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
+		MPbackBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		MPbackBtn.setBounds(10, 10, 51, 46);
 		MPbackBtn.setBorder(null);
 		mypagePanel.add(MPbackBtn);
 		
-		/****************************necPanel (����ǰ �Խ��� �г�)*****************************************/
-		
-		necPanel.setBounds(0, 0, 960, 540);
-		necPanel.setLayout(null);
-		/*�Խ��� table*/
-		String[] necHeader=new String[] {"��ȣ","���","�ð�","�� �� ǰ","�ۼ���","��Ȳ","ä��"};
-		//����
-		Object[][] necData=new Object[][] {
-			{"01","����","16��","���� ������","���ڿ���","����","ä���ϱ�"},
-			{"02","�߹�","12-2��", "�ø��� 1+1 ������", "���ڰ���","���� ��","ä���ϱ�"}		
-		};
-		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// ���� �Ұ�
-			public boolean isCellEditable(int rowIndex, int mColIndex) {
-				return false;
+		//ȸ������ ���� ��ư
+		JButton editInfoBtn = new JButton("");
+		editInfoBtn.setIcon(new ImageIcon(".\\Image\\edit_info_btn.PNG"));
+		editInfoBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new InfoEdit(curr_user, connection);
 			}
-		};
-		table=new JTable(necMod);
-        table.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		//������ ���� �� ��ȣ��� 
-        		int row = table.getSelectedRow();
-                int col = table.getSelectedColumn();
-                new BoardWrite(nec_board,curr_user);
-				/*
-				 * if(col==6) { new BoardWrite(nec_board,curr_user); }
-				 */
-        	}
-        });
-        table.getColumn("��Ȳ").setCellRenderer(colC);	//���̺� ä��-> �����
-	    //���̺� ���� ����
+		});
+		editInfoBtn.setBounds(348, 22, 155, 46);
+		editInfoBtn.setBorder(null);
+		mypagePanel.add(editInfoBtn);
+		
+		//ä�� �˸�
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(101, 138, 756, 38);
+		mypagePanel.add(lblNewLabel);
+		
+		mypagePanel.setVisible(true);
+		
+		return mypagePanel;
+	}
+	
+	//����ǰ �г� ����
+	private JPanel Create_Nec_Panel(db_connection connection) {
+		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
+	    colC.setBackground(new Color(255, 255, 208));	
+	    //table�� �� ������ ����
 	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
 	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
 	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
 	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
+	    //'��Ȳ'���� ���� ���� ����� ��� ������ ���� DefaultTableCellRenderer ��ü ����
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
 	    
-	    table.getColumn("��ȣ").setPreferredWidth(5);
-        table.getColumn("��ȣ").setCellRenderer(celAlignCenter);
-        table.getColumn("���").setPreferredWidth(7);
-        table.getColumn("���").setCellRenderer(celAlignCenter);
-        table.getColumn("�ð�").setPreferredWidth(7);
-        table.getColumn("�ð�").setCellRenderer(celAlignCenter);
-        table.getColumn("�ۼ���").setPreferredWidth(10);
-        table.getColumn("�ۼ���").setCellRenderer(celAlignCenter);
-        table.getColumn("ä��").setPreferredWidth(10);
-        table.getColumn("ä��").setCellRenderer(celAlignCenter);
-        table.getColumn("��Ȳ").setPreferredWidth(10);
-        table.getColumn("��Ȳ").setCellRenderer(celAlignCenter);
-        
-		table.setRowHeight(30);
-		table.setFont(new Font("Sanserif", Font.BOLD, 17));
-		table.setPreferredScrollableViewportSize(new Dimension(700,600));
-		table.getTableHeader().setReorderingAllowed(false); // �÷��� �̵� �Ұ�
-        table.getTableHeader().setResizingAllowed(false); // �÷� ũ�� ���� �Ұ�
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ������ ���� �Ұ�
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(243, 88, 687, 392);
+		ImagePanel necPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
+		frame.getContentPane().add(necPanel);
+		
+		necPanel.setBounds(0, 0, 960, 540);
+		necPanel.setLayout(null);
+		/*�Խ��� table*/
+		String[] necHeader=new String[] {"��ȣ","���","�ð�","����","�ۼ���","��Ȳ","ä��"};
+		//����
+		nec_board_data = connection.show_board("nes_board");
+		
+		DefaultTableModel necMod=new DefaultTableModel(nec_board_data, necHeader) {	// ���� �Ұ�
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
+		ntable=new JTable(necMod);
+		//테이블이 채팅하기 셀을 클릭하면 채팅창이 나타남
+        ntable.addMouseListener(new MouseAdapter() {
+              @Override
+              public void mouseClicked(MouseEvent e) {
+                  int row = ntable.getSelectedRow();   //해당 셀의 행을 받아올 수 있음
+                   int col = ntable.getSelectedColumn();   //해당 셀의 열을 받아올 수 있음
+         if(col==6){
+        	 ChatClientObject client=new ChatClientObject(row,"nec");
+      	   client.service();
+            System.out.println("Row:"+row+"Chat");
+         }
+                   
+      }
+          });
+	    //���̺� ���� ����
+	    ntable.getColumn("��ȣ").setPreferredWidth(40);
+        ntable.getColumn("��ȣ").setCellRenderer(celAlignCenter);
+        ntable.getColumn("���").setPreferredWidth(60);
+        ntable.getColumn("���").setCellRenderer(celAlignCenter);
+        ntable.getColumn("�ð�").setPreferredWidth(80);
+        ntable.getColumn("�ð�").setCellRenderer(celAlignCenter);
+        ntable.getColumn("����").setPreferredWidth(306);
+        ntable.getColumn("�ۼ���").setPreferredWidth(100);
+        ntable.getColumn("�ۼ���").setCellRenderer(celAlignCenter);
+        ntable.getColumn("��Ȳ").setPreferredWidth(80);
+        ntable.getColumn("��Ȳ").setCellRenderer(celOrCenter);
+        ntable.getColumn("ä��").setPreferredWidth(80);
+        TableCellRenderer renderer = new TableCellRenderer();	//ä�� ��ư ����
+        ntable.getColumn("ä��").setCellRenderer(renderer);
+       
+		ntable.setRowHeight(30);
+		ntable.setFont(new Font("Sanserif", Font.BOLD, 17));
+		ntable.setPreferredScrollableViewportSize(new Dimension(746,392));
+		ntable.getTableHeader().setReorderingAllowed(false); // �÷��� �̵� �Ұ�
+        ntable.getTableHeader().setResizingAllowed(false); // �÷� ũ�� ���� �Ұ�
+        ntable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ������ ���� �Ұ�
+		JScrollPane scrollPane = new JScrollPane(ntable);
+		scrollPane.setBounds(189, 92, 746, 392);;
 		necPanel.add(scrollPane);
 		
 		/*�� ã�� �˻���*/
@@ -268,14 +337,13 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//searchField �����ϱ�
-				/*
-				 * �� ã��
-				 * 
-				 * */
+				String search_text = "'" + searchField.getText() + "'";
+				nec_board_data = connection.search_post("nes_board", search_text);
+				
 			}
-			
 		});
-		searchBtn.setIcon(new ImageIcon(imagepath+"\\search_btn.PNG"));
+		
+		searchBtn.setIcon(new ImageIcon(".\\Image\\search_btn.PNG"));
 		searchBtn.setBounds(836, 25, 40, 41);
 		searchBtn.setBorder(null);
 		necPanel.add(searchBtn);
@@ -287,26 +355,33 @@ public class SinamonApp {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
 				bfPanel=currPanel;
-				mypagePanel.setVisible(true);
-				currPanel=mypagePanel;
+				//Create_Mypage_Panel(connection);
+				//mypagePanel.setVisible(true);
+				currPanel=Create_Mypage_Panel(connection);
 			}
 		});
-		myBtn.setIcon(new ImageIcon(imagepath+"\\my_btn.PNG"));
+		myBtn.setIcon(new ImageIcon(".\\Image\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
 		necPanel.add(myBtn);
-		
 		
 		/*�۾��� ��ư*/
 		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				//�� �ۼ� event
-				new BoardWrite(food_board, curr_user);
+				BoardWrite boardWrite = new BoardWrite("nes_board", curr_user);
+				if(boardWrite.return_is_enrolled()==true) {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
+				else {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
 			}
 		});
-		writeBtn.setIcon(new ImageIcon(imagepath+"\\write_btn.PNG"));
+		writeBtn.setIcon(new ImageIcon(".\\Image\\write_btn.PNG"));
 		writeBtn.setBounds(864, 488, 78, 35);
 		writeBtn.setBorder(null);
 		necPanel.add(writeBtn);
@@ -316,86 +391,114 @@ public class SinamonApp {
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				choicePanel.setVisible(true);
-				currPanel = choicePanel;
+				currPanel = Create_Choice_Panel(connection);
 			}
 		});
-		boardBackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
+		boardBackBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		boardBackBtn.setBounds(0, 491, 49, 45);
 		boardBackBtn.setBorder(null);
 		necPanel.add(boardBackBtn);
 		
-
-		/****************************foodPanel (���� �Խ��� �г�)*****************************************/
+		necPanel.setVisible(true);
+		
+		return necPanel;
+	}
+	
+	private JPanel Create_Food_Panel(db_connection connection) {
+		/******************방생성*****************/
+		
+		Room foodroom;
+		Room necroom;
+		for(int i=0; i<1000; i++) {
+		necroom=new Room();
+		foodroom=new Room();
+		RoomManager.setnecroom(necroom);
+		RoomManager.setfoodroom(foodroom);
+		}
+		
+		/*********************서버 오픈*******************/
+		//ChatServerObject chattingserver=new ChatServerObject();
+		//chattingserver.serverrun();
+		
+		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
+	    colC.setBackground(new Color(255, 255, 208));	
+	    //table�� �� ������ ����
+	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
+	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
+	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
+	    //'��Ȳ'���� ���� ���� ����� ��� ������ ���� DefaultTableCellRenderer ��ü ����
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
+		
+		ImagePanel foodPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
+		frame.getContentPane().add(foodPanel);
 		
 		foodPanel.setBounds(0, 0, 960, 540);
 		foodPanel.setLayout(null);
 		/*�Խ��� table*/
-		String[] header=new String[] {"��ȣ","���","�ð�","��  ��","�ۼ���","ä��"};
+		String[] header=new String[] {"��ȣ","���","�ð�","����","�ۼ���","��Ȳ","ä��"};
 		//����
-		Object[][] data=new Object[][] {
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"},
-			{"01","16��","����","Ǫ��� �����Ծ��","���ڿ���","ä���ϱ�"}
-			
-		};
-		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// ���� �Ұ�
+		food_board_data = connection.show_board("food_board");
+		
+		for(int i=0; i<12; i++) {
+			System.out.println(food_board_data[i][0]);
+		}
+		
+		DefaultTableModel foodMod=new DefaultTableModel(food_board_data, header) {	// ���� �Ұ�
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
 		};
-		table=new JTable(foodMod);
-	    table.getColumnModel().getColumn(5).setCellRenderer(colC);	//���̺� ä��-> �����
-	    //���̺� �� �� ����
-        table.getColumnModel().getColumn(0).setPreferredWidth(1);
-        table.getColumnModel().getColumn(1).setPreferredWidth(1);
-        table.getColumnModel().getColumn(2).setPreferredWidth(1);
-        table.getColumnModel().getColumn(4).setPreferredWidth(1);
-        table.getColumnModel().getColumn(5).setPreferredWidth(1);
-		/*//���̺� �̸� �ٲ�� ���� �����
-		 * table.getColumn("��ȣ").setPreferredWidth(5);
-		 * table.getColumn("��ȣ").setCellRenderer(celAlignCenter);
-		 * table.getColumn("���").setPreferredWidth(7);
-		 * table.getColumn("���").setCellRenderer(celAlignCenter);
-		 * table.getColumn("�ð�").setPreferredWidth(7);
-		 * table.getColumn("�ð�").setCellRenderer(celAlignCenter);
-		 * table.getColumn("�ۼ���").setPreferredWidth(10);
-		 * table.getColumn("�ۼ���").setCellRenderer(celAlignCenter);
-		 * table.getColumn("ä��").setPreferredWidth(10);
-		 * table.getColumn("ä��").setCellRenderer(celAlignCenter);
-		 * table.getColumn("��Ȳ").setPreferredWidth(10);
-		 * table.getColumn("��Ȳ").setCellRenderer(celAlignCenter);
-		 */
-		table.setRowHeight(30);
-		table.setFont(new Font("Sanserif", Font.BOLD, 17));
-		table.setPreferredScrollableViewportSize(new Dimension(700,600));
-		table.getTableHeader().setReorderingAllowed(false); // �÷��� �̵� �Ұ�
-        table.getTableHeader().setResizingAllowed(false); // �÷� ũ�� ���� �Ұ�
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ������ ���� �Ұ�
+		ftable=new JTable(foodMod);
+		
+		ftable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = ftable.getSelectedRow();   //해당 셀의 행을 받아올 수 있음
+                 int col = ftable.getSelectedColumn();   //해당 셀의 열을 받아올 수 있음
+
+       if(col==6){
+    	   ChatClientObject client=new ChatClientObject(row,"food");
+    	   client.service();
+       }
+                 
+    }
+		});
+		
+	  //���̺� ���� ����
+	    ftable.getColumn("��ȣ").setPreferredWidth(40);
+        ftable.getColumn("��ȣ").setCellRenderer(celAlignCenter);
+        ftable.getColumn("���").setPreferredWidth(60);
+        ftable.getColumn("���").setCellRenderer(celAlignCenter);
+        ftable.getColumn("�ð�").setPreferredWidth(80);
+        ftable.getColumn("�ð�").setCellRenderer(celAlignCenter);
+        ftable.getColumn("����").setPreferredWidth(306);
+        ftable.getColumn("�ۼ���").setPreferredWidth(100);
+        ftable.getColumn("�ۼ���").setCellRenderer(celAlignCenter);
+        ftable.getColumn("��Ȳ").setPreferredWidth(80);
+        ftable.getColumn("��Ȳ").setCellRenderer(celOrCenter);
+        ftable.getColumn("ä��").setPreferredWidth(80);
+        TableCellRenderer renderer = new TableCellRenderer();	//ä�� ��ư ����
+        ftable.getColumn("ä��").setCellRenderer(renderer);	//ä�ù�ư ����
+     
+		ftable.setRowHeight(30);
+		ftable.setFont(new Font("Sanserif", Font.BOLD, 17));
+		ftable.setPreferredScrollableViewportSize(new Dimension(746, 392));
+		ftable.getTableHeader().setReorderingAllowed(false); // �÷��� �̵� �Ұ�
+        ftable.getTableHeader().setResizingAllowed(false); // �÷� ũ�� ���� �Ұ�
+        ftable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ������ ���� �Ұ�
         
-		scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane(ftable);
 		scrollPane.setBounds(189, 92, 746, 392);
 		foodPanel.add(scrollPane);
-		
-		
 		
 		/*�� ã�� �˻���*/
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
-		searchField.setFont(new Font("Dialog", Font.PLAIN, 15));
+		searchField.setFont(new Font("�� M",Font.PLAIN,19));
 		searchField.setBounds(686, 29, 149, 36);
 		searchField.setBorder(null);
 		foodPanel.add(searchField);
@@ -407,61 +510,74 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//searchField �����ϱ�
-				/*
-				 * �� ã��
-				 * 
-				 * */
+				String search_text = "'" + searchField.getText() + "'";
+				connection.search_post("food_board", search_text);
 			}
 		});
-		searchBtn.setIcon(new ImageIcon(imagepath+"\\search_btn.PNG"));
+		searchBtn.setIcon(new ImageIcon(".\\Image\\search_btn.PNG"));
 		searchBtn.setBounds(836, 25, 40, 41);
 		searchBtn.setBorder(null);
 		foodPanel.add(searchBtn);
 		
 		/*ȸ������ ��ư*/
-		myBtn = new JButton("");
+		JButton myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
 				bfPanel=currPanel;
-				mypagePanel.setVisible(true);
-				currPanel=mypagePanel;
+				currPanel=Create_Mypage_Panel(connection);
 			}
 		});
-		myBtn.setIcon(new ImageIcon(imagepath+"\\my_btn.PNG"));
+		myBtn.setIcon(new ImageIcon(".\\Image\\my_btn.PNG"));
 		myBtn.setBounds(886, 20, 49, 48);
 		myBtn.setBorder(null);
 		foodPanel.add(myBtn);
 		
 		/*�۾��� ��ư*/
-		writeBtn = new JButton("");
+		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//�� �ۼ� event
-				new BoardWrite(nec_board,curr_user);
+				BoardWrite boardWrite = new BoardWrite("food_board", curr_user);
+				if(boardWrite.return_is_enrolled()==true) {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
+				else {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
 			}
 		});
-		writeBtn.setIcon(new ImageIcon(imagepath+"\\write_btn.PNG"));
+		
+		writeBtn.setIcon(new ImageIcon(".\\Image\\write_btn.PNG"));
 		writeBtn.setBounds(864, 488, 78, 35);
 		writeBtn.setBorder(null);
 		foodPanel.add(writeBtn);
 		
 		/*�ڷΰ��� ��ư*/
-		boardBackBtn = new JButton("");
+		JButton boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				choicePanel.setVisible(true);
-				currPanel = choicePanel;
+				//choicePanel.setVisible(true);
+				currPanel = Create_Choice_Panel(connection);
 			}
 		});
-		boardBackBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
+		boardBackBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		boardBackBtn.setBounds(0, 491, 49, 45);
 		boardBackBtn.setBorder(null);
 		foodPanel.add(boardBackBtn);
 		
-		/****************************Choice panel (�ó� ���� �ó� ����ǰ)*********************************************/
+		foodPanel.setVisible(true);
+		
+		return foodPanel;
+	}
+	
+	private JPanel Create_Choice_Panel(db_connection connection) {
+		ImagePanel choicePanel = new ImagePanel(new ImageIcon(".\\Image\\choice.png").getImage());
+		frame.getContentPane().add(choicePanel);
 		
 		choicePanel.setBounds(0, 0, 960, 540);
 		choicePanel.setLayout(null);
@@ -471,12 +587,12 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				foodPanel.setVisible(true);
-				currPanel = foodPanel;
+				//foodPanel.setVisible(true);
+				currPanel = Create_Food_Panel(connection);
 			}	
 		});
-		foodBtn.setBounds(127, 154, 307, 309);
-		foodBtn.setIcon(new ImageIcon(imagepath+"\\Ch_food.PNG"));
+		foodBtn.setBounds(129, 156, 306, 307);
+		foodBtn.setIcon(new ImageIcon(".\\Image\\Ch_food.PNG"));
 		foodBtn.setBorder(null);
 		choicePanel.add(foodBtn);
 		
@@ -485,62 +601,67 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				necPanel.setVisible(true);
-				currPanel = necPanel;
+				currPanel = Create_Nec_Panel(connection);
 			}	
 		});
-		necBtn.setBounds(525, 154, 307, 309);
-		necBtn.setIcon(new ImageIcon(imagepath+"\\Ch_nec.PNG"));
+		necBtn.setBounds(526, 157, 305, 305);
+		necBtn.setIcon(new ImageIcon(".\\Image\\Ch_nec.PNG"));
 		necBtn.setBorder(null);
 		choicePanel.add(necBtn);
 		
+		choicePanel.setVisible(true);
 		
-		/**********************************Join panel (ȸ������ �г�)******************************************/
+		return choicePanel;
+	}
+	
+	private JPanel Create_Join_Panel(db_connection connection, ChatServerObject chattingserver) {
+		ImagePanel joinPanel = new ImagePanel(new ImageIcon(".\\Image\\join.png").getImage());
+		frame.getContentPane().add(joinPanel);
 		
 		joinPanel.setBounds(0, 0, 960, 540);
 		joinPanel.setLayout(null);
 		
-		joinIdField = new JTextField();
-		joinIdField.setBounds(235, 175, 199, 25);
-		joinIdField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinNameField = new JTextField(); //�̸�
+		joinNameField.setBounds(235, 175, 199, 25);
+		joinNameField.setFont(new Font("�� M",Font.PLAIN,19));
+		joinNameField.setColumns(10);
+		joinNameField.setBorder(null);
+		joinPanel.add(joinNameField);
+
+		joinIdField = new JTextField(); //���̵�
+		joinIdField.setBounds(235, 232, 199, 25);
+		joinIdField.setFont(new Font("�� M",Font.PLAIN,19));
 		joinIdField.setColumns(10);
 		joinIdField.setBorder(null);
 		joinPanel.add(joinIdField);
 		
-		joinNameField = new JTextField();
-		joinNameField.setBounds(235, 232, 199, 25);
-		joinNameField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-		joinNameField.setColumns(10);
-		joinNameField.setBorder(null);
-		joinPanel.add(joinNameField);
-		
-		joinPwField = new JTextField();
+		joinPwField = new JPasswordField(); //��й�ȣ
 		joinPwField.setBounds(235, 287, 199, 25);
-		joinPwField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinPwField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwField.setColumns(10);
 		joinPwField.setBorder(null);
 		joinPanel.add(joinPwField);
 		
-		joinPwCheckField = new JTextField();
+		joinPwCheckField = new JPasswordField(); //��й�ȣ Ȯ��
 		joinPwCheckField.setBounds(235, 338, 199, 25);
-		joinPwCheckField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinPwCheckField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwCheckField.setColumns(10);
 		joinPwCheckField.setBorder(null);
 		joinPanel.add(joinPwCheckField);
 		
-		JComboBox comboBox = new JComboBox(place);
-		comboBox.setBounds(583, 225, 106, 27);
-		comboBox.setFont(new Font("HY����M", Font.PLAIN, 17));
+		JComboBox comboBox = new JComboBox(place); //���
+		comboBox.setBounds(583, 175, 207, 27);
+		comboBox.setFont(new Font("�� M",Font.PLAIN,19));
 		joinPanel.add(comboBox);
 		
-		joinNickField = new JTextField();
-		joinNickField.setBounds(583, 286, 207, 27);
-		joinNickField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinNickField = new JTextField(); //�г���
+		joinNickField.setBounds(583, 232, 207, 27);
+		joinNickField.setFont(new Font("�� M",Font.PLAIN,19));
 		joinNickField.setColumns(10);
 		joinNickField.setBorder(null);
 		joinPanel.add(joinNickField);
-		
-		enrollBtn = new JButton("");
+
+		enrollBtn = new JButton("");				//��� ��ư
 		enrollBtn.setBounds(419, 426, 122, 49);
 		enrollBtn.setBorder(null);
 		enrollBtn.addActionListener(new ActionListener(){	
@@ -548,42 +669,71 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {	//����ϱ� ��ư�� ������ ���� ����
 				try {
-					/*
-					 * ȸ������ ������ �����ϱ�
-					 *  
-					 * */
-					//getText()�� ������ ����
-					//���(ComboBox)-comboBox.getSelectedItem().toString()�� ������ ����
+					String nameString = "'" + joinNameField.getText() + "'";			//�̸�
+					String nicknameString = "'" + joinNickField.getText() + "'";		//�г���
+					String idString = "'" + joinIdField.getText() + "'";				//���̵�
+					String pwdString = "'" + joinPwField.getText() + "'";				//���
+					String pwdcheckString = "'" + joinPwCheckField.getText() + "'";		//��� Ȯ��
+					String homeString = "'" + comboBox.getSelectedItem().toString() + "'";	//��� ��
+					
+					
+					
+					if(pwdString.equals(pwdcheckString)) {		//����� ���Ȯ���� ��ġ�ϸ�
+						if(connection.input_user_info(nameString, nicknameString, idString, pwdString, homeString)) {
+							JOptionPane.showMessageDialog(null,"ȸ�������� �����մϴ�!");
+							currPanel.setVisible(false);
+							//loginPanel.setVisible(true);
+							currPanel = Create_login_Panel(connection,chattingserver);
+							return;
+						}
+						else {
+							JOptionPane.showMessageDialog(null,"�̹� �����ϴ� ���̵��Դϴ�.");	
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null,"��й�ȣ�� ��ġ���� �ʽ��ϴ�. �ٽ� Ȯ���ϼ���.");
+					}
 					
 				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(null,"You Failed to Enroll");
+					JOptionPane.showMessageDialog(null,"Unknown Error! ȸ�����Կ� �����Ͽ����ϴ�! �ó��� ������ ����ó: 01030135810");
 				}
+				/*
 				JOptionPane.showMessageDialog(null,"ȸ�������� �����մϴ�!");
 				currPanel.setVisible(false);
 				loginPanel.setVisible(true);
-				currPanel = (JPanel) loginPanel;				
+				currPanel = loginPanel;		
+				*/		
 			}		
 		});
-		enrollBtn.setPressedIcon(new ImageIcon(imagepath+"\\enroll_click_btn.PNG"));
+		enrollBtn.setPressedIcon(new ImageIcon(".\\Image\\enroll_click_btn.PNG"));
 		joinPanel.add(enrollBtn);
-		enrollBtn.setIcon(new ImageIcon(imagepath+"\\enroll_btn.PNG"));
+		enrollBtn.setIcon(new ImageIcon(".\\Image\\enroll_btn.PNG"));
 		
-		backBtn = new JButton("");
+		//�ڷΰ��� ��ư
+		backBtn = new JButton("");		
 		backBtn.setBounds(5, 10, 49, 49);
 		backBtn.setBorder(null);
 		backBtn.addActionListener(new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currPanel.setVisible(false);
-				loginPanel.setVisible(true);
-				currPanel = (JPanel) loginPanel;				
+				currPanel.setVisible(false);	//���� �г�(ȸ������) �Ⱥ��̰� �ϰ�
+				//loginPanel.setVisible(true);	//�α��� �г��� �ٽ� ���̰� �ϰ�
+				currPanel = Create_login_Panel(connection,chattingserver);	//���� �г�=�α��� �г�	
 			}		
 		});
-		backBtn.setIcon(new ImageIcon(imagepath+"\\back_btn.PNG"));
+		backBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		joinPanel.add(backBtn);
 		
-		/***************************************login panel(�α��� �г�)***************************************/
+		joinPanel.setVisible(true);
+		
+		return joinPanel;
+	}
+	
+	private JPanel Create_login_Panel(db_connection connection,ChatServerObject chattingserver) {
+		
+		
+		ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
+		frame.getContentPane().add(loginPanel);
 		
 		loginPanel.setBounds(0, 0, 960, 540);
 		loginPanel.setLayout(null);
@@ -593,41 +743,54 @@ public class SinamonApp {
 		
 		idField = new JTextField();
 		idField.setBounds(183, 274, 198, 24);
-		idField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		idField.setFont(new Font("�� M",Font.PLAIN,19));
 		loginPanel.add(idField);
 		idField.setColumns(10);
 		idField.setBorder(null);
 		
 		pwField = new JPasswordField();
 		pwField.setBounds(183, 322, 198, 26);
-		pwField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
+		pwField.setFont(new Font("Dialog", Font.BOLD, 20));
 		loginPanel.add(pwField);
 		pwField.setBorder(null);
 		
 		JButton loginBtn = new JButton("");			//loginBtn
 		loginBtn.setBounds(424, 291, 131, 51);
 		loginBtn.setBorder(null);
+		
 		loginBtn.addActionListener(new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * ID PW ��
-				 *  
-				 * */
+				String idString = "'" + idField.getText() + "'";		//id
+				String pwdString = "'" + pwField.getText() + "'";		//password
+				
+			
 				if(ID.equals(idField.getText()) && PASS.equals(pwField.getText())){
-					chattingserver.serverdown();
 					currPanel.setVisible(false);
-					choicePanel.setVisible(true);
-					currPanel = choicePanel;
+					
+					currPanel = Create_Choice_Panel(connection);
+					curr_user = connection.return_user_info(idString);
+					serverrun=true;
+					System.out.println(serverrun);
+					
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"You Failed to Log In");
 				}
+				
+				if(connection.login(idString, pwdString)) {				//�ش�Ǵ� ���̵�� �н����� ��ġ�ϸ� true ��ȯ
+					currPanel.setVisible(false);
+					
+					currPanel = Create_Choice_Panel(connection);
+					curr_user = connection.return_user_info(idString);	//���� �α������� ȸ�� ����
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"���̵�/����� ��ġ���� �ʰų�, �������� �ʴ� �����Դϴ�");
+				}
 			}
 		});
-		loginBtn.setIcon(new ImageIcon(imagepath+"\\login_btn.PNG"));
-		loginBtn.setPressedIcon(new ImageIcon(imagepath+"\\login_click_btn.PNG"));
+		loginBtn.setIcon(new ImageIcon(".\\Image\\login_btn.PNG"));
+		loginBtn.setPressedIcon(new ImageIcon(".\\Image\\login_click_btn.PNG"));
 		loginPanel.add(loginBtn);
 		
 		JButton joinBtn = new JButton("");		//joinBtn
@@ -637,19 +800,62 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				joinPanel.setVisible(true);
-				currPanel = joinPanel;
+				currPanel = Create_Join_Panel(connection,chattingserver);
 			}
 		});
-		joinBtn.setIcon(new ImageIcon(imagepath+"\\join_btn.PNG"));
-		joinBtn.setPressedIcon(new ImageIcon(imagepath+"\\join_click_btn.PNG"));
+		joinBtn.setIcon(new ImageIcon(".\\Image\\join_btn.PNG"));
+		joinBtn.setPressedIcon(new ImageIcon(".\\Image\\join_click_btn.PNG"));
 		loginPanel.add(joinBtn);
 		
-		joinPanel.setVisible(false);
-		necPanel.setVisible(false);
-		foodPanel.setVisible(false);
-		choicePanel.setVisible(false);
-		mypagePanel.setVisible(false);
+		loginPanel.setVisible(true);
+		return loginPanel;
+	}
+	
+	private void initialize(db_connection connection,ChatServerObject chattingserver) {
+		//frame ����
+		frame = new JFrame();
+		frame.setTitle("�ó���");
+		frame.setBounds(100, 100, 960, 540);
+		frame.setPreferredSize(new Dimension(960,540));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//ȭ���� ������ ���α׷� ����
+		frame.setResizable(false); 		//ũ�� ����
+		//
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Image logo=tk.getImage(".\\Image\\logo.png");
+		frame.setIconImage(logo);
+
+		
+		currPanel=Create_login_Panel(connection,chattingserver);
+	    System.out.println("hey");
+	    
+		/**************************** My page (ȸ�� �����丮 �г�)*****************************************/
+		
+		
+		/****************************necPanel (����ǰ �Խ��� �г�)*****************************************/
+		
+		
+		
+		/****************************foodPanel (���� �Խ��� �г�)*****************************************/
+		
+		
+		
+		/****************************Choice panel (�ó� ���� �ó� ����ǰ)*********************************************/
+		
+		
+		
+		
+		/**********************************Join panel (ȸ������ �г�)******************************************/
+		
+		
+		
+		/***************************************login panel(�α��� �г�)***************************************/
+		
+		
+		Create_Join_Panel(connection,chattingserver).setVisible(false);
+		Create_Nec_Panel(connection).setVisible(false);
+		Create_Food_Panel(connection).setVisible(false);
+		Create_Choice_Panel(connection).setVisible(false);
+		Create_Mypage_Panel(connection).setVisible(false);
 	}
 }
 

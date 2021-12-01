@@ -16,11 +16,12 @@ class InfoDTO implements Serializable{
 	private String nickName;
 	private String message;
 	private int roomid;		//방번호
+	private int necroomid;
+	private int foodroomid;
 	private boolean room_existence; //방번호 존재 여부
 	private Info command;	
 	private Room room;
-	private boolean chatclick=false;
-	private boolean noticeclick=false;
+	private String roomname;
 	
 	
 	//private who whossend = who.me;
@@ -33,7 +34,18 @@ class InfoDTO implements Serializable{
 		return roomid;
 	}
 	
+	public int getnecroomid() {
+		return necroomid;
+	}
 	
+	public int getfoodroomid() {
+		return foodroomid;
+	}
+	
+	public String getroomname() {
+		return roomname;
+	}
+
 	
 	public String getNickName(){
 		return nickName;
@@ -44,12 +56,7 @@ class InfoDTO implements Serializable{
 	public List<ChatHandlerObject> getuserlist(){
 		return room.getuser();
 	}
-	public boolean getchatclick() {
-		return chatclick;
-	}
-	public boolean getnoticeclick() {
-		return noticeclick;
-	}
+
 	
 	
 	
@@ -75,6 +82,14 @@ class InfoDTO implements Serializable{
 		this.roomid=roomid;
 	}
 	
+	public void setnecroomid(int necroomid) {
+		this.necroomid=necroomid;
+	}
+	
+	public void setfoodroomid(int foodroomid) {
+		this.foodroomid=foodroomid;
+	}
+	
 	public void setNickName(String nickName){
 		this.nickName= nickName;
 	}
@@ -90,12 +105,10 @@ class InfoDTO implements Serializable{
 		this.message= message; 
 	}
 	
-	public void setchatclick() {
-		chatclick=true;
+	public void setroomname(String roomname) {
+		this.roomname=roomname;
 	}
-	public void setnoticeclick() {
-		noticeclick=true;
-	}
+	
 }
 /*
 ChatClient.java ---> ChatClientObject.java

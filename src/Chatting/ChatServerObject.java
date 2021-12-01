@@ -63,7 +63,7 @@ public class ChatServerObject
 	}
 	public void serverrun() {
 		try {  //서버 소켓 생성 작업
-			new hello();
+			//new hello();
 			serverSocket = new ServerSocket(9500);
 			
 			System.out.println("채팅서버 준비 완료");
@@ -72,16 +72,14 @@ public class ChatServerObject
 			InfoDTO dto= null;
 			
 			while(serverrun) {
-				System.out.println("check1");
 				Socket socket = serverSocket.accept();
 				ChatHandlerObject handler1 = new ChatHandlerObject(socket);
 				ChatHandlerObject handler2=new ChatHandlerObject(handler1);
 				
 				handler2.start();  //스레드 시작- 스레드 실행
-				userlist.add(handler1);
-				userlistsize=RoomManager.eachroomusersize();
+				//userlist.add(handler1);
+				//userlistsize=RoomManager.eachroomusersize();
 			}	
-			System.out.println("check2");
 		}
 		
 		 catch (IOException e) {
