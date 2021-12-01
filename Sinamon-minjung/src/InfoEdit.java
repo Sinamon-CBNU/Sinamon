@@ -1,5 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 public class InfoEdit {
 
@@ -25,70 +28,68 @@ public class InfoEdit {
 	/**
 	 * Create the application.
 	 */
-	public InfoEdit(Object[] curr_user) {	//유저정보 받아옴
-		initialize(curr_user);
+	public InfoEdit(Object[] curr_user, db_connection connection) {	//유저정보 받아옴
+		initialize(curr_user, connection);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Object[] curr_user) {
+	private void initialize(Object[] curr_user, db_connection connection) {
 		frame = new JFrame();
 		frame.setTitle("회원정보 수정");
-		frame.setBounds(100, 100, 460, 340);
-		//db_connection connection = new db_connection();
+		frame.setBounds(100, 100, 640, 440);
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\edit_info.png").getImage());
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
-		nameField = new JTextField();						//이름
-		nameField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		nameField.setBounds(79, 89, 130, 22);
-		nameField.setBorder(null);
-		writePanel.add(nameField);
+		nameField = new JTextField(); //이름
+		nameField.setFont(new Font("고도 M", Font.PLAIN, 17));
 		nameField.setColumns(10);
+		nameField.setBorder(null);
+		nameField.setBounds(110, 121, 165, 25);
+		writePanel.add(nameField);
 		
-		idField = new JTextField();							//id
-		idField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		idField = new JTextField(); //id
+		idField.setFont(new Font("고도 M", Font.PLAIN, 17));
 		idField.setColumns(10);
 		idField.setBorder(null);
-		idField.setBounds(79, 134, 130, 22);
+		idField.setBounds(110, 180, 165, 25);
 		writePanel.add(idField);
 		
-		pwField = new JTextField();							//pw			
-		pwField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		pwField.setColumns(10);
+		pwField = new JPasswordField(); //pw
 		pwField.setBorder(null);
-		pwField.setBounds(79, 176, 130, 22);
+		pwField.setBounds(110, 236, 165, 25);
 		writePanel.add(pwField);
 		
-		pwCheckField = new JTextField();					//pw check
-		pwCheckField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		pwCheckField.setColumns(10);
+		pwCheckField = new JPasswordField(); //pw check
 		pwCheckField.setBorder(null);
-		pwCheckField.setBounds(79, 218, 130, 22);
+		pwCheckField.setBounds(110, 292, 165, 25);
 		writePanel.add(pwCheckField);
 		
 		nickNameField = new JTextField();					//닉네임
-		nickNameField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
+		nickNameField.setFont(new Font("고도 M", Font.PLAIN, 17));
 		nickNameField.setColumns(10);
 		nickNameField.setBorder(null);
-		nickNameField.setBounds(285, 134, 128, 22);
+		nickNameField.setBounds(382, 180, 165, 25);
 		writePanel.add(nickNameField);
 	
 		
 		JComboBox comboBox = new JComboBox(place);			//장소
-		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		comboBox.setBounds(282, 89, 133, 23);
+		comboBox.setFont(new Font("고도 M", Font.PLAIN, 17));
+		comboBox.setBounds(377, 119, 175, 28);
 		writePanel.add(comboBox);
 		
 		JButton enrollBtn = new JButton("");				//작성 완료 버튼
 		enrollBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
-            	String placeString = "'" + comboBox.getSelectedItem().toString() + "'";
+            	String nameString = "'" + nameField.getText() + "'";		//이름
+            	String user_idString = "'" + idField.getText() + "'";		//아이디
+            	String pwdString = "'" + pwField.getText() + "'";			//비번
+            	String nicknameString = "'" + nickNameField.getText() + "'";	//닉네임
+            	String placeString = "'" + comboBox.getSelectedItem().toString() + "'";		//사는곳
             	
             	int home_id = 0;
             	//정문1 중문2 후문3 서문4 양성재5 양진재6 본관7
@@ -124,7 +125,7 @@ public class InfoEdit {
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + placeString);
 				}
-            
+            	connection.modify_user_info(home_id, placeString, placeString)
         		frame.setVisible(false);	//창 닫기
             }
         });

@@ -19,8 +19,8 @@ public class ChatBtnDesign extends JButton{
     protected void decorate() { setBorderPainted(false); setOpaque(false); }
     @Override 
     protected void paintComponent(Graphics g) {
-       Color c=new Color(255, 255, 208); //배경색 결정
-       Color o=new Color(247,99,12); //글자색 결정
+       Color c=new Color(255, 212, 0); //배경색 결정
+       Color o=new Color(255, 249, 225); //글자색 결정
        int width = getWidth(); 
        int height = getHeight(); 
        Graphics2D graphics = (Graphics2D) g; 

@@ -1,15 +1,13 @@
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.ObjectInputStream.GetField;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -114,34 +112,8 @@ public class SinamonApp {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	
-	 
-	private void initialize(db_connection connection) {
-		//frame 설정
-		frame = new JFrame();
-		frame.setTitle("시나몬");
-		frame.setBounds(100, 100, 960, 540);
-		frame.setPreferredSize(new Dimension(960,540));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//화면을 닫으면 프로그램 종료
-		frame.setResizable(false); 		//크기 고정
-		
-		
-		//패널 이미지
-		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(".\\Image\\mypage.png").getImage());
-		frame.getContentPane().add(mypagePanel);
-		ImagePanel foodPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
-		frame.getContentPane().add(foodPanel);
-		ImagePanel necPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
-		frame.getContentPane().add(necPanel);
-		ImagePanel choicePanel = new ImagePanel(new ImageIcon(".\\Image\\choice.png").getImage());
-		frame.getContentPane().add(choicePanel);
-		ImagePanel joinPanel = new ImagePanel(new ImageIcon(".\\Image\\join.png").getImage());
-		frame.getContentPane().add(joinPanel);
-		ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
-		//ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
-		frame.getContentPane().add(loginPanel);
-		
-		//table의 '채팅하기' 셀의 색깔 변경을 위한 DefaultTableCellRenderer 객체 선언
+	//마이페이지 패널 생성
+	private JPanel Create_Mypage_Panel(db_connection connection) {
 		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
 	    colC.setBackground(new Color(255, 255, 208));	
 	    //table의 글 정렬을 위한
@@ -150,20 +122,21 @@ public class SinamonApp {
 	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
 	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
 	    //'현황'셀의 글자 색깔 변경과 가운데 정룔을 위한 DefaultTableCellRenderer 객체 선언
-	    DefaultTableCellRenderer celBlueCenter=new DefaultTableCellRenderer();
-	    celBlueCenter.setForeground(Color.BLUE);
-	    celBlueCenter.setHorizontalAlignment(JLabel.CENTER);
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
 	    
-	    
-		/**************************** My page (회원 히스토리 패널)*****************************************/
+		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(".\\Image\\mypage.png").getImage());
+		frame.getContentPane().add(mypagePanel);	
+		
 		mypagePanel.setBounds(0,0,960,540);	//패널 사이즈
 		mypagePanel.setLayout(null);
 		
 		//history1 구현 - [내가 쓴 글]
 		String[] hHeader=new String[] {"제목", "현황"};	//히스토리 테이블 헤더
 		String nickname = "'" + curr_user[2] + "'";
-		my_board_data = connection.return_my_board("food_board", nickname);
-
+		my_board_data = connection.return_my_board(nickname);
+		
 		//DefaultTableModel을 사용하여 내용 수정 불가하게
 		DefaultTableModel modH1 = new DefaultTableModel(my_board_data, hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -178,8 +151,9 @@ public class SinamonApp {
             	int row = history1.getSelectedRow();
                 int col = history1.getSelectedColumn();
                 String value=(String) history1.getValueAt(row,col);		//선택한 셀의 값을 저장하여
-            	if(value.equals("예정"))									//'에정'일 경우
+            	if(value.equals("예정"))	{								//'에정'일 경우
             		new BoardEdit();									//수정창이 나타남
+            	}
             }
         });
 		//테이블 세부 설정
@@ -187,7 +161,7 @@ public class SinamonApp {
 		history1.setFont(new Font("Sanserif", Font.BOLD, 15));	//테이블 폰트
 	    history1.getColumn("제목").setPreferredWidth(300);			//테이블 열 간격
 	    history1.getColumn("현황").setPreferredWidth(80);
-	    history1.getColumn("현황").setCellRenderer(celBlueCenter);	//'현황': 글자 파란색, 가운데 정렬
+	    history1.getColumn("현황").setCellRenderer(celOrCenter);	//'현황': 글자 파란색, 가운데 정렬
 		history1.setPreferredScrollableViewportSize(new Dimension(380,256));
         history1.getTableHeader().setReorderingAllowed(false); 	// 컬럼들 이동 불가
         history1.getTableHeader().setResizingAllowed(false); 	// 컬럼 크기 조절 불가
@@ -197,13 +171,8 @@ public class SinamonApp {
 		mypagePanel.add(h1ScrollPane);
 		
 		//history2 구현 - [내가 시나몬 한 history]
-		Object[][] hData2=new Object[][] {
-			{"푸라닭","완료"},
-			{"엽떡","완료"},
-			{"곱창전골","완료"},
-			{"휴지","진행 중"},
-			{"스시","진행 중"}
-		};
+		Object[][] hData2 = connection.return_get_in_board(nickname);
+		
 		//DefaultTableModel을 사용하여 내용 수정 불가하게
 		DefaultTableModel modH2 = new DefaultTableModel(hData2,hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -217,17 +186,19 @@ public class SinamonApp {
             public void mouseClicked(MouseEvent e) {
             	int row = history2.getSelectedRow();
                 int col = history2.getSelectedColumn();
-                String value=(String) history2.getValueAt(row,col);			//선택한 셀의 값을 저장하여
-	        	if(value.equals("진행 중"))									//'진행 중'일 경우
-	        		new BoardLook(board_name,curr_user);					//게시글 보기 창이 나타남
+                String value=(String) history2.getValueAt(row,col);         //선택한 셀의 값을 저장하여
+                if(value.equals("진행중")) {                          //'진행 중'일 경우
+                	new BoardLook(board_name,curr_user);               //게시글 보기 창이 나타남
+                }
             }
         });
+
 		//테이블 세부 설정
         history2.setRowHeight(25);	//테이블 행 간격
 		history2.setFont(new Font("Sanserif", Font.BOLD, 15));	//테이블 폰트
 	    history2.getColumn("제목").setPreferredWidth(300);			//테이블 열 간격
 	    history2.getColumn("현황").setPreferredWidth(80);
-	    history2.getColumn("현황").setCellRenderer(celBlueCenter);	//'현황': 글자 파란색, 가운데 정렬
+	    history2.getColumn("현황").setCellRenderer(celOrCenter);	//'현황': 글자 파란색, 가운데 정렬
 		history2.setPreferredScrollableViewportSize(new Dimension(380,256));
         history2.getTableHeader().setReorderingAllowed(false); 	// 컬럼들 이동 불가
         history2.getTableHeader().setResizingAllowed(false); 	// 컬럼 크기 조절 불가
@@ -256,7 +227,7 @@ public class SinamonApp {
 		editInfoBtn.setIcon(new ImageIcon(".\\Image\\edit_info_btn.PNG"));
 		editInfoBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new InfoEdit(curr_user);
+				new InfoEdit(curr_user, connection);
 			}
 		});
 		editInfoBtn.setBounds(348, 22, 155, 46);
@@ -268,7 +239,27 @@ public class SinamonApp {
 		lblNewLabel.setBounds(101, 138, 756, 38);
 		mypagePanel.add(lblNewLabel);
 		
-		/****************************necPanel (생필품 게시판 패널)*****************************************/
+		mypagePanel.setVisible(true);
+		
+		return mypagePanel;
+	}
+	
+	//생필품 패널 생성
+	private JPanel Create_Nec_Panel(db_connection connection) {
+		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
+	    colC.setBackground(new Color(255, 255, 208));	
+	    //table의 글 정렬을 위한
+	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
+	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
+	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
+	    //'현황'셀의 글자 색깔 변경과 가운데 정룔을 위한 DefaultTableCellRenderer 객체 선언
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
+	    
+		ImagePanel necPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
+		frame.getContentPane().add(necPanel);
 		
 		necPanel.setBounds(0, 0, 960, 540);
 		necPanel.setLayout(null);
@@ -295,7 +286,7 @@ public class SinamonApp {
         ntable.getColumn("작성자").setPreferredWidth(100);
         ntable.getColumn("작성자").setCellRenderer(celAlignCenter);
         ntable.getColumn("현황").setPreferredWidth(80);
-        ntable.getColumn("현황").setCellRenderer(celBlueCenter);
+        ntable.getColumn("현황").setCellRenderer(celOrCenter);
         ntable.getColumn("채팅").setPreferredWidth(80);
         TableCellRenderer renderer = new TableCellRenderer();	//채팅 버튼 구현
         ntable.getColumn("채팅").setCellRenderer(renderer);
@@ -344,8 +335,9 @@ public class SinamonApp {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
 				bfPanel=currPanel;
-				mypagePanel.setVisible(true);
-				currPanel=mypagePanel;
+				//Create_Mypage_Panel(connection);
+				//mypagePanel.setVisible(true);
+				currPanel=Create_Mypage_Panel(connection);
 			}
 		});
 		myBtn.setIcon(new ImageIcon(".\\Image\\my_btn.PNG"));
@@ -358,7 +350,15 @@ public class SinamonApp {
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//글 작성 event
-				new BoardWrite("nes_board", curr_user);
+				BoardWrite boardWrite = new BoardWrite("nes_board", curr_user);
+				if(boardWrite.return_is_enrolled()==true) {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
+				else {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
 			}
 		});
 		writeBtn.setIcon(new ImageIcon(".\\Image\\write_btn.PNG"));
@@ -371,8 +371,7 @@ public class SinamonApp {
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				choicePanel.setVisible(true);
-				currPanel = choicePanel;
+				currPanel = Create_Choice_Panel(connection);
 			}
 		});
 		boardBackBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
@@ -380,7 +379,26 @@ public class SinamonApp {
 		boardBackBtn.setBorder(null);
 		necPanel.add(boardBackBtn);
 		
-		/****************************foodPanel (음식 게시판 패널)*****************************************/
+		necPanel.setVisible(true);
+		
+		return necPanel;
+	}
+	
+	private JPanel Create_Food_Panel(db_connection connection) {
+		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
+	    colC.setBackground(new Color(255, 255, 208));	
+	    //table의 글 정렬을 위한
+	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
+	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
+	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
+	    //'현황'셀의 글자 색깔 변경과 가운데 정룔을 위한 DefaultTableCellRenderer 객체 선언
+	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
+	    celOrCenter.setForeground(new Color(255, 127, 0));
+	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
+		
+		ImagePanel foodPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
+		frame.getContentPane().add(foodPanel);
 		
 		foodPanel.setBounds(0, 0, 960, 540);
 		foodPanel.setLayout(null);
@@ -410,8 +428,9 @@ public class SinamonApp {
         ftable.getColumn("작성자").setPreferredWidth(100);
         ftable.getColumn("작성자").setCellRenderer(celAlignCenter);
         ftable.getColumn("현황").setPreferredWidth(80);
-        ftable.getColumn("현황").setCellRenderer(celBlueCenter);
+        ftable.getColumn("현황").setCellRenderer(celOrCenter);
         ftable.getColumn("채팅").setPreferredWidth(80);
+        TableCellRenderer renderer = new TableCellRenderer();	//채팅 버튼 구현
         ftable.getColumn("채팅").setCellRenderer(renderer);	//채팅버튼 구현
      
 		ftable.setRowHeight(30);
@@ -421,7 +440,7 @@ public class SinamonApp {
         ftable.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
         ftable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table 여러개 선택 불가
         
-		scrollPane = new JScrollPane(ftable);
+        JScrollPane scrollPane = new JScrollPane(ftable);
 		scrollPane.setBounds(189, 92, 746, 392);
 		foodPanel.add(scrollPane);
 		
@@ -429,7 +448,7 @@ public class SinamonApp {
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
-		searchField.setFont(new Font("Dialog", Font.PLAIN, 15));
+		searchField.setFont(new Font("고도 M",Font.PLAIN,19));
 		searchField.setBounds(686, 29, 149, 36);
 		searchField.setBorder(null);
 		foodPanel.add(searchField);
@@ -451,14 +470,13 @@ public class SinamonApp {
 		foodPanel.add(searchBtn);
 		
 		/*회원정보 버튼*/
-		myBtn = new JButton("");
+		JButton myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
 				bfPanel=currPanel;
-				mypagePanel.setVisible(true);
-				currPanel=mypagePanel;
+				currPanel=Create_Mypage_Panel(connection);
 			}
 		});
 		myBtn.setIcon(new ImageIcon(".\\Image\\my_btn.PNG"));
@@ -467,12 +485,19 @@ public class SinamonApp {
 		foodPanel.add(myBtn);
 		
 		/*글쓰기 버튼*/
-		writeBtn = new JButton("");
+		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//글 작성 event
-				new BoardWrite("food_board", curr_user);
-				//foodPanel.repaint();
+				BoardWrite boardWrite = new BoardWrite("food_board", curr_user);
+				if(boardWrite.return_is_enrolled()==true) {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
+				else {
+					currPanel.setVisible(false);
+					currPanel = Create_Nec_Panel(connection);
+				}
 			}
 		});
 		
@@ -482,12 +507,12 @@ public class SinamonApp {
 		foodPanel.add(writeBtn);
 		
 		/*뒤로가기 버튼*/
-		boardBackBtn = new JButton("");
+		JButton boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				choicePanel.setVisible(true);
-				currPanel = choicePanel;
+				//choicePanel.setVisible(true);
+				currPanel = Create_Choice_Panel(connection);
 			}
 		});
 		boardBackBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
@@ -495,7 +520,14 @@ public class SinamonApp {
 		boardBackBtn.setBorder(null);
 		foodPanel.add(boardBackBtn);
 		
-		/****************************Choice panel (시나 음식 시나 생필품)*********************************************/
+		foodPanel.setVisible(true);
+		
+		return foodPanel;
+	}
+	
+	private JPanel Create_Choice_Panel(db_connection connection) {
+		ImagePanel choicePanel = new ImagePanel(new ImageIcon(".\\Image\\choice.png").getImage());
+		frame.getContentPane().add(choicePanel);
 		
 		choicePanel.setBounds(0, 0, 960, 540);
 		choicePanel.setLayout(null);
@@ -505,11 +537,11 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				foodPanel.setVisible(true);
-				currPanel = foodPanel;
+				//foodPanel.setVisible(true);
+				currPanel = Create_Food_Panel(connection);
 			}	
 		});
-		foodBtn.setBounds(127, 154, 307, 309);
+		foodBtn.setBounds(129, 156, 306, 307);
 		foodBtn.setIcon(new ImageIcon(".\\Image\\Ch_food.PNG"));
 		foodBtn.setBorder(null);
 		choicePanel.add(foodBtn);
@@ -519,61 +551,66 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				necPanel.setVisible(true);
-				currPanel = necPanel;
+				currPanel = Create_Nec_Panel(connection);
 			}	
 		});
-		necBtn.setBounds(525, 154, 307, 309);
+		necBtn.setBounds(526, 157, 305, 305);
 		necBtn.setIcon(new ImageIcon(".\\Image\\Ch_nec.PNG"));
 		necBtn.setBorder(null);
 		choicePanel.add(necBtn);
 		
+		choicePanel.setVisible(true);
 		
-		/**********************************Join panel (회원가입 패널)******************************************/
+		return choicePanel;
+	}
+	
+	private JPanel Create_Join_Panel(db_connection connection) {
+		ImagePanel joinPanel = new ImagePanel(new ImageIcon(".\\Image\\join.png").getImage());
+		frame.getContentPane().add(joinPanel);
 		
 		joinPanel.setBounds(0, 0, 960, 540);
 		joinPanel.setLayout(null);
 		
-		joinNameField = new JTextField();		//이름
+		joinNameField = new JTextField(); //이름
 		joinNameField.setBounds(235, 175, 199, 25);
-		joinNameField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinNameField.setFont(new Font("고도 M",Font.PLAIN,19));
 		joinNameField.setColumns(10);
 		joinNameField.setBorder(null);
 		joinPanel.add(joinNameField);
-		
-		joinIdField = new JTextField();			//아이디
+
+		joinIdField = new JTextField(); //아이디
 		joinIdField.setBounds(235, 232, 199, 25);
-		joinIdField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinIdField.setFont(new Font("고도 M",Font.PLAIN,19));
 		joinIdField.setColumns(10);
 		joinIdField.setBorder(null);
 		joinPanel.add(joinIdField);
 		
-		joinPwField = new JTextField();			//비밀번호
+		joinPwField = new JPasswordField(); //비밀번호
 		joinPwField.setBounds(235, 287, 199, 25);
-		joinPwField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinPwField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwField.setColumns(10);
 		joinPwField.setBorder(null);
 		joinPanel.add(joinPwField);
 		
-		joinPwCheckField = new JTextField();	//비밀번호 확인
+		joinPwCheckField = new JPasswordField(); //비밀번호 확인
 		joinPwCheckField.setBounds(235, 338, 199, 25);
-		joinPwCheckField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		joinPwCheckField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwCheckField.setColumns(10);
 		joinPwCheckField.setBorder(null);
 		joinPanel.add(joinPwCheckField);
 		
-		JComboBox comboBox = new JComboBox(place);	//장소
-		comboBox.setBounds(583, 225, 106, 27);
-		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 17));
+		JComboBox comboBox = new JComboBox(place); //장소
+		comboBox.setBounds(583, 175, 207, 27);
+		comboBox.setFont(new Font("고도 M",Font.PLAIN,19));
 		joinPanel.add(comboBox);
-			
-		joinNickField = new JTextField();			//닉네임
-		joinNickField.setBounds(583, 286, 207, 27);
-		joinNickField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		
+		joinNickField = new JTextField(); //닉네임
+		joinNickField.setBounds(583, 232, 207, 27);
+		joinNickField.setFont(new Font("고도 M",Font.PLAIN,19));
 		joinNickField.setColumns(10);
 		joinNickField.setBorder(null);
 		joinPanel.add(joinNickField);
-		
+
 		enrollBtn = new JButton("");				//등록 버튼
 		enrollBtn.setBounds(419, 426, 122, 49);
 		enrollBtn.setBorder(null);
@@ -593,8 +630,8 @@ public class SinamonApp {
 						if(connection.input_user_info(nameString, nicknameString, idString, pwdString, homeString)) {
 							JOptionPane.showMessageDialog(null,"회원가입을 축하합니다!");
 							currPanel.setVisible(false);
-							loginPanel.setVisible(true);
-							currPanel = (JPanel) loginPanel;
+							//loginPanel.setVisible(true);
+							currPanel = Create_login_Panel(connection);
 							return;
 						}
 						else {
@@ -628,14 +665,21 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);	//현재 패널(회원가입) 안보이게 하고
-				loginPanel.setVisible(true);	//로그인 패널을 다시 보이게 하고
-				currPanel = loginPanel;	//현재 패널=로그인 패널	
+				//loginPanel.setVisible(true);	//로그인 패널을 다시 보이게 하고
+				currPanel = Create_login_Panel(connection);	//현재 패널=로그인 패널	
 			}		
 		});
 		backBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		joinPanel.add(backBtn);
 		
-		/***************************************login panel(로그인 패널)***************************************/
+		joinPanel.setVisible(true);
+		
+		return joinPanel;
+	}
+	
+	private JPanel Create_login_Panel(db_connection connection) {
+		ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
+		frame.getContentPane().add(loginPanel);
 		
 		loginPanel.setBounds(0, 0, 960, 540);
 		loginPanel.setLayout(null);
@@ -645,14 +689,14 @@ public class SinamonApp {
 		
 		idField = new JTextField();
 		idField.setBounds(183, 274, 198, 24);
-		idField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		idField.setFont(new Font("고도 M",Font.PLAIN,19));
 		loginPanel.add(idField);
 		idField.setColumns(10);
 		idField.setBorder(null);
 		
 		pwField = new JPasswordField();
 		pwField.setBounds(183, 322, 198, 26);
-		pwField.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 20));
+		pwField.setFont(new Font("Dialog", Font.BOLD, 20));
 		loginPanel.add(pwField);
 		pwField.setBorder(null);
 		
@@ -667,8 +711,8 @@ public class SinamonApp {
 				String pwdString = "'" + pwField.getText() + "'";		//password
 				if(connection.login(idString, pwdString)) {				//해당되는 아이디와 패스워드 일치하면 true 반환
 					currPanel.setVisible(false);
-					choicePanel.setVisible(true);		//음식, 생필품 선택 화면으로 넘어감
-					currPanel = choicePanel;
+					
+					currPanel = Create_Choice_Panel(connection);
 					curr_user = connection.return_user_info(idString);	//현재 로그인중인 회원 정보
 				}
 				else {
@@ -687,19 +731,63 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				joinPanel.setVisible(true);
-				currPanel = joinPanel;
+				currPanel = Create_Join_Panel(connection);
 			}
 		});
 		joinBtn.setIcon(new ImageIcon(".\\Image\\join_btn.PNG"));
 		joinBtn.setPressedIcon(new ImageIcon(".\\Image\\join_click_btn.PNG"));
 		loginPanel.add(joinBtn);
 		
-		joinPanel.setVisible(false);
-		necPanel.setVisible(false);
-		foodPanel.setVisible(false);
-		choicePanel.setVisible(false);
-		mypagePanel.setVisible(false);
+		loginPanel.setVisible(true);
+		
+		return loginPanel;
+	}
+	
+	private void initialize(db_connection connection) {
+		//frame 설정
+		frame = new JFrame();
+		frame.setTitle("시나몬");
+		frame.setBounds(100, 100, 960, 540);
+		frame.setPreferredSize(new Dimension(960,540));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//화면을 닫으면 프로그램 종료
+		frame.setResizable(false); 		//크기 고정
+		//
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Image logo=tk.getImage(".\\Image\\logo.png");
+		frame.setIconImage(logo);
+
+		
+		currPanel=Create_login_Panel(connection);
+	    
+	    
+		/**************************** My page (회원 히스토리 패널)*****************************************/
+		
+		
+		/****************************necPanel (생필품 게시판 패널)*****************************************/
+		
+		
+		
+		/****************************foodPanel (음식 게시판 패널)*****************************************/
+		
+		
+		
+		/****************************Choice panel (시나 음식 시나 생필품)*********************************************/
+		
+		
+		
+		
+		/**********************************Join panel (회원가입 패널)******************************************/
+		
+		
+		
+		/***************************************login panel(로그인 패널)***************************************/
+		
+		
+		Create_Join_Panel(connection).setVisible(false);
+		Create_Nec_Panel(connection).setVisible(false);
+		Create_Food_Panel(connection).setVisible(false);
+		Create_Choice_Panel(connection).setVisible(false);
+		Create_Mypage_Panel(connection).setVisible(false);
 	}
 }
 
