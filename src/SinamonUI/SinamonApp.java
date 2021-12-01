@@ -35,26 +35,26 @@ import javax.swing.table.DefaultTableModel;
 
 public class SinamonApp {
 	
-	//check ÀÓ½Ã ID,PW
+	//check ì„ì‹œ ID,PW
 	private final String ID="Hello";
 	private final String PASS="1234";
-	//BoardWrite ¿­±âÀ§ÇØ¼­ Àá½Ã ¼±¾ğ¸¸ÇØµÒ >>Áö¿ì±â
+	//BoardWrite ì—´ê¸°ìœ„í•´ì„œ ì ì‹œ ì„ ì–¸ë§Œí•´ë‘  >>ì§€ìš°ê¸°
 	String food_board;		
 	String nec_board;
 	String board_name;
 	Object[] curr_user;
 	/*
-	 * ID PW ÀúÀå
+	 * ID PW ì €ì¥
 	 *  
 	 * */
 	
-	private final String place[]= {"Á¤ ¹®", "Áß ¹®","¼­ ¹®","ÈÄ ¹®","º» °ü","¾ç ¼º Àç","¾ç Áø Àç"};
+	private final String place[]= {"ì • ë¬¸", "ì¤‘ ë¬¸","ì„œ ë¬¸","í›„ ë¬¸","ë³¸ ê´€","ì–‘ ì„± ì¬","ì–‘ ì§„ ì¬"};
 	
 	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
-	private JPanel currPanel;	//ÇöÀç ÆĞ³Î
-	private JPanel bfPanel;	//Àü before ÆĞ³Î
+	private JPanel currPanel;	//í˜„ì¬ íŒ¨ë„
+	private JPanel bfPanel;	//ì „ before íŒ¨ë„
 	private JTextField joinNameField;
 	private JTextField joinIdField;
 	private JTextField joinPwField;
@@ -65,16 +65,16 @@ public class SinamonApp {
 	private JButton clickBtn;
 	private JButton recBtn;
 	private JButton searchBtn;
-	private JTable ftable;			//À½½Ä °Ô½ÃÆÇÀÇ table
-	private JTable ntable;			//»ıÇÊÇ° °Ô½ÃÆÇÀÇ table
-	private JTable history1;		//Mypage-³»°¡ ¾´ ±Û
-	private JTable history2;		//Mypage-³»°¡ ½Ã³ª¸ó ÇÑ history
-	private JScrollPane h1ScrollPane;	//Mypage-³»°¡ ¾´ ±Û Å×ÀÌºíÀÇ ½ºÅ©·ÑÆĞÀÎ
-	private JScrollPane h2ScrollPane;	///Mypage-³»°¡ ½Ã³ª¸ó ÇÑ history Å×ÀÌºíÀÇ ½ºÅ©·ÑÆĞ
+	private JTable ftable;			//ìŒì‹ ê²Œì‹œíŒì˜ table
+	private JTable ntable;			//ìƒí•„í’ˆ ê²Œì‹œíŒì˜ table
+	private JTable history1;		//Mypage-ë‚´ê°€ ì“´ ê¸€
+	private JTable history2;		//Mypage-ë‚´ê°€ ì‹œë‚˜ëª¬ í•œ history
+	private JScrollPane h1ScrollPane;	//Mypage-ë‚´ê°€ ì“´ ê¸€ í…Œì´ë¸”ì˜ ìŠ¤í¬ë¡¤íŒ¨ì¸
+	private JScrollPane h2ScrollPane;	///Mypage-ë‚´ê°€ ì‹œë‚˜ëª¬ í•œ history í…Œì´ë¸”ì˜ ìŠ¤í¬ë¡¤íŒ¨
 	private JTextField searchField;
 	private JButton MPbackBtn;
 	private JCheckBox frontCkBx;
-	private JPanel curMenuPanel;		//board¿¡¼­ Àå¼Ò ¹öÆ° Ã³¸®¸¦ À§ÇØ ÇöÀç ¹öÆ° »ı¼º
+	private JPanel curMenuPanel;		//boardì—ì„œ ì¥ì†Œ ë²„íŠ¼ ì²˜ë¦¬ë¥¼ ìœ„í•´ í˜„ì¬ ë²„íŠ¼ ìƒì„±
 	
 	/**
 	 * Launch the application.
@@ -104,8 +104,8 @@ public class SinamonApp {
 		 public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) { 
 			 Component chatBtn = null; 
 			 if(column==6){
-				 chatBtn = new JButton("Ã¤ÆÃÇÏ±â");
-				 chatBtn.setFont(new Font("°íµµ M", Font.BOLD, 13));
+				 chatBtn = new JButton("ì±„íŒ…í•˜ê¸°");
+				 chatBtn.setFont(new Font("ê³ ë„ M", Font.BOLD, 13));
 				 ((JButton) chatBtn).addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -128,24 +128,24 @@ public class SinamonApp {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//frame ¼³Á¤
+		//frame ì„¤ì •
 		frame = new JFrame();
-		frame.setTitle("½Ã³ª¸ó");
+		frame.setTitle("ì‹œë‚˜ëª¬");
 		frame.setBounds(100, 100, 960, 540);
 		frame.setPreferredSize(new Dimension(960,540));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//È­¸éÀ» ´İÀ¸¸é ÇÁ·Î±×·¥ Á¾·á
-		frame.setResizable(false); 		//Å©±â °íÁ¤
-		//·Î°í
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//í™”ë©´ì„ ë‹«ìœ¼ë©´ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
+		frame.setResizable(false); 		//í¬ê¸° ê³ ì •
+		//ë¡œê³ 
 		Toolkit tk = Toolkit.getDefaultToolkit();
         Image logo=tk.getImage(".\\Image\\logo.png");
         frame.setIconImage(logo);
 		
 		
-		//ÆùÆ® ¼³Á¤
-		//Font Jua=new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ",Font.PLAIN,19);
-		Font Jua=new Font("°íµµ M",Font.PLAIN,19);
+		//í°íŠ¸ ì„¤ì •
+		//Font Jua=new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„",Font.PLAIN,19);
+		Font Jua=new Font("ê³ ë„ M",Font.PLAIN,19);
 		
-		//ÆĞ³Î ÀÌ¹ÌÁö
+		//íŒ¨ë„ ì´ë¯¸ì§€
 		ImagePanel mypagePanel = new ImagePanel(new ImageIcon(".\\Image\\mypage.png").getImage());
 		frame.getContentPane().add(mypagePanel);
 		ImagePanel foodPanel = new ImagePanel(new ImageIcon(".\\Image\\board.png").getImage());
@@ -159,106 +159,106 @@ public class SinamonApp {
 		ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
 		frame.getContentPane().add(loginPanel);
 		
-		//tableÀÇ 'Ã¤ÆÃÇÏ±â' ¼¿ÀÇ »ö±ò º¯°æÀ» À§ÇÑ DefaultTableCellRenderer °´Ã¼ ¼±¾ğ
+		//tableì˜ 'ì±„íŒ…í•˜ê¸°' ì…€ì˜ ìƒ‰ê¹” ë³€ê²½ì„ ìœ„í•œ DefaultTableCellRenderer ê°ì²´ ì„ ì–¸
 		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
 	    colC.setBackground(new Color(0, 118, 134));	
-	    //tableÀÇ ±Û Á¤·ÄÀ» À§ÇÑ
+	    //tableì˜ ê¸€ ì •ë ¬ì„ ìœ„í•œ
 	    DefaultTableCellRenderer celAlignCenter=new DefaultTableCellRenderer();
 	    celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
 	    DefaultTableCellRenderer celAlignRight=new DefaultTableCellRenderer();
 	    celAlignRight.setHorizontalAlignment(JLabel.RIGHT);
-	    //'ÇöÈ²'¼¿ÀÇ ±ÛÀÚ »ö±ò º¯°æ°ú °¡¿îµ¥ Á¤·ãÀ» À§ÇÑ DefaultTableCellRenderer °´Ã¼ ¼±¾ğ
+	    //'í˜„í™©'ì…€ì˜ ê¸€ì ìƒ‰ê¹” ë³€ê²½ê³¼ ê°€ìš´ë° ì •ë£”ì„ ìœ„í•œ DefaultTableCellRenderer ê°ì²´ ì„ ì–¸
 	    DefaultTableCellRenderer celOrCenter=new DefaultTableCellRenderer();
 	    celOrCenter.setForeground(new Color(255, 127, 0));
 	    celOrCenter.setHorizontalAlignment(JLabel.CENTER);
 	    
-	    /**************************** My page (È¸¿ø È÷½ºÅä¸® ÆĞ³Î)*****************************************/
-		mypagePanel.setBounds(0,0,960,540);	//ÆĞ³Î »çÀÌÁî
+	    /**************************** My page (íšŒì› íˆìŠ¤í† ë¦¬ íŒ¨ë„)*****************************************/
+		mypagePanel.setBounds(0,0,960,540);	//íŒ¨ë„ ì‚¬ì´ì¦ˆ
 		mypagePanel.setLayout(null);
 		
-		//history1 ±¸Çö - [³»°¡ ¾´ ±Û]
-		String[] hHeader=new String[] {"Á¦¸ñ", "ÇöÈ²"};	//È÷½ºÅä¸® Å×ÀÌºí Çì´õ
+		//history1 êµ¬í˜„ - [ë‚´ê°€ ì“´ ê¸€]
+		String[] hHeader=new String[] {"ì œëª©", "í˜„í™©"};	//íˆìŠ¤í† ë¦¬ í…Œì´ë¸” í—¤ë”
 		Object[][] hData1=new Object[][] {					
-			{"Çª¶ó´ß ¸ÔÀ» »ç¶÷","¿Ï·á"},
-			{"¿±¶± ¸ÔÀ» »ç¶÷","¿Ï·á"},
-			{"°öÃ¢Àü°ñ ¸ÔÀ» »ç¶÷","¿Ï·á"},
-			{"ÈŞÁö ³ª´­ »ç¶÷","¿¹Á¤"},
-			{"½º½Ã ¸ÔÀ» »ç¶÷","ÁøÇà Áß"}
+			{"í‘¸ë¼ë‹­ ë¨¹ì„ ì‚¬ëŒ","ì™„ë£Œ"},
+			{"ì—½ë–¡ ë¨¹ì„ ì‚¬ëŒ","ì™„ë£Œ"},
+			{"ê³±ì°½ì „ê³¨ ë¨¹ì„ ì‚¬ëŒ","ì™„ë£Œ"},
+			{"íœ´ì§€ ë‚˜ëˆŒ ì‚¬ëŒ","ì˜ˆì •"},
+			{"ìŠ¤ì‹œ ë¨¹ì„ ì‚¬ëŒ","ì§„í–‰ ì¤‘"}
 		};
 		
-		//DefaultTableModelÀ» »ç¿ëÇÏ¿© ³»¿ë ¼öÁ¤ ºÒ°¡ÇÏ°Ô
+		//DefaultTableModelì„ ì‚¬ìš©í•˜ì—¬ ë‚´ìš© ìˆ˜ì • ë¶ˆê°€í•˜ê²Œ
 		DefaultTableModel modH1 = new DefaultTableModel(hData1,hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             }
         };
         history1 =new JTable(modH1);
-        //Å×ÀÌºíÀÌ "¿¹Á¤"ÀÏ °æ¿ì, Å¬¸¯ÇÏ¸é °Ô½Ã±Û ¼öÁ¤Ã¢ÀÌ ³ªÅ¸³²
+        //í…Œì´ë¸”ì´ "ì˜ˆì •"ì¼ ê²½ìš°, í´ë¦­í•˜ë©´ ê²Œì‹œê¸€ ìˆ˜ì •ì°½ì´ ë‚˜íƒ€ë‚¨
         history1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
             	int row = history1.getSelectedRow();
                 int col = history1.getSelectedColumn();
-                String value=(String) history1.getValueAt(row,col);		//¼±ÅÃÇÑ ¼¿ÀÇ °ªÀ» ÀúÀåÇÏ¿©
-            	if(value.equals("¿¹Á¤"))									//'¿¡Á¤'ÀÏ °æ¿ì
-            		new BoardEdit();									//¼öÁ¤Ã¢ÀÌ ³ªÅ¸³²
+                String value=(String) history1.getValueAt(row,col);		//ì„ íƒí•œ ì…€ì˜ ê°’ì„ ì €ì¥í•˜ì—¬
+            	if(value.equals("ì˜ˆì •"))									//'ì—ì •'ì¼ ê²½ìš°
+            		new BoardEdit();									//ìˆ˜ì •ì°½ì´ ë‚˜íƒ€ë‚¨
             }
         });
-		//Å×ÀÌºí ¼¼ºÎ ¼³Á¤
-        history1.setRowHeight(25);	//Å×ÀÌºí Çà °£°İ
-		history1.setFont(new Font("Sanserif", Font.BOLD, 15));	//Å×ÀÌºí ÆùÆ®
-	    history1.getColumn("Á¦¸ñ").setPreferredWidth(300);			//Å×ÀÌºí ¿­ °£°İ
-	    history1.getColumn("ÇöÈ²").setPreferredWidth(80);
-	    history1.getColumn("ÇöÈ²").setCellRenderer(celOrCenter);	//'ÇöÈ²': ±ÛÀÚ ÁÖÈ², °¡¿îµ¥ Á¤·Ä
+		//í…Œì´ë¸” ì„¸ë¶€ ì„¤ì •
+        history1.setRowHeight(25);	//í…Œì´ë¸” í–‰ ê°„ê²©
+		history1.setFont(new Font("Sanserif", Font.BOLD, 15));	//í…Œì´ë¸” í°íŠ¸
+	    history1.getColumn("ì œëª©").setPreferredWidth(300);			//í…Œì´ë¸” ì—´ ê°„ê²©
+	    history1.getColumn("í˜„í™©").setPreferredWidth(80);
+	    history1.getColumn("í˜„í™©").setCellRenderer(celOrCenter);	//'í˜„í™©': ê¸€ì ì£¼í™©, ê°€ìš´ë° ì •ë ¬
 		history1.setPreferredScrollableViewportSize(new Dimension(380,256));
-        history1.getTableHeader().setReorderingAllowed(false); 	// ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        history1.getTableHeader().setResizingAllowed(false); 	// ÄÃ·³ Å©±â Á¶Àı ºÒ°¡
+        history1.getTableHeader().setReorderingAllowed(false); 	// ì»¬ëŸ¼ë“¤ ì´ë™ ë¶ˆê°€
+        history1.getTableHeader().setResizingAllowed(false); 	// ì»¬ëŸ¼ í¬ê¸° ì¡°ì ˆ ë¶ˆê°€
 		
-        h1ScrollPane = new JScrollPane(history1);	//tableÀ» ½ºÅ©·Ñ ÆĞÀÎÀ¸·Î
+        h1ScrollPane = new JScrollPane(history1);	//tableì„ ìŠ¤í¬ë¡¤ íŒ¨ì¸ìœ¼ë¡œ
 		h1ScrollPane.setBounds(77, 254, 380, 256);
 		mypagePanel.add(h1ScrollPane);
 		
-		//history2 ±¸Çö - [³»°¡ ½Ã³ª¸ó ÇÑ history]
+		//history2 êµ¬í˜„ - [ë‚´ê°€ ì‹œë‚˜ëª¬ í•œ history]
 		Object[][] hData2=new Object[][] {
-			{"Çª¶ó´ß","¿Ï·á"},
-			{"¿±¶±","¿Ï·á"},
-			{"°öÃ¢Àü°ñ","¿Ï·á"},
-			{"ÈŞÁö","ÁøÇà Áß"},
-			{"½º½Ã","ÁøÇà Áß"}
+			{"í‘¸ë¼ë‹­","ì™„ë£Œ"},
+			{"ì—½ë–¡","ì™„ë£Œ"},
+			{"ê³±ì°½ì „ê³¨","ì™„ë£Œ"},
+			{"íœ´ì§€","ì§„í–‰ ì¤‘"},
+			{"ìŠ¤ì‹œ","ì§„í–‰ ì¤‘"}
 		};
-		//DefaultTableModelÀ» »ç¿ëÇÏ¿© ³»¿ë ¼öÁ¤ ºÒ°¡ÇÏ°Ô
+		//DefaultTableModelì„ ì‚¬ìš©í•˜ì—¬ ë‚´ìš© ìˆ˜ì • ë¶ˆê°€í•˜ê²Œ
 		DefaultTableModel modH2 = new DefaultTableModel(hData2,hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             }
         };
         history2 =new JTable(modH2);
-        //Å×ÀÌºíÀÌ "ÁøÇàÁß"ÀÏ °æ¿ì, Å¬¸¯ÇÏ¸é °Ô½Ã±Û º¸±âÃ¢ÀÌ ³ªÅ¸³²
+        //í…Œì´ë¸”ì´ "ì§„í–‰ì¤‘"ì¼ ê²½ìš°, í´ë¦­í•˜ë©´ ê²Œì‹œê¸€ ë³´ê¸°ì°½ì´ ë‚˜íƒ€ë‚¨
         history2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
             	int row = history2.getSelectedRow();
                 int col = history2.getSelectedColumn();
-                String value=(String) history2.getValueAt(row,col);			//¼±ÅÃÇÑ ¼¿ÀÇ °ªÀ» ÀúÀåÇÏ¿©
-	        	if(value.equals("ÁøÇà Áß"))									//'ÁøÇà Áß'ÀÏ °æ¿ì
-	        		new BoardLook(board_name,curr_user);					//°Ô½Ã±Û º¸±â Ã¢ÀÌ ³ªÅ¸³²
+                String value=(String) history2.getValueAt(row,col);			//ì„ íƒí•œ ì…€ì˜ ê°’ì„ ì €ì¥í•˜ì—¬
+	        	if(value.equals("ì§„í–‰ ì¤‘"))									//'ì§„í–‰ ì¤‘'ì¼ ê²½ìš°
+	        		new BoardLook(board_name,curr_user);					//ê²Œì‹œê¸€ ë³´ê¸° ì°½ì´ ë‚˜íƒ€ë‚¨
             }
         });
-		//Å×ÀÌºí ¼¼ºÎ ¼³Á¤
-        history2.setRowHeight(25);	//Å×ÀÌºí Çà °£°İ
-		history2.setFont(new Font("Sanserif", Font.BOLD, 15));	//Å×ÀÌºí ÆùÆ®
-	    history2.getColumn("Á¦¸ñ").setPreferredWidth(300);			//Å×ÀÌºí ¿­ °£°İ
-	    history2.getColumn("ÇöÈ²").setPreferredWidth(80);
-	    history2.getColumn("ÇöÈ²").setCellRenderer(celOrCenter);	//'ÇöÈ²': ±ÛÀÚ ÁÖÈ²»ö, °¡¿îµ¥ Á¤·Ä
+		//í…Œì´ë¸” ì„¸ë¶€ ì„¤ì •
+        history2.setRowHeight(25);	//í…Œì´ë¸” í–‰ ê°„ê²©
+		history2.setFont(new Font("Sanserif", Font.BOLD, 15));	//í…Œì´ë¸” í°íŠ¸
+	    history2.getColumn("ì œëª©").setPreferredWidth(300);			//í…Œì´ë¸” ì—´ ê°„ê²©
+	    history2.getColumn("í˜„í™©").setPreferredWidth(80);
+	    history2.getColumn("í˜„í™©").setCellRenderer(celOrCenter);	//'í˜„í™©': ê¸€ì ì£¼í™©ìƒ‰, ê°€ìš´ë° ì •ë ¬
 		history2.setPreferredScrollableViewportSize(new Dimension(380,256));
-        history2.getTableHeader().setReorderingAllowed(false); 	// ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        history2.getTableHeader().setResizingAllowed(false); 	// ÄÃ·³ Å©±â Á¶Àı ºÒ°¡
+        history2.getTableHeader().setReorderingAllowed(false); 	// ì»¬ëŸ¼ë“¤ ì´ë™ ë¶ˆê°€
+        history2.getTableHeader().setResizingAllowed(false); 	// ì»¬ëŸ¼ í¬ê¸° ì¡°ì ˆ ë¶ˆê°€
 		
-        h2ScrollPane = new JScrollPane(history2);	//tableÀ» ½ºÅ©·Ñ ÆĞÀÎÀ¸·Î
+        h2ScrollPane = new JScrollPane(history2);	//tableì„ ìŠ¤í¬ë¡¤ íŒ¨ì¸ìœ¼ë¡œ
 		h2ScrollPane.setBounds(499, 254, 380, 256);
 		mypagePanel.add(h2ScrollPane);
 		
-		//Mypage µÚ·Î°¡±â ¹öÆ°
+		//Mypage ë’¤ë¡œê°€ê¸° ë²„íŠ¼
 		MPbackBtn = new JButton("");
 		MPbackBtn.addActionListener(new ActionListener() {
 			@Override
@@ -273,7 +273,7 @@ public class SinamonApp {
 		MPbackBtn.setBorder(null);
 		mypagePanel.add(MPbackBtn);
 		
-		//È¸¿øÁ¤º¸ ¼öÁ¤ ¹öÆ°
+		//íšŒì›ì •ë³´ ìˆ˜ì • ë²„íŠ¼
 		JButton editInfoBtn = new JButton("");
 		editInfoBtn.setIcon(new ImageIcon(".\\Image\\edit_info_btn.PNG"));
 		editInfoBtn.addActionListener(new ActionListener() {
@@ -285,56 +285,72 @@ public class SinamonApp {
 		editInfoBtn.setBorder(null);
 		mypagePanel.add(editInfoBtn);
 		
-		//Ã¤ÆÃ ¾Ë¸²
+		//ì±„íŒ… ì•Œë¦¼
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(101, 138, 756, 38);
 		mypagePanel.add(lblNewLabel);
 	    
-		/****************************necPanel (»ıÇÊÇ° °Ô½ÃÆÇ ÆĞ³Î)*****************************************/
+		/****************************necPanel (ìƒí•„í’ˆ ê²Œì‹œíŒ íŒ¨ë„)*****************************************/
 		
 		necPanel.setBounds(0, 0, 960, 540);
 		necPanel.setLayout(null);
-		/*°Ô½ÃÆÇ table*/
-		String[] necHeader=new String[] {"¹øÈ£","Àå¼Ò","½Ã°£","Á¦¸ñ","ÀÛ¼ºÀÚ","ÇöÈ²","Ã¤ÆÃ"};
-		//¿¹½Ã
+		/*ê²Œì‹œíŒ table*/
+		String[] necHeader=new String[] {"ë²ˆí˜¸","ì¥ì†Œ","ì‹œê°„","ì œëª©","ì‘ì„±ì","í˜„í™©","ì±„íŒ…"};
+		//ì˜ˆì‹œ
 		Object[][] necData=new Object[][] {
-			{"01","¾çÁøÀç","16½Ã","ÈŞÁö ³ª´²¿ä","ÃÊÄÚ¿ÕÀÚ","¿¹Á¤",""},
-			{"02","Áß¹®","12-2½Ã", "ÇÃ¸®½º 1+1 ³ª´²¿ä", "ÃÊÄÚ°øÁÖ","ÁøÇà Áß",""}		
+			{"01","ì–‘ì§„ì¬","16ì‹œ","íœ´ì§€ ë‚˜ëˆ ìš”","ì´ˆì½”ì™•ì","ì˜ˆì •",""},
+			{"02","ì¤‘ë¬¸","12-2ì‹œ", "í”Œë¦¬ìŠ¤ 1+1 ë‚˜ëˆ ìš”", "ì´ˆì½”ê³µì£¼","ì§„í–‰ ì¤‘",""}		
 		};
-		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// ¼öÁ¤ ºÒ°¡
+		DefaultTableModel necMod=new DefaultTableModel(necData,necHeader) {	// ìˆ˜ì • ë¶ˆê°€
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
 		};
 		ntable=new JTable(necMod);
+		//í…Œì´ë¸”ì´ ì±„íŒ…í•˜ê¸° ì…€ì„ í´ë¦­í•˜ë©´ ì±„íŒ…ì°½ì´ ë‚˜íƒ€ë‚¨
+        	ntable.addMouseListener(new MouseAdapter() {
+           		@Override
+           		public void mouseClicked(MouseEvent e) {
+            			int row = ntable.getSelectedRow();	//í•´ë‹¹ ì…€ì˜ í–‰ì„ ë°›ì•„ì˜¬ ìˆ˜ ìˆìŒ
+                		int col = ntable.getSelectedColumn();	//í•´ë‹¹ ì…€ì˜ ì—´ì„ ë°›ì•„ì˜¬ ìˆ˜ ìˆìŒ
+				if(col==6){
+					/*
+					* ì±„íŒ…ì°½ êµ¬í˜„!!
+					*/
+					//í™•ì¸ìš©
+					System.out.print("Chat");
+				}
+                		
+			}
+       		});
         
-	    //Å×ÀÌºí °£°İ Á¶Á¤
-	    ntable.getColumn("¹øÈ£").setPreferredWidth(40);
-        ntable.getColumn("¹øÈ£").setCellRenderer(celAlignCenter);
-        ntable.getColumn("Àå¼Ò").setPreferredWidth(70);
-        ntable.getColumn("Àå¼Ò").setCellRenderer(celAlignCenter);
-        ntable.getColumn("½Ã°£").setPreferredWidth(70);
-        ntable.getColumn("½Ã°£").setCellRenderer(celAlignCenter);
-        ntable.getColumn("Á¦¸ñ").setPreferredWidth(306);
-        ntable.getColumn("ÀÛ¼ºÀÚ").setPreferredWidth(100);
-        ntable.getColumn("ÀÛ¼ºÀÚ").setCellRenderer(celAlignCenter);
-        ntable.getColumn("ÇöÈ²").setPreferredWidth(80);
-        ntable.getColumn("ÇöÈ²").setCellRenderer(celOrCenter);
-        ntable.getColumn("Ã¤ÆÃ").setPreferredWidth(80);
+	    //í…Œì´ë¸” ê°„ê²© ì¡°ì •
+	    ntable.getColumn("ë²ˆí˜¸").setPreferredWidth(40);
+        ntable.getColumn("ë²ˆí˜¸").setCellRenderer(celAlignCenter);
+        ntable.getColumn("ì¥ì†Œ").setPreferredWidth(70);
+        ntable.getColumn("ì¥ì†Œ").setCellRenderer(celAlignCenter);
+        ntable.getColumn("ì‹œê°„").setPreferredWidth(70);
+        ntable.getColumn("ì‹œê°„").setCellRenderer(celAlignCenter);
+        ntable.getColumn("ì œëª©").setPreferredWidth(306);
+        ntable.getColumn("ì‘ì„±ì").setPreferredWidth(100);
+        ntable.getColumn("ì‘ì„±ì").setCellRenderer(celAlignCenter);
+        ntable.getColumn("í˜„í™©").setPreferredWidth(80);
+        ntable.getColumn("í˜„í™©").setCellRenderer(celOrCenter);
+        ntable.getColumn("ì±„íŒ…").setPreferredWidth(80);
        
 		ntable.setRowHeight(30);
 		ntable.setFont(new Font("Sanserif", Font.BOLD, 17));
 		ntable.setPreferredScrollableViewportSize(new Dimension(746,392));
-		ntable.getTableHeader().setReorderingAllowed(false); // ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        ntable.getTableHeader().setResizingAllowed(false); // ÄÃ·³ Å©±â Á¶Àı ºÒ°¡
-        ntable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ¿©·¯°³ ¼±ÅÃ ºÒ°¡
+		ntable.getTableHeader().setReorderingAllowed(false); // ì»¬ëŸ¼ë“¤ ì´ë™ ë¶ˆê°€
+        ntable.getTableHeader().setResizingAllowed(false); // ì»¬ëŸ¼ í¬ê¸° ì¡°ì ˆ ë¶ˆê°€
+        ntable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ì—¬ëŸ¬ê°œ ì„ íƒ ë¶ˆê°€
 		JScrollPane scrollPane = new JScrollPane(ntable);
-		DefaultTableCellRenderer renderer = new MyTableCellRenderer();	//Ã¤ÆÃ ¹öÆ° ±¸Çö
-        ntable.getColumn("Ã¤ÆÃ").setCellRenderer(renderer);
+		DefaultTableCellRenderer renderer = new MyTableCellRenderer();	//ì±„íŒ… ë²„íŠ¼ êµ¬í˜„
+        ntable.getColumn("ì±„íŒ…").setCellRenderer(renderer);
 		scrollPane.setBounds(189, 92, 746, 392);;
 		necPanel.add(scrollPane);
 		
-		/*±Û Ã£±â °Ë»ö¶õ*/
+		/*ê¸€ ì°¾ê¸° ê²€ìƒ‰ë€*/
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
@@ -344,14 +360,14 @@ public class SinamonApp {
 		necPanel.add(searchField);
 		searchField.setColumns(10);
 		
-		/*±Û Ã£±â ¹öÆ°*/
+		/*ê¸€ ì°¾ê¸° ë²„íŠ¼*/
 		JButton searchBtn = new JButton("");
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//searchField ÀúÀåÇÏ±â
+				//searchField ì €ì¥í•˜ê¸°
 				/*
-				 * ±Û Ã£±â
+				 * ê¸€ ì°¾ê¸°
 				 * 
 				 * */
 			}
@@ -362,7 +378,7 @@ public class SinamonApp {
 		searchBtn.setBorder(null);
 		necPanel.add(searchBtn);
 		
-		/*È¸¿øÁ¤º¸ ¹öÆ°*/
+		/*íšŒì›ì •ë³´ ë²„íŠ¼*/
 		JButton myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
@@ -378,12 +394,12 @@ public class SinamonApp {
 		myBtn.setBorder(null);
 		necPanel.add(myBtn);
 		
-		/*±Û¾²±â ¹öÆ°*/
+		/*ê¸€ì“°ê¸° ë²„íŠ¼*/
 		JButton writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//±Û ÀÛ¼º event
-				/*±Û¾²±â ¹öÆ°*/
+				//ê¸€ ì‘ì„± event
+				/*ê¸€ì“°ê¸° ë²„íŠ¼*/
 				new BoardWrite("nes_board", curr_user);
 			}
 		});
@@ -392,7 +408,7 @@ public class SinamonApp {
 		writeBtn.setBorder(null);
 		necPanel.add(writeBtn);
 		
-		/*µÚ·Î°¡±â ¹öÆ°*/
+		/*ë’¤ë¡œê°€ê¸° ë²„íŠ¼*/
 		JButton boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -407,20 +423,20 @@ public class SinamonApp {
 		necPanel.add(boardBackBtn);
 		
 		/*
-		 * Àå¼Ò ¸Ş´º ¹öÆ° ±¸Çö
+		 * ì¥ì†Œ ë©”ë‰´ ë²„íŠ¼ êµ¬í˜„
 		 */
-		ChatBtnDesign nAllBtn = new ChatBtnDesign("¸ğµç ±Û º¸±â");		//¸ğµç ±Û º¸±â
+		ChatBtnDesign nAllBtn = new ChatBtnDesign("ëª¨ë“  ê¸€ ë³´ê¸°");		//ëª¨ë“  ê¸€ ë³´ê¸°
 		nAllBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		nAllBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.BOLD, 25));
+		nAllBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.BOLD, 25));
 		nAllBtn.setBounds(0, 96, 158, 48);
 		necPanel.add(nAllBtn);
 		
-		ChatBtnDesign nCentralBtn = new ChatBtnDesign(" Áß ¹® ");		//Áß¹®
-		nCentralBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		ChatBtnDesign nCentralBtn = new ChatBtnDesign(" ì¤‘ ë¬¸ ");		//ì¤‘ë¬¸
+		nCentralBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nCentralBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -429,144 +445,160 @@ public class SinamonApp {
 		nCentralBtn.setBounds(0, 154, 158, 36);
 		necPanel.add(nCentralBtn);
 		
-		ChatBtnDesign nFrontBtn = new ChatBtnDesign(" Á¤ ¹® ");		//Á¤¹®
+		ChatBtnDesign nFrontBtn = new ChatBtnDesign(" ì • ë¬¸ ");		//ì •ë¬¸
 		nFrontBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		nFrontBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nFrontBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nFrontBtn.setBounds(0, 191, 158, 36);
 		necPanel.add(nFrontBtn);
 		
-		ChatBtnDesign nWestBtn = new ChatBtnDesign(" ¼­ ¹® ");			//¼­¹®
+		ChatBtnDesign nWestBtn = new ChatBtnDesign(" ì„œ ë¬¸ ");			//ì„œë¬¸
 		nWestBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		nWestBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nWestBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nWestBtn.setBounds(0, 228, 158, 36);
 		necPanel.add(nWestBtn);
 		
-		ChatBtnDesign nBackGateBtn = new ChatBtnDesign(" ÈÄ ¹® ");		//ÈÄ¹®
+		ChatBtnDesign nBackGateBtn = new ChatBtnDesign(" í›„ ë¬¸ ");		//í›„ë¬¸
 		nBackGateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		nBackGateBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nBackGateBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nBackGateBtn.setBounds(0, 265, 158, 36);
 		necPanel.add(nBackGateBtn);
 		
-		ChatBtnDesign nBonBtn = new ChatBtnDesign(" º» °ü ");			//º»°ü
+		ChatBtnDesign nBonBtn = new ChatBtnDesign(" ë³¸ ê´€ ");			//ë³¸ê´€
 		nBonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		nBonBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nBonBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nBonBtn.setBounds(0, 303, 158, 36);
 		necPanel.add(nBonBtn);
 		
-		ChatBtnDesign nYSungBtn = new ChatBtnDesign(" ¾ç¼ºÀç ");		//¾ç¼ºÀç
+		ChatBtnDesign nYSungBtn = new ChatBtnDesign(" ì–‘ì„±ì¬ ");		//ì–‘ì„±ì¬
 		nYSungBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		nYSungBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nYSungBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nYSungBtn.setBounds(0, 340, 158, 36);
 		necPanel.add(nYSungBtn);
 		
-		ChatBtnDesign nYJinBtn = new ChatBtnDesign(" ¾çÁøÀç");			//¾çÁøÀç
+		ChatBtnDesign nYJinBtn = new ChatBtnDesign(" ì–‘ì§„ì¬");			//ì–‘ì§„ì¬
 		nYJinBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		nYJinBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nYJinBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nYJinBtn.setBounds(0, 377, 158, 36);
 		necPanel.add(nYJinBtn);
 		
-		/****************************foodPanel (À½½Ä °Ô½ÃÆÇ ÆĞ³Î)*****************************************/
+		/****************************foodPanel (ìŒì‹ ê²Œì‹œíŒ íŒ¨ë„)*****************************************/
 		
 		foodPanel.setBounds(0, 0, 960, 540);
 		foodPanel.setLayout(null);
-		/*°Ô½ÃÆÇ table*/
-		String[] header=new String[] {"¹øÈ£","Àå¼Ò","½Ã°£","Á¦¸ñ","ÀÛ¼ºÀÚ","ÇöÈ²","Ã¤ÆÃ"};
-		//¿¹½Ã
+		/*ê²Œì‹œíŒ table*/
+		String[] header=new String[] {"ë²ˆí˜¸","ì¥ì†Œ","ì‹œê°„","ì œëª©","ì‘ì„±ì","í˜„í™©","ì±„íŒ…"};
+		//ì˜ˆì‹œ
 		Object[][] data=new Object[][] {
-			{"01","¾çÁøÀç","¾Æ¹«¶§³ª","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"},
-			{"01","¼­¹®","16½Ã","Çª¶ó´ß ³ª´²¸Ô¾î¿ä","ÃÊÄÚ¿ÕÀÚ","ÁøÇà Áß"}
+			{"01","ì–‘ì§„ì¬","ì•„ë¬´ë•Œë‚˜","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"},
+			{"01","ì„œë¬¸","16ì‹œ","í‘¸ë¼ë‹­ ë‚˜ëˆ ë¨¹ì–´ìš”","ì´ˆì½”ì™•ì","ì§„í–‰ ì¤‘"}
 		};
-		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// ¼öÁ¤ ºÒ°¡
+		DefaultTableModel foodMod=new DefaultTableModel(data,header) {	// ìˆ˜ì • ë¶ˆê°€
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
 		};
 		ftable=new JTable(foodMod);
-		//Å×ÀÌºí °£°İ Á¶Á¤
-	    ftable.getColumn("¹øÈ£").setPreferredWidth(40);
-        ftable.getColumn("¹øÈ£").setCellRenderer(celAlignCenter);
-        ftable.getColumn("Àå¼Ò").setPreferredWidth(70);
-        ftable.getColumn("Àå¼Ò").setCellRenderer(celAlignCenter);
-        ftable.getColumn("½Ã°£").setPreferredWidth(80);
-        ftable.getColumn("½Ã°£").setCellRenderer(celAlignCenter);
-        ftable.getColumn("Á¦¸ñ").setPreferredWidth(306);
-        ftable.getColumn("ÀÛ¼ºÀÚ").setPreferredWidth(100);
-        ftable.getColumn("ÀÛ¼ºÀÚ").setCellRenderer(celAlignCenter);
-        ftable.getColumn("ÇöÈ²").setPreferredWidth(70);
-        ftable.getColumn("ÇöÈ²").setCellRenderer(celOrCenter);
-        ftable.getColumn("Ã¤ÆÃ").setPreferredWidth(90);
-        ftable.getColumn("Ã¤ÆÃ").setCellRenderer(renderer);	//Ã¤ÆÃ¹öÆ° ±¸Çö
+		//í…Œì´ë¸”ì´ ì±„íŒ…í•˜ê¸° ì…€ì„ í´ë¦­í•˜ë©´ ì±„íŒ…ì°½ì´ ë‚˜íƒ€ë‚¨
+        	ntable.addMouseListener(new MouseAdapter() {
+           		@Override
+           		public void mouseClicked(MouseEvent e) {
+            			int row = ntable.getSelectedRow();	//í•´ë‹¹ ì…€ì˜ í–‰ì„ ë°›ì•„ì˜¬ ìˆ˜ ìˆìŒ
+                		int col = ntable.getSelectedColumn();	//í•´ë‹¹ ì…€ì˜ ì—´ì„ ë°›ì•„ì˜¬ ìˆ˜ ìˆìŒ
+				if(col==6){	
+					/*
+					* ì±„íŒ…ì°½ êµ¬í˜„!!
+					*/
+					//í™•ì¸ìš©
+					System.out.print("Chat");
+				}
+                		
+			}
+       		});
+		//í…Œì´ë¸” ê°„ê²© ì¡°ì •
+	    ftable.getColumn("ë²ˆí˜¸").setPreferredWidth(40);
+        ftable.getColumn("ë²ˆí˜¸").setCellRenderer(celAlignCenter);
+        ftable.getColumn("ì¥ì†Œ").setPreferredWidth(70);
+        ftable.getColumn("ì¥ì†Œ").setCellRenderer(celAlignCenter);
+        ftable.getColumn("ì‹œê°„").setPreferredWidth(80);
+        ftable.getColumn("ì‹œê°„").setCellRenderer(celAlignCenter);
+        ftable.getColumn("ì œëª©").setPreferredWidth(306);
+        ftable.getColumn("ì‘ì„±ì").setPreferredWidth(100);
+        ftable.getColumn("ì‘ì„±ì").setCellRenderer(celAlignCenter);
+        ftable.getColumn("í˜„í™©").setPreferredWidth(70);
+        ftable.getColumn("í˜„í™©").setCellRenderer(celOrCenter);
+        ftable.getColumn("ì±„íŒ…").setPreferredWidth(90);
+        ftable.getColumn("ì±„íŒ…").setCellRenderer(renderer);	//ì±„íŒ…ë²„íŠ¼ êµ¬í˜„
      
 		ftable.setRowHeight(30);
 		ftable.setFont(Jua);
 		ftable.setPreferredScrollableViewportSize(new Dimension(746, 392));
-		ftable.getTableHeader().setReorderingAllowed(false); // ÄÃ·³µé ÀÌµ¿ ºÒ°¡
-        ftable.getTableHeader().setResizingAllowed(false); // ÄÃ·³ Å©±â Á¶Àı ºÒ°¡
-        ftable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ¿©·¯°³ ¼±ÅÃ ºÒ°¡
+		ftable.getTableHeader().setReorderingAllowed(false); // ì»¬ëŸ¼ë“¤ ì´ë™ ë¶ˆê°€
+        ftable.getTableHeader().setResizingAllowed(false); // ì»¬ëŸ¼ í¬ê¸° ì¡°ì ˆ ë¶ˆê°€
+        ftable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//table ì—¬ëŸ¬ê°œ ì„ íƒ ë¶ˆê°€
         
 		scrollPane = new JScrollPane(ftable);
 		scrollPane.setBounds(189, 92, 746, 392);
 		foodPanel.add(scrollPane);
 		
-		/*±Û Ã£±â °Ë»ö¶õ*/
+		/*ê¸€ ì°¾ê¸° ê²€ìƒ‰ë€*/
 		searchField = new JTextField("");
 		searchField.setToolTipText("");
 		searchField.setForeground(Color.DARK_GRAY);
-		searchField.setFont(new Font("°íµµ M",Font.PLAIN,19));
+		searchField.setFont(new Font("ê³ ë„ M",Font.PLAIN,19));
 		searchField.setBounds(686, 29, 149, 36);
 		searchField.setBorder(null);
 		foodPanel.add(searchField);
 		searchField.setColumns(10);
 		
-		/*±Û Ã£±â ¹öÆ°*/
+		/*ê¸€ ì°¾ê¸° ë²„íŠ¼*/
 		searchBtn = new JButton("");
 		searchBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//searchField ÀúÀåÇÏ±â
+				//searchField ì €ì¥í•˜ê¸°
 				/*
-				 * ±Û Ã£±â
+				 * ê¸€ ì°¾ê¸°
 				 * 
 				 * */
 				System.out.print("good");
@@ -577,7 +609,7 @@ public class SinamonApp {
 		searchBtn.setBorder(null);
 		foodPanel.add(searchBtn);
 		
-		/*È¸¿øÁ¤º¸ ¹öÆ°*/
+		/*íšŒì›ì •ë³´ ë²„íŠ¼*/
 		myBtn = new JButton("");
 		myBtn.addActionListener(new ActionListener(){
 			@Override
@@ -593,11 +625,11 @@ public class SinamonApp {
 		myBtn.setBorder(null);
 		foodPanel.add(myBtn);
 		
-		/*±Û¾²±â ¹öÆ°*/
+		/*ê¸€ì“°ê¸° ë²„íŠ¼*/
 		writeBtn = new JButton("");
 		writeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//±Û ÀÛ¼º event
+				//ê¸€ ì‘ì„± event
 				new BoardWrite(nec_board,curr_user);
 			}
 		});
@@ -606,7 +638,7 @@ public class SinamonApp {
 		writeBtn.setBorder(null);
 		foodPanel.add(writeBtn);
 		
-		/*µÚ·Î°¡±â ¹öÆ°*/
+		/*ë’¤ë¡œê°€ê¸° ë²„íŠ¼*/
 		boardBackBtn = new JButton("");
 		boardBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -621,20 +653,20 @@ public class SinamonApp {
 		foodPanel.add(boardBackBtn);
 		
 		/*
-		 * Àå¼Ò ¸Ş´º ¹öÆ° ±¸Çö
+		 * ì¥ì†Œ ë©”ë‰´ ë²„íŠ¼ êµ¬í˜„
 		 */
-		ChatBtnDesign fAllBtn = new ChatBtnDesign("¸ğµç ±Û º¸±â");		//¸ğµç ±Û º¸±â
+		ChatBtnDesign fAllBtn = new ChatBtnDesign("ëª¨ë“  ê¸€ ë³´ê¸°");		//ëª¨ë“  ê¸€ ë³´ê¸°
 		fAllBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		fAllBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.BOLD, 25));
+		fAllBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.BOLD, 25));
 		fAllBtn.setBounds(0, 96, 158, 48);
 		foodPanel.add(fAllBtn);
 		
-		ChatBtnDesign fCentralBtn = new ChatBtnDesign(" Áß ¹® ");		//Áß¹®
-		fCentralBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		ChatBtnDesign fCentralBtn = new ChatBtnDesign(" ì¤‘ ë¬¸ ");		//ì¤‘ë¬¸
+		fCentralBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fCentralBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -643,64 +675,64 @@ public class SinamonApp {
 		fCentralBtn.setBounds(0, 154, 158, 36);
 		foodPanel.add(fCentralBtn);
 		
-		ChatBtnDesign fFrontBtn = new ChatBtnDesign(" Á¤ ¹® ");		//Á¤¹®
+		ChatBtnDesign fFrontBtn = new ChatBtnDesign(" ì • ë¬¸ ");		//ì •ë¬¸
 		fFrontBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		fFrontBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		fFrontBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fFrontBtn.setBounds(0, 191, 158, 36);
 		foodPanel.add(fFrontBtn);
 		
-		ChatBtnDesign fWestBtn = new ChatBtnDesign(" ¼­ ¹® ");			//¼­¹®
+		ChatBtnDesign fWestBtn = new ChatBtnDesign(" ì„œ ë¬¸ ");			//ì„œë¬¸
 		fWestBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		fWestBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		fWestBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fWestBtn.setBounds(0, 228, 158, 36);
 		foodPanel.add(fWestBtn);
 		
-		ChatBtnDesign nfBackGateBtn = new ChatBtnDesign(" ÈÄ ¹® ");		//ÈÄ¹®
+		ChatBtnDesign nfBackGateBtn = new ChatBtnDesign(" í›„ ë¬¸ ");		//í›„ë¬¸
 		nfBackGateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		nfBackGateBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		nfBackGateBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		nfBackGateBtn.setBounds(0, 265, 158, 36);
 		foodPanel.add(nfBackGateBtn);
 		
-		ChatBtnDesign fBonBtn = new ChatBtnDesign(" º» °ü ");			//º»°ü
+		ChatBtnDesign fBonBtn = new ChatBtnDesign(" ë³¸ ê´€ ");			//ë³¸ê´€
 		fBonBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		fBonBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		fBonBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fBonBtn.setBounds(0, 303, 158, 36);
 		foodPanel.add(fBonBtn);
 		
-		ChatBtnDesign fYSungBtn = new ChatBtnDesign(" ¾ç¼ºÀç ");		//¾ç¼ºÀç
+		ChatBtnDesign fYSungBtn = new ChatBtnDesign(" ì–‘ì„±ì¬ ");		//ì–‘ì„±ì¬
 		fYSungBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		fYSungBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		fYSungBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fYSungBtn.setBounds(0, 340, 158, 36);
 		foodPanel.add(fYSungBtn);
 		
-		ChatBtnDesign fYJinBtn = new ChatBtnDesign(" ¾çÁøÀç");			//¾çÁøÀç
+		ChatBtnDesign fYJinBtn = new ChatBtnDesign(" ì–‘ì§„ì¬");			//ì–‘ì§„ì¬
 		fYJinBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		fYJinBtn.setFont(new Font("¹è´ŞÀÇ¹ÎÁ· ÁÖ¾Æ", Font.PLAIN, 23));
+		fYJinBtn.setFont(new Font("ë°°ë‹¬ì˜ë¯¼ì¡± ì£¼ì•„", Font.PLAIN, 23));
 		fYJinBtn.setBounds(0, 377, 158, 36);
 		foodPanel.add(fYJinBtn);
 		
-		/****************************Choice panel (½Ã³ª À½½Ä ½Ã³ª »ıÇÊÇ°)*********************************************/
+		/****************************Choice panel (ì‹œë‚˜ ìŒì‹ ì‹œë‚˜ ìƒí•„í’ˆ)*********************************************/
 		
 		choicePanel.setBounds(0, 0, 960, 540);
 		choicePanel.setLayout(null);
@@ -734,70 +766,70 @@ public class SinamonApp {
 		choicePanel.add(necBtn);
 		
 		
-		/**********************************Join panel (È¸¿ø°¡ÀÔ ÆĞ³Î)******************************************/
+		/**********************************Join panel (íšŒì›ê°€ì… íŒ¨ë„)******************************************/
 		
 		joinPanel.setBounds(0, 0, 960, 540);
 		joinPanel.setLayout(null);
 		
-		joinNameField = new JTextField();		//ÀÌ¸§
+		joinNameField = new JTextField();		//ì´ë¦„
 		joinNameField.setBounds(235, 175, 199, 25);
 		joinNameField.setFont(Jua);
 		joinNameField.setColumns(10);
 		joinNameField.setBorder(null);
 		joinPanel.add(joinNameField);
 		
-		joinIdField = new JTextField();			//¾ÆÀÌµğ
+		joinIdField = new JTextField();			//ì•„ì´ë””
 		joinIdField.setBounds(235, 232, 199, 25);
 		joinIdField.setFont(Jua);
 		joinIdField.setColumns(10);
 		joinIdField.setBorder(null);
 		joinPanel.add(joinIdField);
 		
-		joinPwField = new JPasswordField();			//ºñ¹Ğ¹øÈ£
+		joinPwField = new JPasswordField();			//ë¹„ë°€ë²ˆí˜¸
 		joinPwField.setBounds(235, 287, 199, 25);
 		joinPwField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwField.setColumns(10);
 		joinPwField.setBorder(null);
 		joinPanel.add(joinPwField);
 		
-		joinPwCheckField = new JPasswordField();	//ºñ¹Ğ¹øÈ£ È®ÀÎ
+		joinPwCheckField = new JPasswordField();	//ë¹„ë°€ë²ˆí˜¸ í™•ì¸
 		joinPwCheckField.setBounds(235, 338, 199, 25);
 		joinPwCheckField.setFont(new Font("Dialog", Font.PLAIN, 17));
 		joinPwCheckField.setColumns(10);
 		joinPwCheckField.setBorder(null);
 		joinPanel.add(joinPwCheckField);
 		
-		JComboBox comboBox = new JComboBox(place);	//Àå¼Ò
+		JComboBox comboBox = new JComboBox(place);	//ì¥ì†Œ
 		comboBox.setBounds(583, 175, 207, 27);
 		comboBox.setFont(Jua);
 		joinPanel.add(comboBox);
 			
-		joinNickField = new JTextField();			//´Ğ³×ÀÓ
+		joinNickField = new JTextField();			//ë‹‰ë„¤ì„
 		joinNickField.setBounds(583, 232, 207, 27);
 		joinNickField.setFont(Jua);
 		joinNickField.setColumns(10);
 		joinNickField.setBorder(null);
 		joinPanel.add(joinNickField);
 		
-		enrollBtn = new JButton("");				//µî·Ï ¹öÆ°
+		enrollBtn = new JButton("");				//ë“±ë¡ ë²„íŠ¼
 		enrollBtn.setBounds(419, 432, 122, 49);
 		enrollBtn.setBorder(null);
 		enrollBtn.addActionListener(new ActionListener(){	
 
 			@Override
-			public void actionPerformed(ActionEvent e) {	//µî·ÏÇÏ±â ¹öÆ°À» ´­·¶À» ¶§ÀÇ µ¿ÀÛ
+			public void actionPerformed(ActionEvent e) {	//ë“±ë¡í•˜ê¸° ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œì˜ ë™ì‘
 				try {
 					/*
-					 * È¸¿ø°¡ÀÔ µ¥ÀÌÅÍ ÀúÀåÇÏ±â
+					 * íšŒì›ê°€ì… ë°ì´í„° ì €ì¥í•˜ê¸°
 					 *  
 					 * */
-					//getText()·Î µ¥ÀÌÅÍ ÀúÀå
-					//Àå¼Ò(ComboBox)-comboBox.getSelectedItem().toString()·Î µ¥ÀÌÅÍ ÀúÀå
+					//getText()ë¡œ ë°ì´í„° ì €ì¥
+					//ì¥ì†Œ(ComboBox)-comboBox.getSelectedItem().toString()ë¡œ ë°ì´í„° ì €ì¥
 					
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null,"You Failed to Enroll");
 				}
-				JOptionPane.showMessageDialog(null,"È¸¿ø°¡ÀÔÀ» ÃàÇÏÇÕ´Ï´Ù!");
+				JOptionPane.showMessageDialog(null,"íšŒì›ê°€ì…ì„ ì¶•í•˜í•©ë‹ˆë‹¤!");
 				currPanel.setVisible(false);
 				loginPanel.setVisible(true);
 				currPanel = loginPanel;				
@@ -806,22 +838,22 @@ public class SinamonApp {
 		joinPanel.add(enrollBtn);
 		enrollBtn.setIcon(new ImageIcon(".\\Image\\enroll_btn.PNG"));
 		
-		//µÚ·Î°¡±â ¹öÆ°
+		//ë’¤ë¡œê°€ê¸° ë²„íŠ¼
 		backBtn = new JButton("");		
 		backBtn.setBounds(5, 10, 49, 49);
 		backBtn.setBorder(null);
 		backBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currPanel.setVisible(false);	//ÇöÀç ÆĞ³Î(È¸¿ø°¡ÀÔ) ¾Èº¸ÀÌ°Ô ÇÏ°í
-				loginPanel.setVisible(true);	//·Î±×ÀÎ ÆĞ³ÎÀ» ´Ù½Ã º¸ÀÌ°Ô ÇÏ°í
-				currPanel = loginPanel;	//ÇöÀç ÆĞ³Î=·Î±×ÀÎ ÆĞ³Î	
+				currPanel.setVisible(false);	//í˜„ì¬ íŒ¨ë„(íšŒì›ê°€ì…) ì•ˆë³´ì´ê²Œ í•˜ê³ 
+				loginPanel.setVisible(true);	//ë¡œê·¸ì¸ íŒ¨ë„ì„ ë‹¤ì‹œ ë³´ì´ê²Œ í•˜ê³ 
+				currPanel = loginPanel;	//í˜„ì¬ íŒ¨ë„=ë¡œê·¸ì¸ íŒ¨ë„	
 			}		
 		});
 		backBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
 		joinPanel.add(backBtn);
 		
-		/***************************************login panel(·Î±×ÀÎ ÆĞ³Î)***************************************/
+		/***************************************login panel(ë¡œê·¸ì¸ íŒ¨ë„)***************************************/
 		
 		loginPanel.setBounds(0, 0, 960, 540);
 		loginPanel.setLayout(null);
@@ -831,7 +863,7 @@ public class SinamonApp {
 		
 		idField = new JTextField();
 		idField.setBounds(183, 275, 198, 24);
-		idField.setFont(new Font("°íµµ M",Font.PLAIN,19));
+		idField.setFont(new Font("ê³ ë„ M",Font.PLAIN,19));
 		loginPanel.add(idField);
 		idField.setColumns(10);
 		idField.setBorder(null);
@@ -850,7 +882,7 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/*
-				 * ID PW ºñ±³
+				 * ID PW ë¹„êµ
 				 *  
 				 * */
 				if(ID.equals(idField.getText()) && PASS.equals(pwField.getText())){
