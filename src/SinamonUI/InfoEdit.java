@@ -19,7 +19,7 @@ public class InfoEdit {
 	private JFrame frame;
 	private JTextArea titleArea;	
 	private JComboBox placeBox;
-	private final String place[]= {"¡§ πÆ", "¡ﬂ πÆ","º≠ πÆ","»ƒ πÆ","∫ª ∞¸","æÁ º∫ ¿Á","æÁ ¡¯ ¿Á"};
+	private final String place[]= {"Ï†ï Î¨∏", "Ï§ë Î¨∏","ÏÑú Î¨∏","ÌõÑ Î¨∏","Î≥∏ Í¥Ä","Ïñë ÏÑ± Ïû¨","Ïñë ÏßÑ Ïû¨"};
 	private JTextField nameField;
 	private JTextField idField;
 	private JPasswordField pwField;
@@ -29,7 +29,7 @@ public class InfoEdit {
 	/**
 	 * Create the application.
 	 */
-	public InfoEdit(Object[] curr_user) {	//¿Ø¿˙¡§∫∏ πﬁæ∆ø»
+	public InfoEdit(Object[] curr_user) {	//Ïú†Ï†ÄÏ†ïÎ≥¥ Î∞õÏïÑÏò¥
 		initialize(curr_user);
 	}
 
@@ -38,9 +38,9 @@ public class InfoEdit {
 	 */
 	private void initialize(Object[] curr_user) {
 		frame = new JFrame();
-		frame.setTitle("»∏ø¯¡§∫∏ ºˆ¡§");
+		frame.setTitle("ÌöåÏõêÏ†ïÎ≥¥ ÏàòÏ†ï");
 		frame.setBounds(100, 100, 610, 440);
-		//∑Œ∞Ì
+		//Î°úÍ≥†
 		Toolkit tk = Toolkit.getDefaultToolkit();
         Image logo=tk.getImage(".\\Image\\logo.png");
         frame.setIconImage(logo);
@@ -51,15 +51,15 @@ public class InfoEdit {
 		frame.getContentPane().add(writePanel);
 		writePanel.setLayout(null);
 		
-		nameField = new JTextField();							//¿Ã∏ß
-		nameField.setFont(new Font("∞Ìµµ M", Font.PLAIN, 17));
+		nameField = new JTextField();							//Ïù¥Î¶Ñ
+		nameField.setFont(new Font("Í≥†ÎèÑ M", Font.PLAIN, 17));
 		nameField.setColumns(10);
 		nameField.setBorder(null);
 		nameField.setBounds(110, 121, 165, 25);
 		writePanel.add(nameField);
 	
 		idField = new JTextField();								//id
-		idField.setFont(new Font("∞Ìµµ M", Font.PLAIN, 17));
+		idField.setFont(new Font("Í≥†ÎèÑ M", Font.PLAIN, 17));
 		idField.setColumns(10);
 		idField.setBorder(null);
 		idField.setBounds(110, 180, 165, 25);
@@ -75,23 +75,23 @@ public class InfoEdit {
 		pwCheckField.setBounds(110, 292, 165, 25);
 		writePanel.add(pwCheckField);
 		
-		JComboBox comboBox = new JComboBox(place);			//¿Âº“
-		comboBox.setFont(new Font("∞Ìµµ M", Font.PLAIN, 17));
+		JComboBox comboBox = new JComboBox(place);			//Ïû•ÏÜå
+		comboBox.setFont(new Font("Í≥†ÎèÑ M", Font.PLAIN, 17));
 		comboBox.setBounds(377, 119, 175, 28);
 		writePanel.add(comboBox);
 		
-		nickField = new JTextField();						//¥–≥◊¿”
-		nickField.setFont(new Font("∞Ìµµ M", Font.PLAIN, 17));
+		nickField = new JTextField();						//ÎãâÎÑ§ÏûÑ
+		nickField.setFont(new Font("Í≥†ÎèÑ M", Font.PLAIN, 17));
 		nickField.setColumns(10);
 		nickField.setBorder(null);
 		nickField.setBounds(382, 180, 165, 25);
 		writePanel.add(nickField);
 		
-		JButton backSBtn = new JButton("");			//µ⁄∑Œ∞°±‚ πˆ∆∞ 
+		JButton backSBtn = new JButton("");			//Îí§Î°úÍ∞ÄÍ∏∞ Î≤ÑÌäº 
 		backSBtn.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);	//√¢ ¥›±‚
+                frame.setVisible(false);	//Ï∞Ω Îã´Í∏∞
             }
         });
 		backSBtn.setIcon(new ImageIcon(".\\Image\\back_m_btn.PNG"));
@@ -99,12 +99,23 @@ public class InfoEdit {
 		backSBtn.setBorder(null);
 		writePanel.add(backSBtn);
 		
-		JButton cmpBtn = new JButton("");
-		cmpBtn.setIcon(new ImageIcon(".\\Image\\cmp_m_btn.PNG"));
-		cmpBtn.setBounds(450, 317, 105, 38);
-		cmpBtn.setBorder(null);
-		writePanel.add(cmpBtn);
 		
-        frame.setVisible(true);		//frame ∫∏¿Ã∞‘
+		JButton cmpBtn = new JButton("");
+      		cmpBtn.addActionListener(new ActionListener() { 
+                	@Override
+                 	public void actionPerformed(ActionEvent e) {
+            			/*
+            			* Îì±Î°ù Ïù¥Î≤§Ìä∏ Íµ¨ÌòÑ!!
+            			*/
+                      		frame.setV	isible(false);   //Ï∞Ω Îã´Í∏∞
+			}
+           	});
+      		cmpBtn.setIcon(new ImageIcon(".\\Image\\cmp_m_btn.PNG"));
+      		cmpBtn.setBounds(450, 317, 105, 38);
+      		cmpBtn.setBorder(null);
+      		writePanel.add(cmpBtn);
+		
+
+       		frame.setVisible(true);		//frame Î≥¥Ïù¥Í≤å
 	}
 }
