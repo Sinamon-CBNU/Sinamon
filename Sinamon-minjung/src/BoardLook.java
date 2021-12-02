@@ -21,18 +21,17 @@ public class BoardLook {
 	/**
 	 * Create the application.
 	 */
-	public BoardLook(String board_name, Object[] curr_user) {
-		initialize(board_name, curr_user);
+	public BoardLook(String board_name, Object[] curr_user, db_connection connection) {
+		initialize(board_name, curr_user, connection);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String board_name, Object[] curr_user) {
+	private void initialize(String board_name, Object[] curr_user, db_connection connection) {
 		frame = new JFrame();
 		frame.setTitle("게시글 보기");
 		frame.setBounds(100, 100, 460, 340);
-		//db_connection connection = new db_connection();
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
 		frame.getContentPane().add(writePanel);

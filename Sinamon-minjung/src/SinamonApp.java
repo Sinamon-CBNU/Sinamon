@@ -25,9 +25,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import Chatting.*;
+
 public class SinamonApp {
 	
-	//check 임시 ID,PW
 	String board_name;
 	
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
@@ -73,25 +74,27 @@ public class SinamonApp {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		ChatServerObject chattingserver=new ChatServerObject();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SinamonApp window = new SinamonApp();
+					SinamonApp window = new SinamonApp(chattingserver);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		chattingserver.serverrun();
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public SinamonApp() {
+	public SinamonApp(ChatServerObject chattingserver) {
 		db_connection connection = new db_connection();			//데이터베이스 연동 객체
 		//while(true) {
-			initialize(connection);
+			initialize(connection, chattingserver);
 		//}
 		
 	}
@@ -143,6 +146,7 @@ public class SinamonApp {
                 return false;
             }
         };
+        
         history1 =new JTable(modH1);
         //테이블이 "예정"일 경우, 클릭하면 게시글 수정창이 나타남
         history1.addMouseListener(new MouseAdapter() {
@@ -150,6 +154,7 @@ public class SinamonApp {
             public void mouseClicked(MouseEvent e) {
             	int row = history1.getSelectedRow();
                 int col = history1.getSelectedColumn();
+                String title=(String)history1.getValueAt(row, 0);		//제목 문자열로 가져옴
                 String value=(String) history1.getValueAt(row,col);		//선택한 셀의 값을 저장하여
             	if(value.equals("예정"))	{								//'에정'일 경우
             		new BoardEdit();									//수정창이 나타남
@@ -186,9 +191,10 @@ public class SinamonApp {
             public void mouseClicked(MouseEvent e) {
             	int row = history2.getSelectedRow();
                 int col = history2.getSelectedColumn();
+                String title=(String)history1.getValueAt(row, 0);		//제목 문자열로 가져옴
                 String value=(String) history2.getValueAt(row,col);         //선택한 셀의 값을 저장하여
                 if(value.equals("진행중")) {                          //'진행 중'일 경우
-                	new BoardLook(board_name,curr_user);               //게시글 보기 창이 나타남
+                	new BoardLook(board_name,curr_user, connection);               //게시글 보기 창이 나타남
                 }
             }
         });
@@ -274,6 +280,20 @@ public class SinamonApp {
 			}
 		};
 		ntable=new JTable(necMod);
+		//테이블이 채팅하기 셀을 클릭하면 채팅창이 나타남
+        ntable.addMouseListener(new MouseAdapter() {
+              @Override
+              public void mouseClicked(MouseEvent e) {
+                  int row = ntable.getSelectedRow();   //해당 셀의 행을 받아올 수 있음
+                   int col = ntable.getSelectedColumn();   //해당 셀의 열을 받아올 수 있음
+         if(col==6){
+        	 ChatClientObject client=new ChatClientObject(row,"nec");
+        	 client.service();
+             System.out.println("Row:"+row+"Chat");
+         }
+                   
+      }
+          });
         
 	    //테이블 간격 조정
 	    ntable.getColumn("번호").setPreferredWidth(40);
@@ -385,6 +405,21 @@ public class SinamonApp {
 	}
 	
 	private JPanel Create_Food_Panel(db_connection connection) {
+/******************방생성*****************/
+		
+		Room foodroom;
+		Room necroom;
+		for(int i=0; i<1000; i++) {
+		necroom=new Room();
+		foodroom=new Room();
+		RoomManager.setnecroom(necroom);
+		RoomManager.setfoodroom(foodroom);
+		}
+		
+		/*********************서버 오픈*******************/
+		//ChatServerObject chattingserver=new ChatServerObject();
+		//chattingserver.serverrun();
+		
 		DefaultTableCellRenderer colC = new DefaultTableCellRenderer();
 	    colC.setBackground(new Color(255, 255, 208));	
 	    //table의 글 정렬을 위한
@@ -417,6 +452,19 @@ public class SinamonApp {
 			}
 		};
 		ftable=new JTable(foodMod);
+		ftable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = ftable.getSelectedRow();   //해당 셀의 행을 받아올 수 있음
+                 int col = ftable.getSelectedColumn();   //해당 셀의 열을 받아올 수 있음
+       if(col==6){
+    	   ChatClientObject client=new ChatClientObject(row,"food");
+    	   client.service();
+           System.out.print("Chat");
+       }
+                 
+    }
+        });
 	  //테이블 간격 조정
 	    ftable.getColumn("번호").setPreferredWidth(40);
         ftable.getColumn("번호").setCellRenderer(celAlignCenter);
@@ -564,7 +612,7 @@ public class SinamonApp {
 		return choicePanel;
 	}
 	
-	private JPanel Create_Join_Panel(db_connection connection) {
+	private JPanel Create_Join_Panel(db_connection connection, ChatServerObject chattingserver) {
 		ImagePanel joinPanel = new ImagePanel(new ImageIcon(".\\Image\\join.png").getImage());
 		frame.getContentPane().add(joinPanel);
 		
@@ -631,7 +679,7 @@ public class SinamonApp {
 							JOptionPane.showMessageDialog(null,"회원가입을 축하합니다!");
 							currPanel.setVisible(false);
 							//loginPanel.setVisible(true);
-							currPanel = Create_login_Panel(connection);
+							currPanel = Create_login_Panel(connection, chattingserver);
 							return;
 						}
 						else {
@@ -645,12 +693,7 @@ public class SinamonApp {
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null,"Unknown Error! 회원가입에 실패하였습니다! 시나몬 개발자 연락처: 01030135810");
 				}
-				/*
-				JOptionPane.showMessageDialog(null,"회원가입을 축하합니다!");
-				currPanel.setVisible(false);
-				loginPanel.setVisible(true);
-				currPanel = loginPanel;		
-				*/		
+				
 			}		
 		});
 		enrollBtn.setPressedIcon(new ImageIcon(".\\Image\\enroll_click_btn.PNG"));
@@ -666,7 +709,7 @@ public class SinamonApp {
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);	//현재 패널(회원가입) 안보이게 하고
 				//loginPanel.setVisible(true);	//로그인 패널을 다시 보이게 하고
-				currPanel = Create_login_Panel(connection);	//현재 패널=로그인 패널	
+				currPanel = Create_login_Panel(connection, chattingserver);	//현재 패널=로그인 패널	
 			}		
 		});
 		backBtn.setIcon(new ImageIcon(".\\Image\\back_btn.PNG"));
@@ -677,7 +720,7 @@ public class SinamonApp {
 		return joinPanel;
 	}
 	
-	private JPanel Create_login_Panel(db_connection connection) {
+	private JPanel Create_login_Panel(db_connection connection, ChatServerObject chattingserver) {
 		ImagePanel loginPanel = new ImagePanel(new ImageIcon(".\\Image\\login.png").getImage());
 		frame.getContentPane().add(loginPanel);
 		
@@ -731,7 +774,7 @@ public class SinamonApp {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currPanel.setVisible(false);
-				currPanel = Create_Join_Panel(connection);
+				currPanel = Create_Join_Panel(connection, chattingserver);
 			}
 		});
 		joinBtn.setIcon(new ImageIcon(".\\Image\\join_btn.PNG"));
@@ -743,7 +786,7 @@ public class SinamonApp {
 		return loginPanel;
 	}
 	
-	private void initialize(db_connection connection) {
+	private void initialize(db_connection connection, ChatServerObject chattingserver) {
 		//frame 설정
 		frame = new JFrame();
 		frame.setTitle("시나몬");
@@ -757,33 +800,11 @@ public class SinamonApp {
 		frame.setIconImage(logo);
 
 		
-		currPanel=Create_login_Panel(connection);
+		currPanel=Create_login_Panel(connection, chattingserver);
 	    
 	    
-		/**************************** My page (회원 히스토리 패널)*****************************************/
 		
-		
-		/****************************necPanel (생필품 게시판 패널)*****************************************/
-		
-		
-		
-		/****************************foodPanel (음식 게시판 패널)*****************************************/
-		
-		
-		
-		/****************************Choice panel (시나 음식 시나 생필품)*********************************************/
-		
-		
-		
-		
-		/**********************************Join panel (회원가입 패널)******************************************/
-		
-		
-		
-		/***************************************login panel(로그인 패널)***************************************/
-		
-		
-		Create_Join_Panel(connection).setVisible(false);
+		Create_Join_Panel(connection, chattingserver).setVisible(false);
 		Create_Nec_Panel(connection).setVisible(false);
 		Create_Food_Panel(connection).setVisible(false);
 		Create_Choice_Panel(connection).setVisible(false);

@@ -64,44 +64,14 @@ public class db_connection {
 	}
 	
 	//개인정보 수정하는 함수
-	public boolean modify_user_info(int btn_num, String name, String user_id, String pwd, String nickname) {
+	public boolean modify_user_info(int user, String name, String user_id, String pwd, String nickname, int home_id) {
 		try {		
 			String SQL = "";
 			if(is_info_exist(user_id)) {		//존재하는 user_id가 있을 때	
-				switch (btn_num) {
-				case 2: {		//이름
-					SQL = "UPDATE user_info SET name = " + nickname + " WHERE user_id = " + user_id + ";";
-					int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
-					System.out.println("업데이트된 건 수: " + record_num);
-					break;
-				}
-				case 3: {		//닉네임
-					SQL = "UPDATE user_info SET nickname = " + nickname + " WHERE user_id = " + user_id + ";";
-					int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
-					System.out.println("업데이트된 건 수: " + record_num);
-					break;
-				}
-				case 4: {		//아이디
-					SQL = "UPDATE user_info SET user_id = " + nickname + " WHERE user_id = " + user_id + ";";
-					int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
-					System.out.println("업데이트된 건 수: " + record_num);
-					break;
-				}
-				case 5: {		//비번
-					SQL = "UPDATE user_info SET password = " + nickname + " WHERE user_id = " + user_id + ";";
-					int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
-					System.out.println("업데이트된 건 수: " + record_num);
-					break;
-				}
-				case 6: {		//집
-					SQL = "UPDATE user_info SET home = " + nickname + " WHERE user_id = " + user_id + ";";
-					int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
-					System.out.println("업데이트된 건 수: " + record_num);
-					break;
-				}
-				default:
-					throw new IllegalArgumentException("Unexpected btn_num : " + btn_num);
-				}
+				SQL = "UPDATE user_info SET name = " + name + ", nickname = " + nickname + ", user_id = " + user_id + ", password = " + pwd + ", home_id = " + home_id + " WHERE id = " + user + ";";
+				int record_num = st.executeUpdate(SQL);		//INSERT 쿼리는 executeUpdate를 사용한다. 이것은 업데이트된 건수를 int로 리턴한다.
+				System.out.println("업데이트된 건 수: " + record_num);
+				
 			}
 			return true;
 		} catch (Exception e) {
@@ -159,6 +129,46 @@ public class db_connection {
 			System.out.println("데이터베이스 검색 오류/ Code: " + e.getMessage());
 		}
 		return user_info;
+	}
+	
+	//진행중을 누르면 food_reserve_board와 nes_reserve_board 중 맞는 테이블을 찾은 후, title과 일치하는 행 정보를 가져와 배열에 담아 리턴한다.
+	public String[] return_memo(String board_name, String title) {	//food_reserve_board
+		String[] return_arr = new String[3];
+		int board_id = 0;
+		try {
+			if(board_name.equals("food_reserve_board")) {
+				String SQL1 = "SELECT id from food_board WHERE title = '" + title + "';";
+				rs = st.executeQuery(SQL1);
+				if(rs.next()) {
+					board_id = rs.getInt("id");
+				}
+				String SQL2 = "SELECT time, location, memo from food_reserve_board WHERE board_id = " + board_id + ";";
+				rs = st.executeQuery(SQL2);
+				if(rs.next()) {
+					return_arr[0] = rs.getString("time");		//확정 시간
+					return_arr[1] = rs.getString("location");	//확정 장소
+					return_arr[2] = rs.getString("memo");		//확정 메뉴,, 등등 메모
+				}
+			}
+			else if(board_name.equals("nes_reserve_board")) {
+				String SQL1 = "SELECT id from nes_board WHERE title = '" + title + "';";
+				rs = st.executeQuery(SQL1);
+				if(rs.next()) {
+					board_id = rs.getInt("id");
+				}
+				String SQL2 = "SELECT time, location, memo from nes_reserve_board WHERE board_id = " + board_id + ";";
+				rs = st.executeQuery(SQL2);
+				if(rs.next()) {
+					return_arr[0] = rs.getString("time");		//확정 시간
+					return_arr[1] = rs.getString("location");	//확정 장소
+					return_arr[2] = rs.getString("memo");		//확정 메뉴,, 등등 메모
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("데이터베이스 검색 오류/ Code: " + e.getMessage());
+		}
+		return return_arr;
 	}
 	
 	//계정당 상대방 글에 참여한 음식, 생필품 게시판 정보 담을 테이블 만들 함수
