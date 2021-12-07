@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.List;
 
 
-class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 정보가 담겨있는 곳. 소켓을 처리함)
+class ChatHandlerObject extends Thread //泥섎━�빐二쇰뒗 怨�(�냼耳볦뿉 ���븳 �젙蹂닿� �떞寃⑥엳�뒗 怨�. �냼耳볦쓣 泥섎━�븿)
 
 {
 	private ObjectInputStream reader;
@@ -21,7 +21,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	private int roomid;
 	private ChatHandlerObject handler;
 	private String roomname;
-	//생성자
+	//�깮�꽦�옄
 
 	public ChatHandlerObject(Socket socket) throws IOException {
 		
@@ -29,7 +29,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 		writer = new ObjectOutputStream(socket.getOutputStream());
 		reader = new ObjectInputStream(socket.getInputStream());
 		
-		//순서가 뒤바뀌면 값을 입력받지 못하는 상황이 벌어지기 때문에 반드시 writer부터 생성시켜주어야 함!!!!!!
+		//�닚�꽌媛� �뮘諛붾�뚮㈃ 媛믪쓣 �엯�젰諛쏆� 紐삵븯�뒗 �긽�솴�씠 踰뚯뼱吏�湲� �븣臾몄뿉 諛섎뱶�떆 writer遺��꽣 �깮�꽦�떆耳쒖＜�뼱�빞 �븿!!!!!!
 
 		
 	}
@@ -58,7 +58,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			int loopcount=0;
 			while(true){
 	            dto=(InfoDTO)reader.readObject();
-				if(loopcount==0) {	//루프첫바퀴때만 방생성및 handler추가해줌
+				if(loopcount==0) {	//猷⑦봽泥ル컮�대븣留� 諛⑹깮�꽦諛� handler異붽��빐以�
 				
 				roomname=dto.getroomname();
 				
@@ -73,7 +73,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					eachfoodroom.setuser(handler);
 				}
 				else {
-					System.out.println("roomname 오류");
+					System.out.println("roomname �삤瑜�");
 				}
 				}
 				
@@ -82,12 +82,12 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 				
 
 	
-				//사용자가 접속을 끊었을 경우. 프로그램을 끝내서는 안되고 남은 사용자들에게 퇴장메세지를 보내줘야 한다. 
+				//�궗�슜�옄媛� �젒�냽�쓣 �걡�뿀�쓣 寃쎌슦. �봽濡쒓렇�옩�쓣 �걹�궡�꽌�뒗 �븞�릺怨� �궓�� �궗�슜�옄�뱾�뿉寃� �눜�옣硫붿꽭吏�瑜� 蹂대궡以섏빞 �븳�떎. 
 				if(dto.getCommand()==Info.EXIT){ 
 			
 					InfoDTO sendDto = new InfoDTO();
-					//나가려고 exit를 보낸 클라이언트에게 답변 보내기
-					sendDto.setMessage(nickName+"님이 퇴장하였습니다.");
+					//�굹媛��젮怨� exit瑜� 蹂대궦 �겢�씪�씠�뼵�듃�뿉寃� �떟蹂� 蹂대궡湲�
+					sendDto.setMessage(nickName+"이 퇴장하였습니다.");
 					sendDto.setCommand(Info.NOTICE);
 					broadcast(sendDto);
 					
@@ -102,16 +102,15 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 				
 					break;
 				} else if(dto.getCommand()==Info.JOIN){
-					//��� ����ڿ��� �޼��� ������
+					//占쏙옙占� 占쏙옙占쏙옙悶占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙
 					//nickName = dto.getNickName();
-					//��� Ŭ���̾�Ʈ���� ���� �޼��� ������ ��
+					//占쏙옙占� 클占쏙옙占싱억옙트占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
-					sendDto.setMessage(nickName+"님이 입장하였습니다.");
+					sendDto.setMessage(nickName+"이(가) 입장했습니다.");
 					sendDto.sethandlerroomnumber(dto.getroomid());
 					broadcast(sendDto);
 				} else if(dto.getCommand()==Info.SEND){
-					System.out.println("내가속한 룸:"+roomid);
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.SEND);
 					sendDto.setMessage("["+nickName+"] "+ dto.getMessage());
@@ -131,7 +130,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	
 	
 
-	//다른 클라이언트에게 전체 메세지 보내주기
+	//�떎瑜� �겢�씪�씠�뼵�듃�뿉寃� �쟾泥� 硫붿꽭吏� 蹂대궡二쇨린
 	public void broadcast(InfoDTO sendDto) throws IOException {
 		Room eachroom;
 		if(roomname.equals("nec")) {
@@ -145,10 +144,10 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 			System.out.println("roomname error!");
 		}
 		
-		//Room eachroom2=RoomManager.getroom(roomid);		//방번호를통해 RoomManager에서방을 받아와서
+		//Room eachroom2=RoomManager.getroom(roomid);		//諛⑸쾲�샇瑜쇳넻�빐 RoomManager�뿉�꽌諛⑹쓣 諛쏆븘���꽌
 		for(ChatHandlerObject handler : eachroom.getuser()) {
-			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
-			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
+			handler.writer.writeObject(sendDto); //�빖�뱾�윭 �븞�쓽 writer�뿉 媛믪쓣 蹂대궡湲�
+			handler.writer.flush();  //�빖�뱾�윭 �븞�쓽 writer 媛� 鍮꾩썙二쇨린
 		}
 	}
 	
@@ -156,13 +155,13 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 	/*public void broadcast(InfoDTO sendDto) throws IOException {
 		
 		if(userlist==null) {
-			System.out.println("userlist는 null입니다");
+			System.out.println("userlist�뒗 null�엯�땲�떎");
 		}
 		
 		
 		for(ChatHandlerObject handler : userlist) {
-			handler.writer.writeObject(sendDto); //핸들러 안의 writer에 값을 보내기
-			handler.writer.flush();  //핸들러 안의 writer 값 비워주기
+			handler.writer.writeObject(sendDto); //�빖�뱾�윭 �븞�쓽 writer�뿉 媛믪쓣 蹂대궡湲�
+			handler.writer.flush();  //�빖�뱾�윭 �븞�쓽 writer 媛� 鍮꾩썙二쇨린
 		}
 	}*/
 	

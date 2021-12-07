@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,14 +24,14 @@ public class WriteRev {
 	/**
 	 * Create the application.
 	 */
-	public WriteRev(Object[] curr_user) {
-		initialize(curr_user);
+	public WriteRev(Object[] curr_user, db_connection connection) {
+		initialize(curr_user, connection);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Object[] curr_user) {
+	private void initialize(Object[] curr_user, db_connection connection) {
 		frame = new JFrame();
 		frame.setTitle("약속 정하기");
 		frame.setBounds(100, 100, 460, 340);
@@ -39,7 +40,7 @@ public class WriteRev {
         Image logo=tk.getImage(".\\Image\\logo.png");
         frame.setIconImage(logo);
         
-		db_connection connection = new db_connection();
+		//db_connection connection = new db_connection();
 		
 		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\rev.png").getImage());
 		frame.getContentPane().add(writePanel);

@@ -7,15 +7,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class BoardLook {
 
 	private JFrame frame;
-	private JTextArea titleArea;	
-	private JTextField timeField;
-	private JComboBox placeBox;
+	//private JTextArea titleArea;	
+	//private JTextField timeField;
+	//private JComboBox placeBox;
+	private JLabel timeLb;
+	private JTextArea memoArea;
+	private JScrollPane memoScrollPane;
 	private final String place[]= {"정 문", "중 문","서 문","후 문","본 관","양 성 재","양 진 재"};
 	
 	/**
@@ -33,26 +38,43 @@ public class BoardLook {
 		frame.setTitle("게시글 보기");
 		frame.setBounds(100, 100, 460, 340);
 		
-		ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
-		frame.getContentPane().add(writePanel);
-		writePanel.setLayout(null);
-		
-		timeField = new JTextField();						//시간
-		timeField.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		timeField.setBounds(87, 121, 320, 24);
-		timeField.setBorder(null);
-		writePanel.add(timeField);
-		timeField.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox(place);			//장소
-		comboBox.setFont(new Font("HY엽서M", Font.PLAIN, 15));
-		comboBox.setBounds(84, 80, 328, 23);
-		writePanel.add(comboBox);
-		
-		JTextArea titleArea = new JTextArea();
-		titleArea.setLineWrap(true);
-		titleArea.setBounds(87, 164, 320, 69);
-		writePanel.add(titleArea);
+		String [] my_rev_data=new String[3];               //데이터 리스트 선언
+		String nickname = "'" + curr_user[2] + "'";
+        my_rev_data = connection.return_memo(board_name, nickname);      //데이터 리스트르 받아옴
+        String place=my_rev_data[0];   
+        String time=my_rev_data[1];
+        String memo=my_rev_data[2];
+        
+        System.out.println(place);
+        System.out.println(time);
+        System.out.println(memo);
+        
+        ImagePanel writePanel = new ImagePanel(new ImageIcon(".\\Image\\view.png").getImage());
+        frame.getContentPane().add(writePanel);
+        writePanel.setLayout(null);
+      
+        JLabel placeLb = new JLabel(place);         //장소
+        placeLb.setFont(new Font("고도 m", Font.PLAIN, 15));
+        placeLb.setBounds(84, 80, 329, 25);
+        writePanel.add(placeLb);
+      
+        timeLb = new JLabel(time);                  //시간
+        timeLb.setFont(new Font("고도 m", Font.PLAIN, 17));
+        timeLb.setBounds(87, 121, 320, 24);
+        timeLb.setBorder(null);
+        writePanel.add(timeLb);
+      
+        //JLabel은 자동으로 줄바꿈이 안돼서 JTextArea를 수정하지 못하게 하여 사용
+        memoArea = new JTextArea(memo);
+        memoArea.setFont(new Font("고도 m", Font.PLAIN, 17));   //메모
+        memoArea.setEditable(false);        //편집 불가
+        memoArea.setCursor(null);           //커서 없애기
+        memoArea.setWrapStyleWord(true);   //오른쪽 끝을 만나면 다음줄로 넘어가는 기능
+        memoArea.setWrapStyleWord(true);   //다음줄로 넘어갈 때 단어가 나뉘어지지 않도록
+        memoArea.setBounds(87, 164, 320, 69);
+        JScrollPane memoScrollPane = new JScrollPane(memoArea);   //memoArea을 스크롤 패인으로
+        memoScrollPane.setBounds(84, 160, 331, 79);
+        writePanel.add(memoScrollPane);
 		
 		JButton cmpBtn = new JButton("");			//진행 완료 버튼
 		cmpBtn.addActionListener(new ActionListener() { 

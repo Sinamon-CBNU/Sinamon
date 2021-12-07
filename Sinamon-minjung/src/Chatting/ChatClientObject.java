@@ -1,5 +1,5 @@
 /*********************************************/
-//성호가 고칠부분 96줄쯤 nickname부분
+//�꽦�샇媛� 怨좎튌遺�遺� 96以꾩�� nickname遺�遺�
 
 package Chatting;
 
@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.sound.sampled.ReverbType;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
+import sinamon.*;
 
 public class ChatClientObject extends JFrame implements Runnable {
 	
@@ -53,29 +54,29 @@ public class ChatClientObject extends JFrame implements Runnable {
 	public ChatClientObject(int roomid,String roomname) {
 		this.roomid=roomid;
 		this.roomname=roomname;
-		String Image_Path="D:\\Eclipse\\workspace\\Sinamon\\Image";
+		String Image_Path="C:\\Users\\kkssh\\Desktop\\eclipse-workspace\\Sinamon-minjung\\Image";
 		
-		/*자기 경로에 맞게 IconImage_path바꾸면될듯*/
-		
+		/*�옄湲� 寃쎈줈�뿉 留욊쾶 IconImage_path諛붽씀硫대맆�벏*/
+		//C:\Users\kkssh\Desktop\eclipse-workspace\Sinamon-minjung\Image
 		
 				setIconImage(Toolkit.getDefaultToolkit().getImage(Image_Path+"\\Window Icon.png"));
-				setTitle("채팅방");
+				setTitle("梨꾪똿諛�");
 
 		
 
-		// ���Ϳ� TextArea�����
+		// 占쏙옙占싶울옙 TextArea占쏙옙占쏙옙占�
 		output = new JTextArea();
 		output.setBackground(new Color(255, 204, 204));
 		output.setFont(new Font("CookieRun Regular", Font.PLAIN, 15));
 		output.setForeground(new Color(50, 50, 50));
 		output.setEditable(false);
 		JScrollPane scroll = new JScrollPane(output);
-		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // �׻� ��ũ�ѹٰ� ���η� �����
+		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // 占쌓삼옙 占쏙옙크占싼바곤옙 占쏙옙占싸뤄옙 占쏙옙占쏙옙占�
 		
 		
 	
 		
-		// �ϴܿ� ��ư�� TextArea�ֱ�
+		// 占싹단울옙 占쏙옙튼占쏙옙 TextArea占쌍깍옙
 		JPanel bottom = new JPanel();
 		bottom.setBackground(Color.WHITE);
 		bottom.setForeground(Color.RED);
@@ -89,28 +90,28 @@ public class ChatClientObject extends JFrame implements Runnable {
 		sendBtn.setFont(new Font("LG Smart UI Light", Font.PLAIN, 12));
 		//sendBtn.setSize(60,35);
 		//sendBtn.setBackground(Color.yellow);
-		sendBtn.setBorderPainted(false); // ��ư �׵θ� ������
+		sendBtn.setBorderPainted(false); // 占쏙옙튼 占쌓두몌옙 占쏙옙占쏙옙占쏙옙
 		//sendBtn.setOpaque(false);
 		//sendBtn.setBorderPainted(false); 
 		//sendBtn.setFocusPainted(false); 
 		sendBtn.setContentAreaFilled(false);
 		confirmBtn = new JButton();
-		confirmBtn.setIcon(new ImageIcon(Image_Path+"\\send button6.png"));
+		confirmBtn.setIcon(new ImageIcon(Image_Path+"\\confirmBtn.png"));
 		confirmBtn.setBorderPainted(false); 
 		confirmBtn.setContentAreaFilled(false);
 		
-		bottom.add("Center", input); // ���Ϳ� ���̱�
-		bottom.add("East", sendBtn); // ���ʿ� ���̱�
+		bottom.add("Center", input); // 占쏙옙占싶울옙 占쏙옙占싱깍옙
+		bottom.add("East", sendBtn); // 占쏙옙占십울옙 占쏙옙占싱깍옙
 		bottom.add("West", confirmBtn);
-		// container�� ���̱�
+		// container占쏙옙 占쏙옙占싱깍옙
 		Container c = this.getContentPane();
-		c.add("Center", scroll); // ���Ϳ� ���̱�
-		c.add("South", bottom); // ���ʿ� ���̱�
-		// ����� â ���
+		c.add("Center", scroll); // 占쏙옙占싶울옙 占쏙옙占싱깍옙
+		c.add("South", bottom); // 占쏙옙占십울옙 占쏙옙占싱깍옙
+		// 占쏙옙占쏙옙占� 창 占쏙옙占�
 		setBounds(300, 150, 350, 500);
 		setVisible(true);
 
-		// ����� �̺�Ʈ
+		// 占쏙옙占쏙옙占� 占싱븝옙트
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -120,7 +121,7 @@ public class ChatClientObject extends JFrame implements Runnable {
 					InfoDTO dto = new InfoDTO();
 					dto.setNickName(nickName);
 					dto.setCommand(Info.EXIT);
-					writer.writeObject(dto); // ���������� �ʿ䰡 ���
+					writer.writeObject(dto); // 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占십요가 占쏙옙占�
 					writer.flush();
 				} catch (IOException io) {
 					io.printStackTrace();
@@ -137,49 +138,49 @@ public class ChatClientObject extends JFrame implements Runnable {
 		
 		
 		
-		//서버 IP 입력받기
-		//String serverIP = JOptionPane.showInputDialog(this, "서버IP를 입력하세요","서버IP",JOptionPane.INFORMATION_MESSAGE);
+		//�꽌踰� IP �엯�젰諛쏄린
+		//String serverIP = JOptionPane.showInputDialog(this, "�꽌踰껱P瑜� �엯�젰�븯�꽭�슂","�꽌踰껱P",JOptionPane.INFORMATION_MESSAGE);
 		
 		/********************************************/
-		//String serverIP= JOptionPane.showInputDialog(this,"서버IP를 입력하세요","192.168.136.60");  //기본적으로 아이피 값이 입력되어 들어가게 됨
-		//만약 ip입력을 받고싶으면 여기 주석해제하면 됨
+		//String serverIP= JOptionPane.showInputDialog(this,"�꽌踰껱P瑜� �엯�젰�븯�꽭�슂","192.168.136.60");  //湲곕낯�쟻�쑝濡� �븘�씠�뵾 媛믪씠 �엯�젰�릺�뼱 �뱾�뼱媛�寃� �맖
+		//留뚯빟 ip�엯�젰�쓣 諛쏄퀬�떢�쑝硫� �뿬湲� 二쇱꽍�빐�젣�븯硫� �맖
 		/**********************************************/
 		
 		/********************************/
 		
-		String serverIP="49.143.47.208";
-		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
+		String serverIP="192.168.0.3";
+		//�꽌踰꾩륫 ip媛� 蹂�寃쎈릺硫� �뿬湲곕�� 蹂�寃쎈맂 �꽌踰꼒p濡� 諛붽퓭二쇰㈃�맂�떎
 		/*********************************/
 		
-		if(serverIP==null || serverIP.length()==0){  //만약 값이 입력되지 않았을 때 창이 꺼짐
-			System.out.println("서버 IP가 입력되지 않았습니다.");
+		if(serverIP==null || serverIP.length()==0){  //留뚯빟 媛믪씠 �엯�젰�릺吏� �븡�븯�쓣 �븣 李쎌씠 爰쇱쭚
+			System.out.println("�꽌踰� IP媛� �엯�젰�릺吏� �븡�븯�뒿�땲�떎.");
 			System.exit(0);
 		}
-		//닉네임 받기
+		//�땳�꽕�엫 諛쏄린
 		/*************************************************/
-		//nickName= JOptionPane.showInputDialog(this,"닉네임을 입력하세요","닉네임" ,JOptionPane.INFORMATION_MESSAGE);
+		//nickName= JOptionPane.showInputDialog(this,"�땳�꽕�엫�쓣 �엯�젰�븯�꽭�슂","�땳�꽕�엫" ,JOptionPane.INFORMATION_MESSAGE);
 		
-		//이부분을 db의 nickname으로받아주소 
-		//nickName=
+		//�씠遺�遺꾩쓣 db�쓽 nickname�쑝濡쒕컺�븘二쇱냼 
+		nickName="김호발";
 		
 		if(nickName == null || nickName.length()==0){
 			nickName="guest";
 		}
-		try{	//서버에 소켓 보내줌
+		try{	//�꽌踰꾩뿉 �냼耳� 蹂대궡以�
 			socket = new Socket(serverIP,9500);
 			reader= new ObjectInputStream(socket.getInputStream());
 			writer = new ObjectOutputStream(socket.getOutputStream());
 		} catch(UnknownHostException e ){
-			System.out.println("서버를 찾을 수 없습니다.");
+			System.out.println("�꽌踰꾨�� 李얠쓣 �닔 �뾾�뒿�땲�떎.");
 			e.printStackTrace();
 			System.exit(0);
 		} catch(IOException e){
-			System.out.println("서버와 연결이 안되었습니다.");
+			System.out.println("�꽌踰꾩� �뿰寃곗씠 �븞�릺�뿀�뒿�땲�떎.");
 			e.printStackTrace();
 			System.exit(0);
 		}
 		try{
-			//handler로 닉네임 보내기
+			//handler濡� �땳�꽕�엫 蹂대궡湲�
 			dto = new InfoDTO();
 			
 			if(roomname.equals("nec")) {
@@ -200,41 +201,41 @@ public class ChatClientObject extends JFrame implements Runnable {
 			dto.setCommand(Info.JOIN);
 			//dto.setCommand(Info.NOTICE);
 			dto.setNickName(nickName);
-			writer.writeObject(dto);  //역슬러쉬가 필요가 없음
+			writer.writeObject(dto);  //�뿭�뒳�윭�돩媛� �븘�슂媛� �뾾�쓬
 			writer.flush();
-			//setTitle("채팅방"+dto.getroomid());
+			//setTitle("梨꾪똿諛�"+dto.getroomid());
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		
-		//스레드 생성
+		//�뒪�젅�뱶 �깮�꽦
 		t = new Thread(this);
 		t.start();
 		input.addActionListener(new sendActionListener());
 		sendBtn.addActionListener(new sendActionListener());
-		confirmBtn.addActionListener(new confirmBtnActionListener());//멕션 이벤트 추가
+		confirmBtn.addActionListener(new confirmBtnActionListener());//硫뺤뀡 �씠踰ㅽ듃 異붽�
 	}
-	//스레드 오버라이드 
+	//�뒪�젅�뱶 �삤踰꾨씪�씠�뱶 
 		@Override
 		public void run(){
-			//서버로부터 데이터 받기
+			//�꽌踰꾨줈遺��꽣 �뜲�씠�꽣 諛쏄린
 			InfoDTO dto= null;
 			while(true){
 				try{
 					dto = (InfoDTO) reader.readObject();
-					if(dto.getCommand()==Info.EXIT){  //서버로부터 내 자신의 exit를 받으면 종료됨
+					if(dto.getCommand()==Info.EXIT){  //�꽌踰꾨줈遺��꽣 �궡 �옄�떊�쓽 exit瑜� 諛쏆쑝硫� 醫낅즺�맖
 						
 						/***************************************************
 						 * ***************************************
 						 */
-						//이부분이 종료를담당합니다
+						//�씠遺�遺꾩씠 醫낅즺瑜쇰떞�떦�빀�땲�떎
 						reader.close();
 						writer.close();
 						socket.close();
 						//pw.close();
 						//br.close();
-						//System.exit(0);	//프로그램전체종료 주석처리
-						break;			//한개의 프로그램만 종료되도록 수정
+						//System.exit(0);	//�봽濡쒓렇�옩�쟾泥댁쥌猷� 二쇱꽍泥섎━
+						break;			//�븳媛쒖쓽 �봽濡쒓렇�옩留� 醫낅즺�릺�룄濡� �닔�젙
 					} else if(dto.getCommand()==Info.SEND){
 						output.append(dto.getMessage()+"\n");
 						int pos=output.getText().length();
@@ -286,8 +287,13 @@ public class ChatClientObject extends JFrame implements Runnable {
 
 		class confirmBtnActionListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == confirmBtn)
-					System.out.print("확정버튼 누르셨습니다.");
+				db_connection connection = new db_connection(); 
+				if (e.getSource() == confirmBtn) {
+					Object[] curr_user = {1, "김성호", "김호발", "kksshh0612", "ksh1735", "2"};
+					sinamon.WriteRev rev = new WriteRev(curr_user, connection);
+							System.out.print("확정버튼 클릭");
+				}
+					
 
 			}
 
@@ -298,4 +304,4 @@ public class ChatClientObject extends JFrame implements Runnable {
 		
 	}
 }
-//���� ä���� ���� �����带 �������־�� ��
+//占쏙옙占쏙옙 채占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占썲를 占쏙옙占쏙옙占쏙옙占쌍억옙占� 占쏙옙

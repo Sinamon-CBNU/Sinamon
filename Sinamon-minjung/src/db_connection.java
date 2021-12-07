@@ -231,7 +231,7 @@ public class db_connection {
 			// SELECT food_board.id, home_board.home_id, time, title, user_info.nickname, is_complete
 			// FROM food_board JOIN home_board ON food_board.home_id = home_board.id
 			// JOIN user_info ON food_board.nickname_id = user_info.id;
-			String SQL2 = "SELECT " + board_name + ".id, home_board.home_id, time, title, user_info.nickname, is_complete FROM " + board_name + " JOIN home_board ON " + board_name + ".home_id = home_board.id JOIN user_info ON " + board_name + ".nickname_id = user_info.id WHERE " + board_name + ".id BETWEEN 1 and 10";		//원하는 게시판에서 id, 장소, 시간, 제목, 닉네임 가져오기
+			String SQL2 = "SELECT " + board_name + ".id, home_board.home_id, time, title, user_info.nickname, is_complete FROM " + board_name + " JOIN home_board ON " + board_name + ".home_id = home_board.id JOIN user_info ON " + board_name + ".nickname_id = user_info.id WHERE " + board_name + ".id";		//원하는 게시판에서 id, 장소, 시간, 제목, 닉네임 가져오기
 			rs = st.executeQuery(SQL2);
 			for(int i=0; i<last_row_id; i++) {
 				if(rs.next()) {
@@ -248,6 +248,9 @@ public class db_connection {
 			}
 		} catch (Exception e) {
 			System.out.println("데이터베이스 검색 오류1/ Code: " + e.getMessage());
+		}
+		for(int i=0; i<5; i++) {
+			System.out.println(return_arr[i][2]);
 		}
 		return return_arr;
 	}
@@ -267,6 +270,7 @@ public class db_connection {
 		return nickname_id;
 	}
 	
+	//내가 쓴 게시물 2차원배열로 리턴하는 함수
 	public Object[][] return_my_board(String nickname){
 		Object[][] return_arr = new Object[100][2];
 		int nickname_id = convert_nickname_to_nickname_id(nickname);

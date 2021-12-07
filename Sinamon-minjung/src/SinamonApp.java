@@ -177,13 +177,28 @@ public class SinamonApp {
 		
 		//history2 구현 - [내가 시나몬 한 history]
 		Object[][] hData2 = connection.return_get_in_board(nickname);
-		
+	
 		//DefaultTableModel을 사용하여 내용 수정 불가하게
 		DefaultTableModel modH2 = new DefaultTableModel(hData2,hHeader) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             }
         };
+        /*
+        history1 =new JTable(modH1);
+        //테이블이 "예정"일 경우, 클릭하면 게시글 수정창이 나타남
+        history1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	int row = history1.getSelectedRow();
+                int col = history1.getSelectedColumn();
+                String title=(String)history1.getValueAt(row, 0);		//제목 문자열로 가져옴
+                String value=(String) history1.getValueAt(row,col);		//선택한 셀의 값을 저장하여
+            	if(value.equals("예정"))	{								//'에정'일 경우
+            		new BoardEdit();									//수정창이 나타남
+            	}
+            }
+        });*/
         history2 =new JTable(modH2);
         //테이블이 "진행중"일 경우, 클릭하면 게시글 보기창이 나타남
         history2.addMouseListener(new MouseAdapter() {
@@ -191,10 +206,11 @@ public class SinamonApp {
             public void mouseClicked(MouseEvent e) {
             	int row = history2.getSelectedRow();
                 int col = history2.getSelectedColumn();
-                String title=(String)history1.getValueAt(row, 0);		//제목 문자열로 가져옴
+                String title=(String)history2.getValueAt(row, 0);		//제목 문자열로 가져옴
                 String value=(String) history2.getValueAt(row,col);         //선택한 셀의 값을 저장하여
                 if(value.equals("진행중")) {                          //'진행 중'일 경우
-                	new BoardLook(board_name,curr_user, connection);               //게시글 보기 창이 나타남
+                	System.out.println("진행중 클릭됨");
+                	new BoardLook("food_reserve_board",curr_user, connection);               //게시글 보기 창이 나타남
                 }
             }
         });
@@ -405,16 +421,7 @@ public class SinamonApp {
 	}
 	
 	private JPanel Create_Food_Panel(db_connection connection) {
-/******************방생성*****************/
-		
-		Room foodroom;
-		Room necroom;
-		for(int i=0; i<1000; i++) {
-		necroom=new Room();
-		foodroom=new Room();
-		RoomManager.setnecroom(necroom);
-		RoomManager.setfoodroom(foodroom);
-		}
+
 		
 		/*********************서버 오픈*******************/
 		//ChatServerObject chattingserver=new ChatServerObject();
@@ -509,7 +516,8 @@ public class SinamonApp {
 			public void actionPerformed(ActionEvent e) {
 				//searchField 저장하기
 				String search_text = "'" + searchField.getText() + "'";
-				connection.search_post("food_board", search_text);
+				food_board_data = connection.search_post("food_board", search_text);
+				currPanel = Create_Food_Panel(connection);
 			}
 		});
 		searchBtn.setIcon(new ImageIcon(".\\Image\\search_btn.PNG"));
@@ -538,14 +546,8 @@ public class SinamonApp {
 			public void actionPerformed(ActionEvent e) {
 				//글 작성 event
 				BoardWrite boardWrite = new BoardWrite("food_board", curr_user);
-				if(boardWrite.return_is_enrolled()==true) {
-					currPanel.setVisible(false);
-					currPanel = Create_Nec_Panel(connection);
-				}
-				else {
-					currPanel.setVisible(false);
-					currPanel = Create_Nec_Panel(connection);
-				}
+				currPanel.setVisible(false);
+				currPanel = Create_Food_Panel(connection);
 			}
 		});
 		
@@ -574,6 +576,16 @@ public class SinamonApp {
 	}
 	
 	private JPanel Create_Choice_Panel(db_connection connection) {
+		/******************방생성*****************/
+		
+		Room foodroom;
+		Room necroom;
+		for(int i=0; i<1000; i++) {
+		necroom=new Room();
+		foodroom=new Room();
+		RoomManager.setnecroom(necroom);
+		RoomManager.setfoodroom(foodroom);
+		}
 		ImagePanel choicePanel = new ImagePanel(new ImageIcon(".\\Image\\choice.png").getImage());
 		frame.getContentPane().add(choicePanel);
 		
