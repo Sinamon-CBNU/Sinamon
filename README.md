@@ -6,7 +6,7 @@
 	<a href="https://web-skills-06.github.io/web-skills/" target="_blank">
 		<img src="https://user-images.githubusercontent.com/74577768/132121071-1d76de4f-1330-4c33-96da-7107046fe8f0.gif" alt="Web Skills Demo" width="800" />
 	</a>
-</p>
+</p><summary>📖 Table of Contents</summary>
 <br />
 <details>
 
