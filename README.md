@@ -16,7 +16,7 @@
 
 ## ➤ Table of Contents
 
-* [➤ FAQ](#-faq)
+
 	* [What is Web Skills?](#what-is-web-skills)
 	* [How did you choose the skills?](#how-did-you-choose-the-skills)
 	* [How can I get involved?](#how-can-i-get-involved)
