@@ -38,6 +38,10 @@
 
 ### 4) 게시글 작성 
 게시판에 장소, 시간, 음식 혹은 생필품의 내용을 쓰고 작성 버튼을 누르면 게시판에 글이 올라감
+![writing](https://user-images.githubusercontent.com/46774346/146688514-ddda6cd1-211a-4bff-abc0-7b8d90a8d6ed.gif)
+</br>
+</br>
+</br>
 
 ### 5) 회원 정보 수정 
 회원 정보를 수정할 수 있다.
