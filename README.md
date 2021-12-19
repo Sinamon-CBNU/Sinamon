@@ -2,62 +2,120 @@
 
 
 
-branch에 대한 간단한 설명을 적어놓겠습니다.
-
-제가 배운 바로
-main branch는 release(배포)를 담당하는 branch이고,
-develop branch는 기능구현을 하는 branch입니다.
-
-즉, 우리가 어떤 기능을 추가하거나 수정하고 싶을때는 develop branch에서
-새로운 branch를 만들어 작업 한 후, develop branch로 merge시키는 방식을 사용합니다.
-
-그리고, develop branch가 새로 merge됐을때 
-이 기능을 배포해야하므로 develop -> main으로 다시 merge시켜줍니다.
+## Motivation
+1인 가구에게 최소주문금액 및 남은 음식의 양의 부담을 줄여주기 위해 이 플랫폼을 개발하게 되었다.    
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
 
 
+## Main Function
+### 1) 로그인 및 회원가입 
+사용자로부터 이름, ID, PW, 사는곳, 닉네임을 입력받아 MariaDB에 저장 후 로그인 할 수 있게 처리
 
-merge는 branch와 branch를 병합하는 작업입니다.
-예를들어 develop branch에는 a.txt파일만 있고, feature branch에는 a.txt와 b.txt파일이있을때
-feature -> develop으로 merge를 시키면  
-develop branch에는 a.txt, b.txt파일이 존재하게됩니다
-develop과 main을 제외하고, merge시킨 branch는 삭제해도됩니다
-
+![login](https://user-images.githubusercontent.com/46774346/146688307-4ca5ea0b-7537-42c5-b2c8-986aeaf10ea5.gif)
 
 
-
-
-
-main과 develop에는 branch protection을 걸어놨기때문에
-develop으로의 merge, main으로의 merge를 할때 팀원 2명이상의 approve가 있어야지만 merge됩니다.
-그만큼 develop과 main은 중요한 branch입니다. 
-
-*******************************
-[➤가장 중요한 것은]
-main branch에서 작업하지 말것!!
-main branch로 push를 하지 말것!!
-***************************************
-
-main branch는 배포담당 branch인만큼 develop 에서 병합되기만 하지
-이 브랜치에서 어떤 작업도 하지 말아야합니다.
+</br>
+</br>
+</br>
 
 
 
-**********************************************
-따라서 우리가 어떤 기능을 추가하거나 수정하고싶을때는
-develop branch로 이동한 후, develop branch에서 새로운 branch를 만들어
-새로운 branch에서 새로운 파일을 생성하든, 코드를 수정하든 하신다음에
-pull/push를 자유롭게하면됩니다.
-main branch에서 새로운 branch를 생성하면 안됩니다.
-develop branch로 꼭 이동한 후, 새로운 branch를 만들어야합니다.
-*************************************************
+### 2) 게시판 선택 
+음식 게시판과 생필품 게시판 중 선택한 게시판의 창이 뜨도록 설정
+![choice1](https://user-images.githubusercontent.com/46774346/146688433-fe6d24da-9eb5-4d18-95ea-070b96bcf83e.gif)
 
-만약 새로운 branch에서 기능구현이 끝났다
-그러면 이제 새로운branch ->develop으로 merge하고, develop -> main으로 merge시키는 것입니다.
+</br>
 
 
 
+![choice2](https://user-images.githubusercontent.com/46774346/146688448-df11d5aa-28d6-4cf9-8427-3ccabbf15ea7.gif)
 
 
 
+### 3) 뒤로가기 
+뒤로가기 버튼을 누르면 현재 보는 창은 없어지고, 이전에 사용자가 보았던 창이 뜨도록 설정
 
+### 4) 게시글 작성 
+게시판에 장소, 시간, 음식 혹은 생필품의 내용을 쓰고 작성 버튼을 누르면 게시판에 글이 올라감
+![writing](https://user-images.githubusercontent.com/46774346/146688514-ddda6cd1-211a-4bff-abc0-7b8d90a8d6ed.gif)
+</br>
+</br>
+</br>
+
+### 5) 작성 글 수정 
+자신이 작성한 글의 내용을 수정할 수 있다.
+
+
+
+![modifying](https://user-images.githubusercontent.com/46774346/146688565-39dd7f8e-2902-4b1c-8747-6cf1d5fe6813.gif)
+</br>
+</br>
+</br>
+
+### 6) 회원 정보 수정
+회원 정보를 수정할 수 있다.
+
+### 7) 히스토리 
+내가 올린 글과 내가 참여한 글의 히스토리를 볼 수 있다.
+그 중에서 진행 중인 글을 클릭하면 확정된 약속 페이지를 보여준다.
+
+### 8) 데이터 저장 
+모든 회원정보, 게시판 컨텐츠들은 MariaDB 데이터베이스에 저장한다.
+
+### 9) 채팅 
+게시글에 있는 채팅 버튼을 누르면 그 사람과 채팅할 수 있는 채팅방이 개설된다. 각 채팅 버튼마다 생성되는 채팅방은 다르다.
+
+
+
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/46774346/146688697-3a329ab6-97fc-4bb7-b8f9-87a5c66b4774.gif)
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+## System Structure
+![bb](https://user-images.githubusercontent.com/46774346/146688860-4046eec3-8a4a-42c0-b3f9-9a9e0eb3c2e9.png)
+
+
+
+![aa](https://user-images.githubusercontent.com/46774346/146688897-7c42c124-62d7-4020-97b8-b5be61a38d36.png)
+
+자세한 설명은 생략한다.
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+## Development Schedule
+
+
+![cc](https://user-images.githubusercontent.com/46774346/146688956-a5b84f3d-e75a-460c-b784-5aa791757a1e.png)
+
+자세한 설명은 생략한다2.
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+
+## Expected Results
+
+충북대학교 근처에 사는 학생들이 평소에 비싸서, 혹은 양이 많아서
+시켜먹지 못한 배달음식을 ‘시나몬’플랫폼을 통해 같이 시키고 나누어 먹을 수 있다.
+또한, 생필품 같은 경우 대량 묶음이 더 싼데, 불필요한 양까지 살 필요 없이 같이 시켜서 나눌 수 있다.
+
+즉, 생필품 같은 경우 비용 절감의 효과를 얻을 수 있고,
+배달음식 같은 경우 비용 절감과 음식물쓰레기를 줄일 수 있는 효과를 얻을 수 있다.
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+## What can we do to improve?
+
+```
+1. 데이터베이스 각 사용자에게 연동
+2. 약속확정 기능 구현
+3. 채팅 알림 기능 구현
+4. 채팅 서버 한 사용자만 실행하게 끔
+5. 이 모든 것들을 보완해 앱으로 구현
+
+```
