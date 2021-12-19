@@ -45,6 +45,9 @@
 
 ### 5) 회원 정보 수정 
 회원 정보를 수정할 수 있다.
+
+
+
 ![modifying](https://user-images.githubusercontent.com/46774346/146688565-39dd7f8e-2902-4b1c-8747-6cf1d5fe6813.gif)
 </br>
 </br>
