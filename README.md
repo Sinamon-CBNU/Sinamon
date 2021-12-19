@@ -87,5 +87,8 @@
 ## Development Schedule
 
 
+![cc](https://user-images.githubusercontent.com/46774346/146688956-a5b84f3d-e75a-460c-b784-5aa791757a1e.png)
+
+
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
