@@ -14,7 +14,7 @@ develop branch는 기능구현을 하는 branch입니다.
 그리고, develop branch가 새로 merge됐을때 
 이 기능을 배포해야하므로 develop -> main으로 다시 merge시켜줍니다.
 
-
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
 
 merge는 branch와 branch를 병합하는 작업입니다.
