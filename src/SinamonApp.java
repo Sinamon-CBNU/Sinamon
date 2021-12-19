@@ -440,13 +440,24 @@ public class SinamonApp {
 		/*�Խ��� table*/
 		String[] header=new String[] {"��ȣ","���","�ð�","����","�ۼ���","��Ȳ","ä��"};
 		//����
-		food_board_data = connection.show_board("food_board");
+		String[][] food_board_data2 = new String[][] {
+			  {"1", "중문", "17-19시", "BBQ 황금올리브 드실분", "김호발", "예정"},
+			  {"2", "정문", "12-2시", "부리또인 같이먹어용", "서민", "완료"},
+			  {"3", "중문", "12-2시", "두맛찜닭 같이먹어용", "서민", "완료"},
+			  {"4", "중문", "4시", "푸다락 반반 하실분", "정현", "완료"},
+			  {"5", "중문", "20시", "피자 아무데나 시켜먹으실분", "초코공주", "진행중"},
+			  {"6", "서문", "12시", "소주신랑 보쌈부인 드실분~", "주피터", "진행중"},
+			  {"7", "양진재", "17시", "중탕 드실분", "주피터", "완료"},
+			  {"8", "양성재", "아무때나", "피자헛 시켜드실분?", "김호발", "진행중"},
+			  {"9", "본관", "17시", "사케동먹자", "김호발", "진행중"},
+			  {"10", "중문", "14시 이후", "부리또인 시켜드실분", "김호발", "진행중"},
+			  {"11", "양성재", "아무때나", "귤 한박스 샀는데, 반정도 사실분?", "초코공주", "진행중"},
+			  {"12", "후문", "23시", "크통치킨 후라이드 반띵하실분", "김호발", "진행중"}	
+		};
 		
-		for(int i=0; i<12; i++) {
-			System.out.println(food_board_data[i][0]);
-		}
 		
-		DefaultTableModel foodMod=new DefaultTableModel(food_board_data, header) {	// ���� �Ұ�
+		
+		DefaultTableModel foodMod=new DefaultTableModel(food_board_data2, header) {	// ���� �Ұ�
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}
@@ -814,7 +825,7 @@ public class SinamonApp {
 	private void initialize(db_connection connection,ChatServerObject chattingserver) {
 		//frame ����
 		frame = new JFrame();
-		frame.setTitle("�ó���");
+		frame.setTitle("시나몬");
 		frame.setBounds(100, 100, 960, 540);
 		frame.setPreferredSize(new Dimension(960,540));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//ȭ���� ������ ���α׷� ����

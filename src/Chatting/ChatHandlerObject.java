@@ -107,7 +107,7 @@ class ChatHandlerObject extends Thread //처리해주는 곳(소켓에 대한 �
 					//��� Ŭ���̾�Ʈ���� ���� �޼��� ������ ��
 					InfoDTO sendDto = new InfoDTO();
 					sendDto.setCommand(Info.NOTICE);
-					sendDto.setMessage(nickName+"님이 입장하였습니다.");
+					sendDto.setMessage(nickName+"이(가) 입장하였습니다.");
 					sendDto.sethandlerroomnumber(dto.getroomid());
 					broadcast(sendDto);
 				} else if(dto.getCommand()==Info.SEND){

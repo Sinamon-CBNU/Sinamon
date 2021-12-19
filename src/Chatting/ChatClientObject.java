@@ -60,7 +60,7 @@ public class ChatClientObject extends JFrame implements Runnable {
 		
 				setIconImage(Toolkit.getDefaultToolkit().getImage(Image_Path+"\\Window Icon.png"));
 				setTitle("채팅방");
-
+				
 		
 
 		// ���Ϳ� TextArea�����
@@ -95,7 +95,7 @@ public class ChatClientObject extends JFrame implements Runnable {
 		//sendBtn.setFocusPainted(false); 
 		sendBtn.setContentAreaFilled(false);
 		confirmBtn = new JButton();
-		confirmBtn.setIcon(new ImageIcon(Image_Path+"\\send button6.png"));
+		confirmBtn.setIcon(new ImageIcon(Image_Path+"\\confirmBtn.png"));
 		confirmBtn.setBorderPainted(false); 
 		confirmBtn.setContentAreaFilled(false);
 		
@@ -147,7 +147,7 @@ public class ChatClientObject extends JFrame implements Runnable {
 		
 		/********************************/
 		
-		String serverIP="49.143.47.208";
+		String serverIP="192.168.35.155";
 		//서버측 ip가 변경되면 여기를 변경된 서버ip로 바꿔주면된다
 		/*********************************/
 		
@@ -160,7 +160,7 @@ public class ChatClientObject extends JFrame implements Runnable {
 		//nickName= JOptionPane.showInputDialog(this,"닉네임을 입력하세요","닉네임" ,JOptionPane.INFORMATION_MESSAGE);
 		
 		//이부분을 db의 nickname으로받아주소 
-		//nickName=
+		nickName="초코공주";
 		
 		if(nickName == null || nickName.length()==0){
 			nickName="guest";
