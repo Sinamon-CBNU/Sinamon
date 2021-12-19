@@ -17,7 +17,7 @@ develop branch는 기능구현을 하는 branch입니다.
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/readme/Sinamon-minjung/Image/lines/colored.png)](#table-of-contents)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
 merge는 branch와 branch를 병합하는 작업입니다.
 예를들어 develop branch에는 a.txt파일만 있고, feature branch에는 a.txt와 b.txt파일이있을때
