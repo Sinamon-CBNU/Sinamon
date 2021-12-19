@@ -18,6 +18,9 @@
 음식 게시판과 생필품 게시판 중 선택한 게시판의 창이 뜨도록 설정
 ![choice1](https://user-images.githubusercontent.com/46774346/146688433-fe6d24da-9eb5-4d18-95ea-070b96bcf83e.gif)
 
+![choice2](https://user-images.githubusercontent.com/46774346/146688448-df11d5aa-28d6-4cf9-8427-3ccabbf15ea7.gif)
+
+
 
 ### 3) 뒤로가기 
 뒤로가기 버튼을 누르면 현재 보는 창은 없어지고, 이전에 사용자가 보았던 창이 뜨도록 설정
