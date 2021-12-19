@@ -15,7 +15,7 @@
 ![login](https://user-images.githubusercontent.com/46774346/146688307-4ca5ea0b-7537-42c5-b2c8-986aeaf10ea5.gif)
 
 
-
+</br>
 
 
 ### 2) 게시판 선택 
