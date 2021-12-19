@@ -94,3 +94,28 @@
 자세한 설명은 생략한다2.
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+
+## Expected Results
+
+충북대학교 근처에 사는 학생들이 평소에 비싸서, 혹은 양이 많아서
+시켜먹지 못한 배달음식을 ‘시나몬’플랫폼을 통해 같이 시키고 나누어 먹을 수 있다.
+또한, 생필품 같은 경우 대량 묶음이 더 싼데, 불필요한 양까지 살 필요 없이 같이 시켜서 나눌 수 있다.
+
+즉, 생필품 같은 경우 비용 절감의 효과를 얻을 수 있고,
+배달음식 같은 경우 비용 절감과 음식물쓰레기를 줄일 수 있는 효과를 얻을 수 있다.
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+## What can we do to improve?
+
+```
+1. 데이터베이스 각 사용자에게 연동
+2. 약속확정 기능 구현
+3. 채팅 알림 기능 구현
+4. 채팅 서버 한 사용자만 실행하게 끔
+5. 이 모든 것들을 보완해 앱으로 구현
+
+```
