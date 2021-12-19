@@ -15,7 +15,6 @@ develop branch는 기능구현을 하는 branch입니다.
 이 기능을 배포해야하므로 develop -> main으로 다시 merge시켜줍니다.
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
