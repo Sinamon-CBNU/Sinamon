@@ -81,6 +81,8 @@
 
 ![aa](https://user-images.githubusercontent.com/46774346/146688897-7c42c124-62d7-4020-97b8-b5be61a38d36.png)
 
+자세한 설명은 생략한다.
+
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
 
@@ -89,6 +91,6 @@
 
 ![cc](https://user-images.githubusercontent.com/46774346/146688956-a5b84f3d-e75a-460c-b784-5aa791757a1e.png)
 
-
+자세한 설명은 생략한다2.
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
