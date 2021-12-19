@@ -65,8 +65,16 @@
 
 ### 9) 채팅 
 게시글에 있는 채팅 버튼을 누르면 그 사람과 채팅할 수 있는 채팅방이 개설된다. 각 채팅 버튼마다 생성되는 채팅방은 다르다.
+
+
+
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/46774346/146688697-3a329ab6-97fc-4bb7-b8f9-87a5c66b4774.gif)
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
+
+## System structure
+![bb](https://user-images.githubusercontent.com/46774346/146688860-4046eec3-8a4a-42c0-b3f9-9a9e0eb3c2e9.png)
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
