@@ -74,11 +74,18 @@
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
 
 
-## System structure
+## System Structure
 ![bb](https://user-images.githubusercontent.com/46774346/146688860-4046eec3-8a4a-42c0-b3f9-9a9e0eb3c2e9.png)
 
 
 
 ![aa](https://user-images.githubusercontent.com/46774346/146688897-7c42c124-62d7-4020-97b8-b5be61a38d36.png)
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
+
+
+## Development Schedule
+
+
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/Sinamon-CBNU/Sinamon/develop/Sinamon-minjung/Image/colored.png)](#table-of-contents)
