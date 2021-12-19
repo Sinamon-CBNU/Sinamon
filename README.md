@@ -12,6 +12,8 @@
 ### 1) 로그인 및 회원가입 
 사용자로부터 이름, ID, PW, 사는곳, 닉네임을 입력받아 MariaDB에 저장 후 로그인 할 수 있게 처리
 
+![login](https://user-images.githubusercontent.com/46774346/146688307-4ca5ea0b-7537-42c5-b2c8-986aeaf10ea5.gif)
+
 ### 2) 게시판 선택 
 음식 게시판과 생필품 게시판 중 선택한 게시판의 창이 뜨도록 설정
 
